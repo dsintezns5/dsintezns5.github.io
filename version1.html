@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Феномен KEPA_MITA | Реальный Интернет</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Unbounded:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #01010a;
+            --neon-pink: #ff0055;
+            --neon-blue: #00f2ff;
+            --blood-red: #8b0000;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        h1, h2, h3, .font-unbounded {
+            font-family: 'Unbounded', sans-serif;
+        }
+
+        /* Enhanced Neon Borders */
+        .neon-border {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 10px; /* Wider border */
+            height: 100vh;
+            background: linear-gradient(to bottom, var(--neon-blue), transparent, var(--neon-blue));
+            box-shadow: 0 0 30px var(--neon-blue), 0 0 60px rgba(0, 242, 255, 0.4);
+            opacity: 0.8;
+            z-index: 100;
+            animation: aggressive-flicker 3s infinite;
+        }
+
+        .neon-border-right {
+            left: auto;
+            right: 0;
+            background: linear-gradient(to bottom, var(--neon-pink), transparent, var(--neon-pink));
+            box-shadow: 0 0 30px var(--neon-pink), 0 0 60px rgba(255, 0, 85, 0.4);
+        }
+
+        /* Ambient Off-screen Lighting (Wave Effect) */
+        .ambient-glow {
+            position: fixed;
+            width: 80vw;
+            height: 80vh;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            z-index: 1;
+            pointer-events: none;
+            animation: wave-motion 15s infinite alternate ease-in-out;
+        }
+
+        .glow-blue {
+            top: -20%;
+            left: -20%;
+            background: var(--neon-blue);
+        }
+
+        .glow-pink {
+            bottom: -20%;
+            right: -20%;
+            background: var(--neon-pink);
+            animation-delay: -7s;
+        }
+
+        @keyframes aggressive-flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 0.8; filter: brightness(1); }
+            20%, 24%, 55% { opacity: 0.2; filter: brightness(0.5); }
+        }
+
+        @keyframes wave-motion {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(10%, 5%) scale(1.1); }
+            66% { transform: translate(-5%, 10%) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        #bloodCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content-card {
+            background: rgba(2, 2, 21, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 32px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .content-card:hover {
+            border-color: rgba(255, 0, 85, 0.4);
+            box-shadow: 0 0 40px rgba(255, 0, 85, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .glitch-text {
+            text-shadow: 3px 0 var(--neon-pink), -3px 0 var(--neon-blue);
+        }
+
+        .blood-text {
+            color: #ff4d4d;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--blood-red);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow glow-blue"></div>
+    <div class="ambient-glow glow-pink"></div>
+    <div class="neon-border"></div>
+    <div class="neon-border neon-border-right"></div>
+    <canvas id="bloodCanvas"></canvas>
+
+    <main class="relative z-10 max-w-4xl mx-auto px-6 pt-24 pb-48">
+        
+        <header class="mb-32 text-center">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl mb-8 leading-tight glitch-text font-black">
+                🚨 Феномен Миты Кепы: <br/>
+                <span class="text-white">Почему тысячи людей становятся «заложниками»?</span>
+            </h1>
+            <p class="text-xl text-gray-400 italic mb-12 max-w-2xl mx-auto">
+                (Спойлер: пока вы читали этот заголовок, кто-то в её чате уже получил бан за то, что не понял шутку).
+            </p>
+            <div class="h-1.5 w-32 bg-red-600 mx-auto rounded-full animate-pulse shadow-[0_0_15px_#dc2626]"></div>
+        </header>
+
+        <section class="space-y-16">
+            
+            <div class="content-card p-10 md:p-14">
+                <p class="text-lg md:text-2xl leading-relaxed mb-8">
+                    Забудьте всё о стримерах. Эпоха «улыбающихся аниме-девочек» мертва. На её место пришел <span class="blood-text">абсолютный хаос</span>.
+                </p>
+                <p class="text-lg md:text-xl text-gray-300 leading-relaxed">
+                    Представьте: милая 3D-модель из хоррора <span class="italic text-cyan-400">MiSide</span>. Она выглядит уютно, но из колонок несется: <span class="text-red-500 font-bold">«Этот фонарь уничтожил мне билд, это позор!»</span>.
+                </p>
+            </div>
+
+            <div class="text-center py-12">
+                <h2 class="text-4xl md:text-6xl font-unbounded text-white mb-4 tracking-tighter">KEPA_MITA</h2>
+                <p class="text-cyan-400 tracking-[0.3em] uppercase text-xs font-bold">Токсичная искренность в прямом эфире</p>
+            </div>
+
+            <div class="grid gap-12">
+                <!-- Point 1 -->
+                <div class="content-card p-8 border-l-8 border-l-cyan-500">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center">
+                        <span class="text-4xl mr-4">💥</span> 1. Эффект «Злого Гения»
+                    </h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Она препарирует экономику <strong>Path of Exile 2</strong> с хирургической точностью. 40 минут макроэкономики, а потом — слив всего бюджета за один клик. Это реальное шоу про боль и жадность.
+                    </p>
+                </div>
+
+                <!-- Point 2 -->
+                <div class="content-card p-8 border-l-8 border-l-pink-500">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center">
+                        <span class="text-4xl mr-4">🎭</span> 2. Контраст, ломающий мозг
+                    </h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Аниме-аватар выдает тирады, от которых краснеют грузчики. Вы приходите на «милую тян», а остаетесь на лекцию по виртуальным валютам с примерами из личного гастрита.
+                    </p>
+                </div>
+
+                <!-- Point 3 -->
+                <div class="content-card p-8 border-l-8 border-l-red-600">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center">
+                        <span class="text-4xl mr-4">💸</span> 3. Искренность на грани
+                    </h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        <em>«Присылайте деньги, я не хочу на завод!»</em>. Она банит за скуку и жалуется на дроны. Но за этой броней скрывается <strong>100% уязвимость</strong>. Она не играет роль. Она такая.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-32 p-12 bg-gradient-to-t from-red-900/40 to-transparent border border-red-900/30 rounded-[40px] text-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+                <h3 class="text-2xl md:text-4xl font-unbounded mb-8 relative z-10">🔥 ФИНАЛЬНЫЙ ХУК</h3>
+                <p class="text-xl md:text-2xl mb-12 italic text-gray-200 relative z-10">
+                    «Вы бы смогли выдержать автора, который требует донат за то, что вы дышите, но дает знаний больше, чем любой гайд?»
+                </p>
+                
+                <div class="flex flex-col md:flex-row justify-center items-center gap-8 relative z-10">
+                    <a href="https://www.twitch.tv/kepa_mita" target="_blank" rel="noopener noreferrer" 
+                       class="group relative px-12 py-6 bg-red-600 text-white font-black rounded-2xl transition-all hover:scale-110 active:scale-95 shadow-[0_20px_50px_rgba(220,38,38,0.4)] overflow-hidden">
+                        <span class="relative z-10">СМОГ БЫ</span>
+                        <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform"></div>
+                    </a>
+                    <button class="px-10 py-5 border-2 border-white/10 hover:border-white/40 text-white font-bold rounded-2xl transition-all hover:bg-white/5">
+                        Я ЕЩЕ НЕ ПОНЯЛ...
+                    </button>
+                </div>
+
+                <p class="mt-16 text-xs text-gray-500 uppercase tracking-[0.5em] font-bold">
+                    System Failure // Emotional Overload
+                </p>
+            </div>
+
+        </section>
+    </main>
+
+    <script id="v-shader" type="x-shader/x-vertex">
+        varying vec2 vUv;
+        void main() {
+            vUv = uv;
+            gl_Position = vec4(position, 1.0);
+        }
+    </script>
+
+    <script id="f-shader" type="x-shader/x-fragment">
+        precision highp float;
+        uniform float uTime;
+        uniform float uScroll;
+        uniform vec2 uResolution;
+        varying vec2 vUv;
+
+        float noise(vec2 p) {
+            return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+        }
+
+        float smoothNoise(vec2 p) {
+            vec2 i = floor(p);
+            vec2 f = fract(p);
+            f = f * f * (3.0 - 2.0 * f);
+            float a = noise(i);
+            float b = noise(i + vec2(1.0, 0.0));
+            float c = noise(i + vec2(0.0, 1.0));
+            float d = noise(i + vec2(1.0, 1.0));
+            return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+        }
+
+        void main() {
+            vec2 uv = gl_FragCoord.xy / uResolution.xy;
+            float scrollFactor = uScroll * 1.8;
+            
+            float drip = smoothNoise(vec2(uv.x * 4.0, uv.y * 0.1 - uTime * 0.05));
+            float bloodEdge = 1.2 - (uv.y + drip * 0.2);
+            
+            float mask = smoothstep(scrollFactor - 0.3, scrollFactor, bloodEdge);
+            
+            vec3 normal = vec3(0.0, 0.0, 1.0);
+            normal.x = (smoothNoise(uv * 15.0 + uTime * 0.4) - 0.5) * 0.25;
+            normal.y = (smoothNoise(uv * 15.0 - uTime * 0.2) - 0.5) * 0.25;
+            normal = normalize(normal);
+            
+            vec3 lightDir = normalize(vec3(0.5, 0.8, 1.0));
+            float spec = pow(max(dot(normal, lightDir), 0.0), 40.0);
+            
+            vec3 darkBlue = vec3(0.005, 0.005, 0.04); 
+            vec3 bloodColor = vec3(0.45, 0.0, 0.02);   
+            
+            bloodColor += vec3(0.7, 0.1, 0.1) * spec * 0.9;
+            bloodColor += vec3(1.0, 0.9, 0.9) * pow(spec, 80.0);
+
+            vec3 finalColor = mix(darkBlue, bloodColor, mask);
+            gl_FragColor = vec4(finalColor, 1.0);
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        let scene, camera, renderer, material, mesh;
+        let scrollTarget = 0;
+        let currentScroll = 0;
+
+        function init() {
+            scene = new THREE.Scene();
+            camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+            
+            renderer = new THREE.WebGLRenderer({ 
+                canvas: document.getElementById('bloodCanvas'), 
+                antialias: true,
+                alpha: true 
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            const geometry = new THREE.PlaneGeometry(2, 2);
+            material = new THREE.ShaderMaterial({
+                uniforms: {
+                    uTime: { value: 0 },
+                    uScroll: { value: 0 },
+                    uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+                },
+                vertexShader: document.getElementById('v-shader').textContent,
+                fragmentShader: document.getElementById('f-shader').textContent
+            });
+
+            mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+
+            window.addEventListener('resize', onWindowResize);
+            window.addEventListener('scroll', onScroll);
+            
+            animate();
+        }
+
+        function onWindowResize() {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            material.uniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
+        }
+
+        function onScroll() {
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            scrollTarget = window.scrollY / maxScroll;
+        }
+
+        function animate(time) {
+            requestAnimationFrame(animate);
+            currentScroll += (scrollTarget - currentScroll) * 0.04;
+            material.uniforms.uTime.value = time * 0.001;
+            material.uniforms.uScroll.value = currentScroll;
+            renderer.render(scene, camera);
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
