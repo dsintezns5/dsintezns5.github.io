@@ -2,435 +2,1706 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мита Кепочка - Path of Exile 2 Гайды</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Волшебный Сад - Матч-3 Игра</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            color: #e0e0e0;
+            background: linear-gradient(180deg, #87CEEB 0%, #B0E0F6 30%, #98FB98 70%, #90EE90 100%);
             min-height: 100vh;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            text-align: center;
-            padding: 40px 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border-bottom: 3px solid #e94560;
-            margin-bottom: 40px;
-            position: relative;
             overflow: hidden;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%23e94560" opacity="0.3"/></svg>');
-            background-size: 50px 50px;
-            opacity: 0.5;
-        }
-
-        .avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 4px solid #e94560;
-            margin: 0 auto 20px;
-            background: linear-gradient(45deg, #e94560, #0f3460);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 60px;
             position: relative;
-            z-index: 1;
         }
 
-        h1 {
-            color: #e94560;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .subtitle {
-            color: #a0a0a0;
-            font-size: 1.2em;
-            position: relative;
-            z-index: 1;
-        }
-
-        .builds-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .build-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 25px;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .build-card:hover {
-            border-color: #e94560;
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(233, 69, 96, 0.2);
-        }
-
-        .build-title {
-            color: #e94560;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .build-icon {
-            font-size: 1.2em;
-        }
-
-        /* ===== VIDEO PREVIEW ===== */
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            background: #000;
-            border: 2px solid #0f3460;
-            cursor: pointer;
-            display: block;
-            text-decoration: none;
-        }
-
-        .video-thumbnail {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: opacity 0.3s ease;
-        }
-
-        .video-container:hover .video-thumbnail {
-            opacity: 0.75;
-        }
-
-        .play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 68px;
-            height: 48px;
-            background: #ff0000;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s ease, background 0.2s ease;
-            pointer-events: none;
-        }
-
-        .video-container:hover .play-btn {
-            background: #cc0000;
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-
-        .play-btn::after {
-            content: '';
-            display: block;
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 10px 0 10px 20px;
-            border-color: transparent transparent transparent #fff;
-            margin-left: 4px;
-        }
-        /* ========================= */
-
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .link-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 20px;
-            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 8px;
-            border: 2px solid #1a4a7a;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .link-btn:hover {
-            background: linear-gradient(135deg, #e94560 0%, #0f3460 100%);
-            border-color: #e94560;
-            transform: translateX(5px);
-        }
-
-        .link-icon {
-            font-size: 1.2em;
-        }
-
-        .poe-bg {
+        /* Параллакс фон */
+        .parallax-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.1;
-            background-image: 
-                radial-gradient(circle at 20% 50%, #e94560 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, #0f3460 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, #16213e 0%, transparent 50%);
+            overflow: hidden;
         }
 
-        footer {
-            text-align: center;
-            padding: 30px;
-            background: rgba(0, 0, 0, 0.3);
-            border-top: 2px solid #e94560;
-            margin-top: 40px;
-            color: #888;
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50px;
+            animation: float 20s infinite linear;
         }
 
-        .social-links {
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+        }
+
+        .cloud:nth-child(1) { width: 120px; height: 40px; top: 10%; left: -120px; animation-duration: 25s; }
+        .cloud:nth-child(1)::before { width: 50px; height: 50px; top: -25px; left: 15px; }
+        .cloud:nth-child(1)::after { width: 40px; height: 40px; top: -20px; left: 55px; }
+
+        .cloud:nth-child(2) { width: 100px; height: 35px; top: 20%; left: -100px; animation-duration: 30s; animation-delay: 5s; }
+        .cloud:nth-child(2)::before { width: 40px; height: 40px; top: -20px; left: 12px; }
+        .cloud:nth-child(2)::after { width: 35px; height: 35px; top: -17px; left: 45px; }
+
+        .cloud:nth-child(3) { width: 140px; height: 45px; top: 5%; left: -140px; animation-duration: 28s; animation-delay: 10s; }
+        .cloud:nth-child(3)::before { width: 55px; height: 55px; top: -27px; left: 18px; }
+        .cloud:nth-child(3)::after { width: 45px; height: 45px; top: -22px; left: 65px; }
+
+        @keyframes float {
+            0% { transform: translateX(-150px); }
+            100% { transform: translateX(calc(100vw + 150px)); }
+        }
+
+        /* Главный контейнер игры */
+        .game-container {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+            position: relative;
+        }
+
+        /* Персонажи */
+        .character {
+            position: absolute;
+            bottom: 10%;
+            width: 180px;
+            height: 220px;
+            transition: transform 0.3s ease;
+            z-index: 10;
+        }
+
+        .character img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
+
+        .character-left {
+            left: 2%;
+            transform-origin: bottom center;
+        }
+
+        .character-right {
+            right: 2%;
+            transform-origin: bottom center;
+        }
+
+        .character.happy {
+            animation: happyJump 0.5s ease;
+        }
+
+        .character.excited {
+            animation: excitedDance 0.8s ease;
+        }
+
+        .character.sad {
+            animation: sadBounce 0.6s ease;
+        }
+
+        .character.pointing {
+            animation: pointingGesture 0.4s ease;
+        }
+
+        @keyframes happyJump {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        @keyframes excitedDance {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-10deg) scale(1.1); }
+            75% { transform: rotate(10deg) scale(1.1); }
+        }
+
+        @keyframes sadBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px) scale(0.95); }
+        }
+
+        @keyframes pointingGesture {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-5deg); }
+        }
+
+        /* Пузыри с репликами */
+        .speech-bubble {
+            position: absolute;
+            background: white;
+            border-radius: 20px;
+            padding: 12px 18px;
+            max-width: 200px;
+            font-size: 14px;
+            color: #333;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 20;
+        }
+
+        .speech-bubble.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid white;
+        }
+
+        .speech-bubble.left {
+            left: 200px;
+            bottom: 200px;
+        }
+
+        .speech-bubble.left::after {
+            left: 20px;
+        }
+
+        .speech-bubble.right {
+            right: 200px;
+            bottom: 200px;
+        }
+
+        .speech-bubble.right::after {
+            right: 20px;
+        }
+
+        /* Игровая доска */
+        .board-container {
+            position: relative;
+            z-index: 5;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 4px;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,248,255,0.8) 100%);
+            border-radius: 20px;
+            box-shadow: 
+                0 10px 30px rgba(0,0,0,0.3),
+                inset 0 0 20px rgba(255,255,255,0.5);
+            transform: perspective(1000px) rotateX(5deg);
+            backdrop-filter: blur(10px);
+        }
+
+        .cell {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            box-shadow: 
+                inset 0 -3px 5px rgba(0,0,0,0.1),
+                0 2px 5px rgba(255,255,255,0.8);
+        }
+
+        .cell:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255,215,0,0.5);
+        }
+
+        .cell.selected {
+            background: linear-gradient(135deg, #ffd700 0%, #ffec8b 100%);
+            animation: pulse 0.5s infinite;
+            box-shadow: 0 0 20px rgba(255,215,0,0.8);
+        }
+
+        .cell.matched {
+            animation: matchPop 0.4s ease forwards;
+        }
+
+        .cell.falling {
+            animation: fallIn 0.3s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes matchPop {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.8; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        @keyframes fallIn {
+            0% { transform: translateY(-50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .gem {
+            font-size: 32px;
+            transition: transform 0.2s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .gem.bomb {
+            animation: bombPulse 0.8s infinite;
+        }
+
+        .gem.star {
+            animation: starSpin 2s linear infinite;
+        }
+
+        .gem.vortex {
+            animation: vortexRotate 1s linear infinite;
+        }
+
+        @keyframes bombPulse {
+            0%, 100% { filter: drop-shadow(0 0 5px red); }
+            50% { filter: drop-shadow(0 0 15px red); }
+        }
+
+        @keyframes starSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes vortexRotate {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* Частицы */
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .particle.confetti {
+            width: 10px;
+            height: 10px;
+            animation: confettiFall 2s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(200px) rotate(720deg); opacity: 0; }
+        }
+
+        /* UI элементы */
+        .ui-panel {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.9) 100%);
+            padding: 15px 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            display: flex;
+            gap: 30px;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+        }
+
+        .ui-item {
+            text-align: center;
+        }
+
+        .ui-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .ui-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .ui-value.highlight {
+            color: #e94560;
+            animation: valuePulse 0.5s ease;
+        }
+
+        @keyframes valuePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Кнопки */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #e94560 0%, #ff6b8a 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(233,69,96,0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(76,175,80,0.4);
+        }
+
+        /* Модальные окна */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: modalSlide 0.4s ease;
+        }
+
+        @keyframes modalSlide {
+            0% { transform: translateY(-50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal h2 {
+            font-size: 32px;
+            color: #e94560;
             margin-bottom: 20px;
         }
 
-        .social-link {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #0f3460, #16213e);
+        .modal p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+            white-space: pre-line;
+        }
+
+        .modal-buttons {
             display: flex;
-            align-items: center;
+            gap: 15px;
             justify-content: center;
-            color: #e94560;
-            text-decoration: none;
-            font-size: 1.5em;
+            flex-wrap: wrap;
+        }
+
+        /* Главное меню */
+        .main-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .main-menu.hidden {
+            display: none;
+        }
+
+        .menu-title {
+            font-size: 48px;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        .menu-subtitle {
+            font-size: 20px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+        }
+
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .menu-btn {
+            padding: 15px 50px;
+            font-size: 20px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
             transition: all 0.3s ease;
-            border: 2px solid #1a4a7a;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
 
-        .social-link:hover {
-            background: linear-gradient(135deg, #e94560, #0f3460);
-            color: #fff;
-            transform: scale(1.1) rotate(5deg);
+        .menu-btn.play {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
         }
 
-        @media (max-width: 768px) {
-            .builds-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            h1 {
-                font-size: 1.8em;
-            }
-            
-            .build-card {
-                padding: 20px;
-            }
+        .menu-btn.leaderboard {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
         }
 
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: #e94560;
-            color: #fff;
+        .menu-btn.settings {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+
+        /* Таблица лидеров */
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .leaderboard-table th,
+        .leaderboard-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .leaderboard-table th {
+            background: linear-gradient(135deg, #e94560 0%, #ff6b8a 100%);
+            color: white;
+        }
+
+        .leaderboard-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .leaderboard-table tr:hover {
+            background: #fff3cd;
+        }
+
+        /* Поле ввода ника */
+        .nickname-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            transition: border-color 0.3s ease;
+        }
+
+        .nickname-input:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+
+        /* Прогресс уровня */
+        .level-progress {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.9);
+            padding: 10px 30px;
             border-radius: 20px;
-            font-size: 0.8em;
-            margin-left: 10px;
-            font-weight: bold;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+            z-index: 50;
+            display: flex;
+            gap: 20px;
+            align-items: center;
         }
 
-        .description {
-            color: #b0b0b0;
-            margin-bottom: 15px;
-            font-size: 0.95em;
+        .progress-bar {
+            width: 200px;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e94560 0%, #ff6b8a 100%);
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        /* Адаптация под мобильные */
+        @media (max-width: 768px) {
+            .character {
+                width: 120px;
+                height: 150px;
+            }
+
+            .character-left {
+                left: 0;
+                bottom: 5%;
+            }
+
+            .character-right {
+                right: 0;
+                bottom: 5%;
+            }
+
+            .speech-bubble {
+                max-width: 150px;
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+
+            .speech-bubble.left {
+                left: 130px;
+                bottom: 140px;
+            }
+
+            .speech-bubble.right {
+                right: 130px;
+                bottom: 140px;
+            }
+
+            .cell {
+                width: 40px;
+                height: 40px;
+            }
+
+            .gem {
+                font-size: 26px;
+            }
+
+            .ui-panel {
+                padding: 10px 20px;
+                gap: 15px;
+            }
+
+            .ui-value {
+                font-size: 18px;
+            }
+
+            .menu-title {
+                font-size: 32px;
+            }
+
+            .menu-btn {
+                padding: 12px 40px;
+                font-size: 16px;
+            }
+        }
+
+        /* Настройки звука */
+        .settings-panel {
+            margin: 20px 0;
+        }
+
+        .slider-container {
+            margin: 15px 0;
+        }
+
+        .slider-label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        .slider {
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: #e0e0e0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #e94560;
+            cursor: pointer;
+        }
+
+        /* Комбо индикатор */
+        .combo-display {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255,215,0,0.8);
+            pointer-events: none;
+            z-index: 200;
+            opacity: 0;
+        }
+
+        .combo-display.show {
+            animation: comboShow 1s ease forwards;
+        }
+
+        @keyframes comboShow {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+        }
+
+        /* Подсказка */
+        .hint-glow {
+            animation: hintPulse 1s infinite;
+        }
+
+        @keyframes hintPulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(255,215,0,0.5); }
+            50% { box-shadow: 0 0 30px rgba(255,215,0,1); }
         }
     </style>
 </head>
 <body>
-    <div class="poe-bg"></div>
-    
-    <header>
-        <div class="avatar">🎮</div>
-        <h1>Мита Кепочка</h1>
-        <p class="subtitle">Path of Exile 2 • Гайды и билды</p>
-    </header>
+    <!-- Параллакс фон -->
+    <div class="parallax-bg">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
 
-    <div class="container">
-        <div class="builds-grid">
-
-            <!-- Chiula Starter -->
-            <div class="build-card">
-                <h2 class="build-title">
-                    <span class="build-icon">⚔️</span>
-                    Чиула Стартер
-                    <span class="badge">START</span>
-                </h2>
-                <p class="description">Стартовый билд для начала лиги. Отлично подходит для прокачки и первых карт.</p>
-                
-                <a href="https://www.youtube.com/watch?v=x18SPik1yrI" target="_blank" class="video-container">
-                    <img
-                        class="video-thumbnail"
-                        src="https://img.youtube.com/vi/x18SPik1yrI/hqdefault.jpg"
-                        alt="Чиула Стартер гайд"
-                    >
-                    <div class="play-btn"></div>
-                </a>
-                
-                <div class="links">
-                    <a href="https://www.youtube.com/watch?v=x18SPik1yrI" class="link-btn" target="_blank">
-                        <span class="link-icon">📺</span>
-                        Видео гайд на YouTube
-                    </a>
-                    <a href="https://pobb.in/Ff0fnOAHUk1r" class="link-btn" target="_blank">
-                        <span class="link-icon">📋</span>
-                        Path of Building
-                    </a>
-                </div>
-            </div>
-
-            <!-- Chiula Boss -->
-            <div class="build-card">
-                <h2 class="build-title">
-                    <span class="build-icon">💀</span>
-                    Чиула Боссер
-                    <span class="badge">BOSS</span>
-                </h2>
-                <p class="description">Усиленная версия для фарма боссов и эндгейм контента. Максимальный урон по целям.</p>
-                
-                <a href="https://youtu.be/9c2XLW6AM1M?si=vK5M6Ese1bcptdco" target="_blank" class="video-container">
-                    <img
-                        class="video-thumbnail"
-                        src="https://img.youtube.com/vi/9c2XLW6AM1M/hqdefault.jpg"
-                        alt="Чиула Боссер гайд"
-                    >
-                    <div class="play-btn"></div>
-                </a>
-                
-                <div class="links">
-                    <a href="https://youtu.be/9c2XLW6AM1M?si=vK5M6Ese1bcptdco" class="link-btn" target="_blank">
-                        <span class="link-icon">📺</span>
-                        Видео гайд на YouTube
-                    </a>
-                    <a href="https://pobb.in/ZYKe-r4IIkls" class="link-btn" target="_blank">
-                        <span class="link-icon">📋</span>
-                        Path of Building
-                    </a>
-                </div>
-            </div>
-
-            <!-- Bear Fast Mapper -->
-            <div class="build-card">
-                <h2 class="build-title">
-                    <span class="build-icon">🐻</span>
-                    Мишка Фастмапер
-                    <span class="badge">FARM</span>
-                </h2>
-                <p class="description">Быстрый фарм карт. Отличная скорость зачистки для эффективного фарма.</p>
-                
-                <a href="https://www.youtube.com/watch?v=I2HCa-GmUVU" target="_blank" class="video-container">
-                    <img
-                        class="video-thumbnail"
-                        src="https://img.youtube.com/vi/I2HCa-GmUVU/hqdefault.jpg"
-                        alt="Мишка Фастмапер гайд"
-                    >
-                    <div class="play-btn"></div>
-                </a>
-                
-                <div class="links">
-                    <a href="https://www.youtube.com/watch?v=I2HCa-GmUVU" class="link-btn" target="_blank">
-                        <span class="link-icon">📺</span>
-                        Видео гайд на YouTube
-                    </a>
-                    <a href="https://poe.ninja/poe2/pob/13d05" class="link-btn" target="_blank">
-                        <span class="link-icon">📋</span>
-                        PoB на Poe.ninja
-                    </a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="social-links">
-            <a href="https://www.twitch.tv/kepa_mita" class="social-link" title="Twitch">📡</a>
-            <a href="https://www.youtube.com/@Kepa_mita" class="social-link" title="YouTube">🎬</a>
-            <a href="https://discord.gg/Gefd6QDrB4" class="social-link" title="Discord">💬</a>
-            <a href="https://t.me/kepa_mita" class="social-link" title="Telegram">✈️</a>
+    <!-- Главное меню -->
+    <div class="main-menu" id="mainMenu">
+        <h1 class="menu-title">🍎 Волшебный Сад 🌸</h1>
+        <p class="menu-subtitle">Матч-3 приключение с Яблочком и Кепой Митой!</p>
+        <div class="menu-buttons">
+            <button class="menu-btn play" onclick="startGame()">🎮 Играть</button>
+            <button class="menu-btn leaderboard" onclick="showLeaderboard()">🏆 Таблица лидеров</button>
+            <button class="menu-btn settings" onclick="showSettings()">⚙️ Настройки</button>
         </div>
     </div>
 
-    <footer>
-        <p>© 2025 Мита Кепочка • Path of Exile 2 Community</p>
-        <p style="margin-top: 10px; font-size: 0.9em;">Сделано с ❤️ для сообщества PoE2</p>
-    </footer>
+    <!-- Игровой интерфейс -->
+    <div class="ui-panel" id="uiPanel" style="display: none;">
+        <div class="ui-item">
+            <div class="ui-label">Уровень</div>
+            <div class="ui-value" id="levelDisplay">1</div>
+        </div>
+        <div class="ui-item">
+            <div class="ui-label">Счёт</div>
+            <div class="ui-value" id="scoreDisplay">0</div>
+        </div>
+        <div class="ui-item">
+            <div class="ui-label">Ходы</div>
+            <div class="ui-value" id="movesDisplay">20</div>
+        </div>
+        <div class="ui-item">
+            <div class="ui-label">Цель</div>
+            <div class="ui-value" id="targetDisplay">🍎 50</div>
+        </div>
+    </div>
+
+    <!-- Игровое поле -->
+    <div class="game-container" id="gameContainer" style="display: none;">
+        <!-- Левый персонаж - Яблочко -->
+        <div class="character character-left" id="charLeft">
+            <img src="yablo_chkoo.png" alt="Яблочко">
+            <div class="speech-bubble left" id="bubbleLeft"></div>
+        </div>
+
+        <!-- Игровая доска -->
+        <div class="board-container">
+            <div class="game-board" id="gameBoard"></div>
+        </div>
+
+        <!-- Правый персонаж - Кепа Мита -->
+        <div class="character character-right" id="charRight">
+            <img src="KEPA_MITA.png" alt="Кепа Мита">
+            <div class="speech-bubble right" id="bubbleRight"></div>
+        </div>
+    </div>
+
+    <!-- Прогресс уровня -->
+    <div class="level-progress" id="levelProgress" style="display: none;">
+        <span>Прогресс:</span>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+        <span id="progressText">0/50</span>
+    </div>
+
+    <!-- Комбо дисплей -->
+    <div class="combo-display" id="comboDisplay"></div>
+
+    <!-- Модальное окно победы/поражения -->
+    <div class="modal-overlay" id="gameOverModal">
+        <div class="modal">
+            <h2 id="modalTitle">Победа! 🎉</h2>
+            <p id="modalMessage">Вы прошли уровень!</p>
+            <div id="nicknameInputSection" style="display: none;">
+                <input type="text" class="nickname-input" id="nicknameInput" placeholder="Введите ваш ник (до 12 символов)" maxlength="12">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-primary" id="nextLevelBtn" onclick="nextLevel()" style="display: none;">Следующий уровень ➡️</button>
+                <button class="btn btn-secondary" id="retryBtn" onclick="retryLevel()">🔄 Ещё раз</button>
+                <button class="btn btn-primary" id="saveScoreBtn" onclick="saveScore()" style="display: none;">💾 Сохранить счёт</button>
+                <button class="btn btn-secondary" onclick="returnToMenu()">🏠 В меню</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно таблицы лидеров -->
+    <div class="modal-overlay" id="leaderboardModal">
+        <div class="modal">
+            <h2>🏆 Таблица лидеров</h2>
+            <table class="leaderboard-table" id="leaderboardTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ник</th>
+                        <th>Счёт</th>
+                        <th>Уровень</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                </tbody>
+            </table>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeLeaderboard()">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно настроек -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal">
+            <h2>⚙️ Настройки</h2>
+            <div class="settings-panel">
+                <div class="slider-container">
+                    <label class="slider-label">🎵 Музыка</label>
+                    <input type="range" class="slider" id="musicSlider" min="0" max="100" value="70">
+                </div>
+                <div class="slider-container">
+                    <label class="slider-label">🔊 Эффекты</label>
+                    <input type="range" class="slider" id="sfxSlider" min="0" max="100" value="80">
+                </div>
+                <div class="slider-container">
+                    <label class="slider-label">🎤 Озвучка</label>
+                    <input type="range" class="slider" id="voiceSlider" min="0" max="100" value="90">
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeSettings()">Закрыть</button>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // Add some interactivity
-        document.querySelectorAll('.build-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px) scale(1.02)';
+        // ===== КОНФИГУРАЦИЯ ИГРЫ =====
+        const GAME_CONFIG = {
+            BOARD_SIZE: 8,
+            GEM_TYPES: ['🍎', '🪙', '🍬', '⭐', '🎁'],
+            MOVES_INITIAL: 20,
+            TARGET_INITIAL: 50,
+            COMBO_THRESHOLD: 3
+        };
+
+        // ===== СОСТОЯНИЕ ИГРЫ =====
+        let gameState = {
+            board: [],
+            selectedCell: null,
+            score: 0,
+            moves: GAME_CONFIG.MOVES_INITIAL,
+            level: 1,
+            target: { type: '🍎', count: GAME_CONFIG.TARGET_INITIAL, collected: 0 },
+            isProcessing: false,
+            combo: 0,
+            settings: {
+                music: 0.7,
+                sfx: 0.8,
+                voice: 0.9
+            },
+            leaderboard: []
+        };
+
+        // ===== РЕПЛИКИ ПЕРСОНАЖЕЙ =====
+        const YABLO_REPLIES = [
+            "Молодец! Ты просто супер! 🍎✨",
+            "Ой, как красиво получилось! Ещё чуть-чуть!",
+            "Не переживай, я с тобой! Попробуем вместе?",
+            "Ура! Комбо x3! Ты гений!",
+            "Какой замечательный ход! 💖",
+            "Продолжай в том же духе! 🌟"
+        ];
+
+        const KEPA_REPLIES = [
+            "Эй, не тупи! Смотри внимательнее Жучка!",
+            "Ну наконец-то! А то я уже заскучала~",
+            "Ого, не ожидала! Ладно, горжусь тобой... чуть-чуть.",
+            "Снова промах? Давай, соберись, я в тебя верю... наверное!",
+            "Хм, неплохо для начала~",
+            "Так держать! Но не зазнавайся!"
+        ];
+
+        // ===== АУДИО СИСТЕМА =====
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (gameState.settings.sfx === 0) return;
+
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            switch(type) {
+                case 'match':
+                    oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(880, audioContext.currentTime + 0.1);
+                    gainNode.gain.setValueAtTime(gameState.settings.sfx * 0.3, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.15);
+                    break;
+                case 'bonus':
+                    oscillator.frequency.setValueAtTime(523, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(1046, audioContext.currentTime + 0.2);
+                    gainNode.gain.setValueAtTime(gameState.settings.sfx * 0.3, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.3);
+                    break;
+                case 'error':
+                    oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+                    oscillator.frequency.linearRampToValueAtTime(150, audioContext.currentTime + 0.2);
+                    gainNode.gain.setValueAtTime(gameState.settings.sfx * 0.3, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.2);
+                    break;
+                case 'win':
+                    playWinSound();
+                    break;
+            }
+        }
+
+        function playWinSound() {
+            const notes = [523, 659, 783, 1046];
+            notes.forEach((freq, i) => {
+                setTimeout(() => {
+                    const osc = audioContext.createOscillator();
+                    const gain = audioContext.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioContext.destination);
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(gameState.settings.sfx * 0.3, audioContext.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                    osc.start();
+                    osc.stop(audioContext.currentTime + 0.2);
+                }, i * 100);
             });
+        }
+
+        // ===== ОЗВУЧКА =====
+        function speak(text, character) {
+            if (gameState.settings.voice === 0) return;
+            if (!('speechSynthesis' in window)) return;
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ru-RU';
+            utterance.volume = gameState.settings.voice;
             
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
+            // Разные голоса для персонажей
+            if (character === 'yablo') {
+                utterance.pitch = 1.3;
+                utterance.rate = 1.1;
+            } else {
+                utterance.pitch = 1.0;
+                utterance.rate = 1.0;
+            }
+
+            speechSynthesis.speak(utterance);
+        }
+
+        // ===== СИСТЕМА РЕПЛИК =====
+        function showSpeech(character, text) {
+            const bubble = document.getElementById(character === 'yablo' ? 'bubbleLeft' : 'bubbleRight');
+            bubble.textContent = text;
+            bubble.classList.add('show');
+
+            setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 3000);
+        }
+
+        function randomReply(character) {
+            const replies = character === 'yablo' ? YABLO_REPLIES : KEPA_REPLIES;
+            return replies[Math.floor(Math.random() * replies.length)];
+        }
+
+        // ===== АНИМАЦИИ ПЕРСОНАЖЕЙ =====
+        function animateCharacter(character, animation) {
+            const char = document.getElementById(character === 'yablo' ? 'charLeft' : 'charRight');
+            char.classList.remove('happy', 'excited', 'sad', 'pointing');
+            void char.offsetWidth; // trigger reflow
+            char.classList.add(animation);
+
+            setTimeout(() => {
+                char.classList.remove(animation);
+            }, 1000);
+        }
+
+        // ===== ИНИЦИАЛИЗАЦИЯ ИГРЫ =====
+        function initGame() {
+            loadLeaderboard();
+            createBoard();
+            updateUI();
+        }
+
+        function startGame() {
+            document.getElementById('mainMenu').classList.add('hidden');
+            document.getElementById('gameContainer').style.display = 'flex';
+            document.getElementById('uiPanel').style.display = 'flex';
+            document.getElementById('levelProgress').style.display = 'flex';
+            
+            audioContext.resume();
+            resetLevel();
+        }
+
+        function resetLevel() {
+            gameState.score = 0;
+            gameState.moves = GAME_CONFIG.MOVES_INITIAL + gameState.level * 2;
+            gameState.target.collected = 0;
+            gameState.combo = 0;
+            createBoard();
+            updateUI();
+        }
+
+        // ===== СОЗДАНИЕ ДОСКИ =====
+        function createBoard() {
+            const board = document.getElementById('gameBoard');
+            board.innerHTML = '';
+            gameState.board = [];
+
+            for (let row = 0; row < GAME_CONFIG.BOARD_SIZE; row++) {
+                gameState.board[row] = [];
+                for (let col = 0; col < GAME_CONFIG.BOARD_SIZE; col++) {
+                    let gemType;
+                    do {
+                        gemType = getRandomGem();
+                    } while (wouldMatch(row, col, gemType));
+
+                    gameState.board[row][col] = gemType;
+                    
+                    const cell = createCell(row, col, gemType);
+                    board.appendChild(cell);
+                }
+            }
+        }
+
+        function getRandomGem() {
+            return GAME_CONFIG.GEM_TYPES[Math.floor(Math.random() * GAME_CONFIG.GEM_TYPES.length)];
+        }
+
+        function wouldMatch(row, col, gemType) {
+            // Проверка по горизонтали
+            if (col >= 2 && 
+                gameState.board[row][col-1] === gemType && 
+                gameState.board[row][col-2] === gemType) {
+                return true;
+            }
+            
+            // Проверка по вертикали
+            if (row >= 2 && 
+                gameState.board[row-1] && gameState.board[row-1][col] === gemType && 
+                gameState.board[row-2] && gameState.board[row-2][col] === gemType) {
+                return true;
+            }
+
+            return false;
+        }
+
+        function createCell(row, col, gemType) {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.dataset.row = row;
+            cell.dataset.col = col;
+
+            const gem = document.createElement('span');
+            gem.className = 'gem';
+            gem.textContent = gemType;
+            cell.appendChild(gem);
+
+            cell.addEventListener('click', () => handleCellClick(row, col));
+
+            return cell;
+        }
+
+        // ===== ОБРАБОТКА КЛИКОВ =====
+        function handleCellClick(row, col) {
+            if (gameState.isProcessing || gameState.moves <= 0) return;
+
+            if (!gameState.selectedCell) {
+                // Выбор первой ячейки
+                selectCell(row, col);
+            } else {
+                const [prevRow, prevCol] = gameState.selectedCell;
+                
+                if (prevRow === row && prevCol === col) {
+                    // Отмена выбора
+                    deselectCell();
+                } else if (isAdjacent(prevRow, prevCol, row, col)) {
+                    // Попытка обмена
+                    swapGems(prevRow, prevCol, row, col);
+                } else {
+                    // Выбор новой ячейки
+                    selectCell(row, col);
+                }
+            }
+        }
+
+        function selectCell(row, col) {
+            gameState.selectedCell = [row, col];
+            const cell = getCell(row, col);
+            cell.classList.add('selected');
+        }
+
+        function deselectCell() {
+            if (gameState.selectedCell) {
+                const [row, col] = gameState.selectedCell;
+                const cell = getCell(row, col);
+                cell.classList.remove('selected');
+                gameState.selectedCell = null;
+            }
+        }
+
+        function isAdjacent(row1, col1, row2, col2) {
+            return (Math.abs(row1 - row2) === 1 && col1 === col2) ||
+                   (Math.abs(col1 - col2) === 1 && row1 === row2);
+        }
+
+        // ===== ОБМЕН ЭЛЕМЕНТОВ =====
+        async function swapGems(row1, col1, row2, col2) {
+            gameState.isProcessing = true;
+            deselectCell();
+
+            // Визуальный обмен
+            const temp = gameState.board[row1][col1];
+            gameState.board[row1][col1] = gameState.board[row2][col2];
+            gameState.board[row2][col2] = temp;
+
+            renderBoard();
+            playSound('match');
+
+            await sleep(300);
+
+            // Проверка на матчи
+            const matches = findMatches();
+
+            if (matches.length > 0) {
+                // Успешный ход
+                gameState.moves--;
+                await processMatches(matches);
+                
+                // Реакция персонажей
+                if (gameState.combo >= GAME_CONFIG.COMBO_THRESHOLD) {
+                    animateCharacter('yablo', 'excited');
+                    animateCharacter('kepa', 'excited');
+                    showCombo(gameState.combo);
+                } else {
+                    animateCharacter('yablo', 'happy');
+                    showSpeech('yablo', randomReply('yablo'));
+                    speak(randomReply('yablo'), 'yablo');
+                }
+            } else {
+                // Неудачный ход - возврат обратно
+                playSound('error');
+                animateCharacter('kepa', 'sad');
+                showSpeech('kepa', "Эй, сюда смотри! Нет матча!");
+                
+                const temp = gameState.board[row1][col1];
+                gameState.board[row1][col1] = gameState.board[row2][col2];
+                gameState.board[row2][col2] = temp;
+                renderBoard();
+            }
+
+            gameState.isProcessing = false;
+            checkGameState();
+        }
+
+        // ===== ПОИСК МАТЧЕЙ =====
+        function findMatches() {
+            const matches = new Set();
+
+            // Горизонтальные матчи
+            for (let row = 0; row < GAME_CONFIG.BOARD_SIZE; row++) {
+                for (let col = 0; col < GAME_CONFIG.BOARD_SIZE - 2; col++) {
+                    const gem = gameState.board[row][col];
+                    if (!gem) continue;
+
+                    let matchLength = 1;
+                    while (col + matchLength < GAME_CONFIG.BOARD_SIZE && 
+                           gameState.board[row][col + matchLength] === gem) {
+                        matchLength++;
+                    }
+
+                    if (matchLength >= 3) {
+                        for (let i = 0; i < matchLength; i++) {
+                            matches.add(`${row},${col + i}`);
+                        }
+                        
+                        // Создание бонусов
+                        if (matchLength === 4) {
+                            createBonus(row, col + 1, 'bomb');
+                        } else if (matchLength >= 5) {
+                            createBonus(row, col + 2, 'star');
+                        }
+                    }
+
+                    col += matchLength - 1;
+                }
+            }
+
+            // Вертикальные матчи
+            for (let col = 0; col < GAME_CONFIG.BOARD_SIZE; col++) {
+                for (let row = 0; row < GAME_CONFIG.BOARD_SIZE - 2; row++) {
+                    const gem = gameState.board[row][col];
+                    if (!gem) continue;
+
+                    let matchLength = 1;
+                    while (row + matchLength < GAME_CONFIG.BOARD_SIZE && 
+                           gameState.board[row + matchLength][col] === gem) {
+                        matchLength++;
+                    }
+
+                    if (matchLength >= 3) {
+                        for (let i = 0; i < matchLength; i++) {
+                            matches.add(`${row + i},${col}`);
+                        }
+                    }
+
+                    row += matchLength - 1;
+                }
+            }
+
+            return Array.from(matches).map(coord => {
+                const [row, col] = coord.split(',').map(Number);
+                return { row, col };
             });
+        }
+
+        // ===== СОЗДАНИЕ БОНУСОВ =====
+        function createBonus(row, col, type) {
+            if (!gameState.board[row]) return;
+            
+            const bonusGems = {
+                'bomb': '💣',
+                'star': '🌈',
+                'vortex': '🌀'
+            };
+            
+            gameState.board[row][col] = bonusGems[type];
+        }
+
+        // ===== ОБРАБОТКА МАТЧЕЙ =====
+        async function processMatches(matches) {
+            gameState.combo++;
+            
+            // Подсчёт очков и прогресса
+            matches.forEach(({ row, col }) => {
+                const gem = gameState.board[row][col];
+                
+                // Обработка бонусов
+                if (gem === '💣') {
+                    explodeBomb(row, col);
+                } else if (gem === '🌈') {
+                    activateRainbowStar(row, col);
+                }
+
+                // Сбор целевых элементов
+                if (gem === gameState.target.type) {
+                    gameState.target.collected++;
+                }
+
+                gameState.score += 10 * gameState.combo;
+            });
+
+            // Визуальное удаление
+            matches.forEach(({ row, col }) => {
+                const cell = getCell(row, col);
+                cell.classList.add('matched');
+                createParticles(row, col);
+            });
+
+            playSound('match');
+            updateUI();
+
+            await sleep(400);
+
+            // Удаление matched элементов
+            matches.forEach(({ row, col }) => {
+                gameState.board[row][col] = null;
+            });
+
+            // Падение элементов
+            await applyGravity();
+            
+            // Заполнение пустых мест
+            await fillEmptySpaces();
+
+            // Проверка на новые матчи (цепная реакция)
+            const newMatches = findMatches();
+            if (newMatches.length > 0) {
+                await sleep(200);
+                await processMatches(newMatches);
+            } else {
+                gameState.combo = 0;
+            }
+        }
+
+        // ===== ВЗРЫВ БОМБЫ =====
+        function explodeBomb(centerRow, centerCol) {
+            const radius = 1;
+            for (let row = centerRow - radius; row <= centerRow + radius; row++) {
+                for (let col = centerCol - radius; col <= centerCol + radius; col++) {
+                    if (row >= 0 && row < GAME_CONFIG.BOARD_SIZE &&
+                        col >= 0 && col < GAME_CONFIG.BOARD_SIZE) {
+                        if (gameState.board[row][col]) {
+                            gameState.score += 5;
+                            createParticles(row, col);
+                        }
+                        gameState.board[row][col] = null;
+                    }
+                }
+            }
+            playSound('bonus');
+        }
+
+        // ===== АКТИВАЦИЯ РАДУЖНОЙ ЗВЕЗДЫ =====
+        function activateRainbowStar(row, col) {
+            const randomGem = getRandomGem();
+            for (let r = 0; r < GAME_CONFIG.BOARD_SIZE; r++) {
+                for (let c = 0; c < GAME_CONFIG.BOARD_SIZE; c++) {
+                    if (gameState.board[r][c] === randomGem) {
+                        gameState.board[r][c] = null;
+                        gameState.score += 3;
+                        createParticles(r, c);
+                    }
+                }
+            }
+            playSound('bonus');
+        }
+
+        // ===== ГРАВИТАЦИЯ =====
+        async function applyGravity() {
+            let moved = false;
+            
+            for (let col = 0; col < GAME_CONFIG.BOARD_SIZE; col++) {
+                for (let row = GAME_CONFIG.BOARD_SIZE - 1; row > 0; row--) {
+                    if (!gameState.board[row][col] && gameState.board[row-1][col]) {
+                        gameState.board[row][col] = gameState.board[row-1][col];
+                        gameState.board[row-1][col] = null;
+                        moved = true;
+                    }
+                }
+            }
+
+            if (moved) {
+                renderBoard();
+                await sleep(200);
+                await applyGravity();
+            }
+        }
+
+        // ===== ЗАПОЛНЕНИЕ ПУСТЫХ МЕСТ =====
+        async function fillEmptySpaces() {
+            let filled = false;
+            
+            for (let col = 0; col < GAME_CONFIG.BOARD_SIZE; col++) {
+                for (let row = 0; row < GAME_CONFIG.BOARD_SIZE; row++) {
+                    if (!gameState.board[row][col]) {
+                        gameState.board[row][col] = getRandomGem();
+                        filled = true;
+                    }
+                }
+            }
+
+            if (filled) {
+                renderBoard();
+                
+                // Анимация падения
+                const cells = document.querySelectorAll('.cell');
+                cells.forEach(cell => {
+                    cell.classList.add('falling');
+                    setTimeout(() => cell.classList.remove('falling'), 300);
+                });
+                
+                await sleep(300);
+            }
+        }
+
+        // ===== ОТРИСОВКА ДОСКИ =====
+        function renderBoard() {
+            const boardEl = document.getElementById('gameBoard');
+            boardEl.innerHTML = '';
+
+            for (let row = 0; row < GAME_CONFIG.BOARD_SIZE; row++) {
+                for (let col = 0; col < GAME_CONFIG.BOARD_SIZE; col++) {
+                    const cell = createCell(row, col, gameState.board[row][col]);
+                    boardEl.appendChild(cell);
+                }
+            }
+        }
+
+        function getCell(row, col) {
+            return document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+        }
+
+        // ===== ЧАСТИЦЫ =====
+        function createParticles(row, col) {
+            const cell = getCell(row, col);
+            const rect = cell.getBoundingClientRect();
+            
+            for (let i = 0; i < 5; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle confetti';
+                particle.style.left = (rect.left + rect.width/2) + 'px';
+                particle.style.top = (rect.top + rect.height/2) + 'px';
+                particle.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                particle.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px)`;
+                document.body.appendChild(particle);
+
+                setTimeout(() => particle.remove(), 2000);
+            }
+        }
+
+        // ===== КОМБО =====
+        function showCombo(count) {
+            const comboDisplay = document.getElementById('comboDisplay');
+            comboDisplay.textContent = `Комбо x${count}! 🔥`;
+            comboDisplay.classList.add('show');
+
+            setTimeout(() => {
+                comboDisplay.classList.remove('show');
+            }, 1000);
+        }
+
+        // ===== ПРОВЕРКА СОСТОЯНИЯ ИГРЫ =====
+        function checkGameState() {
+            updateUI();
+
+            // Проверка победы
+            if (gameState.target.collected >= gameState.target.count) {
+                setTimeout(() => showVictory(), 500);
+                return;
+            }
+
+            // Проверка поражения
+            if (gameState.moves <= 0) {
+                setTimeout(() => showDefeat(), 500);
+                return;
+            }
+
+            // Проверка на отсутствие ходов
+            if (!hasAvailableMoves()) {
+                reshuffleBoard();
+            }
+        }
+
+        function hasAvailableMoves() {
+            for (let row = 0; row < GAME_CONFIG.BOARD_SIZE; row++) {
+                for (let col = 0; col < GAME_CONFIG.BOARD_SIZE; col++) {
+                    // Проверка обмена с правой ячейкой
+                    if (col < GAME_CONFIG.BOARD_SIZE - 1) {
+                        const temp = gameState.board[row][col];
+                        gameState.board[row][col] = gameState.board[row][col+1];
+                        gameState.board[row][col+1] = temp;
+                        
+                        if (findMatches().length > 0) {
+                            gameState.board[row][col+1] = gameState.board[row][col];
+                            gameState.board[row][col] = temp;
+                            return true;
+                        }
+                        
+                        gameState.board[row][col+1] = gameState.board[row][col];
+                        gameState.board[row][col] = temp;
+                    }
+
+                    // Проверка обмена с нижней ячейкой
+                    if (row < GAME_CONFIG.BOARD_SIZE - 1) {
+                        const temp = gameState.board[row][col];
+                        gameState.board[row][col] = gameState.board[row+1][col];
+                        gameState.board[row+1][col] = temp;
+                        
+                        if (findMatches().length > 0) {
+                            gameState.board[row+1][col] = gameState.board[row][col];
+                            gameState.board[row][col] = temp;
+                            return true;
+                        }
+                        
+                        gameState.board[row+1][col] = gameState.board[row][col];
+                        gameState.board[row][col] = temp;
+                    }
+                }
+            }
+            return false;
+        }
+
+        function reshuffleBoard() {
+            animateCharacter('yablo', 'pointing');
+            showSpeech('yablo', "Сейчас я перемешаю элементы для тебя! 💫");
+            
+            const allGems = [];
+            for (let row = 0; row < GAME_CONFIG.BOARD_SIZE; row++) {
+                for (let col = 0; col < GAME_CONFIG.BOARD_SIZE; col++) {
+                    allGems.push(gameState.board[row][col]);
+                }
+            }
+
+            // Перемешивание
+            for (let i = allGems.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allGems[i], allGems[j]] = [allGems[j], allGems[i]];
+            }
+
+            // Заполнение доски
+            let idx = 0;
+            for (let row = 0; row < GAME_CONFIG.BOARD_SIZE; row++) {
+                for (let col = 0; col < GAME_CONFIG.BOARD_SIZE; col++) {
+                    gameState.board[row][col] = allGems[idx++];
+                }
+            }
+
+            renderBoard();
+        }
+
+        // ===== ОБНОВЛЕНИЕ UI =====
+        function updateUI() {
+            document.getElementById('scoreDisplay').textContent = gameState.score;
+            document.getElementById('movesDisplay').textContent = gameState.moves;
+            document.getElementById('levelDisplay').textContent = gameState.level;
+            document.getElementById('targetDisplay').textContent = `${gameState.target.type} ${gameState.target.collected}/${gameState.target.count}`;
+
+            const progress = (gameState.target.collected / gameState.target.count) * 100;
+            document.getElementById('progressFill').style.width = `${Math.min(progress, 100)}%`;
+            document.getElementById('progressText').textContent = `${gameState.target.collected}/${gameState.target.count}`;
+
+            // Подсветка при изменении
+            const scoreEl = document.getElementById('scoreDisplay');
+            scoreEl.classList.add('highlight');
+            setTimeout(() => scoreEl.classList.remove('highlight'), 500);
+        }
+
+        // ===== ПОБЕДА =====
+        function showVictory() {
+            playSound('win');
+            animateCharacter('yablo', 'excited');
+            animateCharacter('kepa', 'excited');
+            
+            // Конфетти
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle confetti';
+                    particle.style.left = Math.random() * window.innerWidth + 'px';
+                    particle.style.top = '-20px';
+                    particle.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                    document.body.appendChild(particle);
+                    setTimeout(() => particle.remove(), 2000);
+                }, i * 50);
+            }
+
+            document.getElementById('modalTitle').textContent = '🎉 Победа!';
+            document.getElementById('modalMessage').textContent = 
+                `Уровень ${gameState.level} пройден!\nСчёт: ${gameState.score}`;
+            document.getElementById('nicknameInputSection').style.display = 'block';
+            document.getElementById('saveScoreBtn').style.display = 'inline-block';
+            document.getElementById('nextLevelBtn').style.display = 'inline-block';
+            document.getElementById('retryBtn').style.display = 'none';
+
+            document.getElementById('gameOverModal').classList.add('show');
+        }
+
+        // ===== ПОРАЖЕНИЕ =====
+        function showDefeat() {
+            playSound('error');
+            animateCharacter('yablo', 'sad');
+            animateCharacter('kepa', 'sad');
+            showSpeech('kepa', "Эх, не расстраивайся! Попробуем ещё раз!");
+
+            document.getElementById('modalTitle').textContent = '😢 Не вышло...';
+            document.getElementById('modalMessage').textContent = 
+                `Закончились ходы!\nСчёт: ${gameState.score}`;
+            document.getElementById('nicknameInputSection').style.display = 'none';
+            document.getElementById('saveScoreBtn').style.display = 'none';
+            document.getElementById('nextLevelBtn').style.display = 'none';
+            document.getElementById('retryBtn').style.display = 'inline-block';
+
+            document.getElementById('gameOverModal').classList.add('show');
+        }
+
+        // ===== УПРАВЛЕНИЕ УРОВНЯМИ =====
+        function nextLevel() {
+            gameState.level++;
+            gameState.target.count += 20;
+            document.getElementById('gameOverModal').classList.remove('show');
+            resetLevel();
+        }
+
+        function retryLevel() {
+            document.getElementById('gameOverModal').classList.remove('show');
+            resetLevel();
+        }
+
+        function returnToMenu() {
+            document.getElementById('gameOverModal').classList.remove('show');
+            document.getElementById('mainMenu').classList.remove('hidden');
+            document.getElementById('gameContainer').style.display = 'none';
+            document.getElementById('uiPanel').style.display = 'none';
+            document.getElementById('levelProgress').style.display = 'none';
+        }
+
+        // ===== ТАБЛИЦА ЛИДЕРОВ =====
+        function saveScore() {
+            const nickname = document.getElementById('nicknameInput').value.trim();
+            
+            if (!nickname || !/^[a-zA-Zа-яА-ЯёЁ0-9]{1,12}$/.test(nickname)) {
+                alert('Введите корректный ник (1-12 символов, только буквы и цифры)');
+                return;
+            }
+
+            const record = {
+                nickname: nickname,
+                score: gameState.score,
+                level: gameState.level,
+                date: new Date().toISOString()
+            };
+
+            gameState.leaderboard.push(record);
+            gameState.leaderboard.sort((a, b) => b.score - a.score);
+            gameState.leaderboard = gameState.leaderboard.slice(0, 10);
+
+            saveLeaderboard();
+            
+            document.getElementById('gameOverModal').classList.remove('show');
+            alert('Счёт сохранён! 🏆');
+        }
+
+        function saveLeaderboard() {
+            localStorage.setItem('match3_leaderboard', JSON.stringify(gameState.leaderboard));
+        }
+
+        function loadLeaderboard() {
+            const saved = localStorage.getItem('match3_leaderboard');
+            if (saved) {
+                gameState.leaderboard = JSON.parse(saved);
+            }
+        }
+
+        function showLeaderboard() {
+            const tbody = document.getElementById('leaderboardBody');
+            tbody.innerHTML = '';
+
+            gameState.leaderboard.forEach((record, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${record.nickname}</td>
+                    <td>${record.score}</td>
+                    <td>${record.level}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            if (gameState.leaderboard.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Пока нет записей</td></tr>';
+            }
+
+            document.getElementById('leaderboardModal').classList.add('show');
+        }
+
+        function closeLeaderboard() {
+            document.getElementById('leaderboardModal').classList.remove('show');
+        }
+
+        // ===== НАСТРОЙКИ =====
+        function showSettings() {
+            document.getElementById('musicSlider').value = gameState.settings.music * 100;
+            document.getElementById('sfxSlider').value = gameState.settings.sfx * 100;
+            document.getElementById('voiceSlider').value = gameState.settings.voice * 100;
+            document.getElementById('settingsModal').classList.add('show');
+        }
+
+        function closeSettings() {
+            gameState.settings.music = document.getElementById('musicSlider').value / 100;
+            gameState.settings.sfx = document.getElementById('sfxSlider').value / 100;
+            gameState.settings.voice = document.getElementById('voiceSlider').value / 100;
+            document.getElementById('settingsModal').classList.remove('show');
+        }
+
+        // ===== УТИЛИТЫ =====
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // ===== ИНИЦИАЛИЗАЦИЯ =====
+        window.addEventListener('DOMContentLoaded', () => {
+            initGame();
         });
 
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
+        // Обработка изменения размера окна
+        window.addEventListener('resize', () => {
+            // Адаптация под мобильные устройства
         });
     </script>
 </body>
