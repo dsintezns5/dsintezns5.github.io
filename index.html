@@ -1158,16 +1158,28 @@
                     animateCharacter('yablo', 'excited');
                     animateCharacter('kepa', 'excited');
                     showCombo(gameState.combo);
+                    // Озвучка обоих персонажей при комбо
+                    speak(randomReply('yablo'), 'yablo');
+                    setTimeout(() => speak(randomReply('kepa'), 'kepa'), 500);
                 } else {
                     animateCharacter('yablo', 'happy');
                     showSpeech('yablo', randomReply('yablo'));
                     speak(randomReply('yablo'), 'yablo');
+                    // Кепа Мита тоже реагирует на успешные ходы
+                    if (Math.random() > 0.5) {
+                        setTimeout(() => {
+                            showSpeech('kepa', randomReply('kepa'));
+                            speak(randomReply('kepa'), 'kepa');
+                        }, 300);
+                    }
                 }
             } else {
                 // Неудачный ход - возврат обратно
                 playSound('error');
                 animateCharacter('kepa', 'sad');
-                showSpeech('kepa', "Эй, сюда смотри! Нет матча!");
+                const kepaPhrase = "Эй, сюда смотри! Нет матча!";
+                showSpeech('kepa', kepaPhrase);
+                speak(kepaPhrase, 'kepa');
                 
                 const temp = gameState.board[row1][col1];
                 gameState.board[row1][col1] = gameState.board[row2][col2];
@@ -1279,8 +1291,10 @@
             // Визуальное удаление
             matches.forEach(({ row, col }) => {
                 const cell = getCell(row, col);
-                cell.classList.add('matched');
-                createParticles(row, col);
+                if (cell) {
+                    cell.classList.add('matched');
+                    createParticles(row, col);
+                }
             });
 
             playSound('match');
@@ -1360,6 +1374,9 @@
                 renderBoard();
                 await sleep(200);
                 await applyGravity();
+            } else {
+                // Финальная перерисовка после гравитации
+                renderBoard();
             }
         }
 
@@ -1393,12 +1410,32 @@
         // ===== ОТРИСОВКА ДОСКИ =====
         function renderBoard() {
             const boardEl = document.getElementById('gameBoard');
-            boardEl.innerHTML = '';
-
+            
+            // Обновляем существующие ячейки вместо полной перерисовки
             for (let row = 0; row < GAME_CONFIG.BOARD_SIZE; row++) {
                 for (let col = 0; col < GAME_CONFIG.BOARD_SIZE; col++) {
-                    const cell = createCell(row, col, gameState.board[row][col]);
-                    boardEl.appendChild(cell);
+                    let cell = getCell(row, col);
+                    const gemType = gameState.board[row][col];
+                    
+                    if (!cell) {
+                        // Если ячейки нет, создаём её
+                        cell = createCell(row, col, gemType);
+                        boardEl.appendChild(cell);
+                    } else {
+                        // Обновляем содержимое существующей ячейки
+                        const gem = cell.querySelector('.gem');
+                        if (gem && gemType) {
+                            gem.textContent = gemType;
+                            // Сбрасываем специальные классы
+                            gem.classList.remove('bomb', 'star', 'vortex');
+                            // Добавляем специальные классы если нужно
+                            if (gemType === '🍎' && gameState.bombs && gameState.bombs[`${row},${col}`]) {
+                                gem.classList.add('bomb');
+                            } else if (gemType === '⭐' && gameState.rainbowStars && gameState.rainbowStars[`${row},${col}`]) {
+                                gem.classList.add('star');
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -1548,6 +1585,12 @@
             animateCharacter('yablo', 'excited');
             animateCharacter('kepa', 'excited');
             
+            // Озвучка победы обоими персонажами
+            const yabloWinPhrase = "Ура! Ты просто супер! 🍎✨";
+            const kepaWinPhrase = "Ого, не ожидала! Ладно, горжусь тобой... чуть-чуть.";
+            speak(yabloWinPhrase, 'yablo');
+            setTimeout(() => speak(kepaWinPhrase, 'kepa'), 800);
+            
             // Конфетти
             for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
@@ -1577,7 +1620,14 @@
             playSound('error');
             animateCharacter('yablo', 'sad');
             animateCharacter('kepa', 'sad');
-            showSpeech('kepa', "Эх, не расстраивайся! Попробуем ещё раз!");
+            const kepaLosePhrase = "Эх, не расстраивайся! Попробуем ещё раз!";
+            const yabloLosePhrase = "Не переживай, я с тобой! Попробуем вместе?";
+            showSpeech('kepa', kepaLosePhrase);
+            speak(kepaLosePhrase, 'kepa');
+            setTimeout(() => {
+                showSpeech('yablo', yabloLosePhrase);
+                speak(yabloLosePhrase, 'yablo');
+            }, 500);
 
             document.getElementById('modalTitle').textContent = '😢 Не вышло...';
             document.getElementById('modalMessage').textContent = 
