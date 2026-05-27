@@ -732,6 +732,7 @@
 
     <!-- Игровой интерфейс -->
     <div class="ui-panel" id="uiPanel" style="display: none;">
+        <button class="btn btn-secondary" onclick="returnToMenu()" style="padding: 8px 16px; font-size: 14px;">🏠 Меню</button>
         <div class="ui-item">
             <div class="ui-label">Уровень</div>
             <div class="ui-value" id="levelDisplay">1</div>
@@ -892,6 +893,10 @@
             "Так держать! Но не зазнавайся!"
         ];
 
+        // Счётчик ходов для очередности реплик
+        let totalMovesMade = 0;
+        let lastSpeaker = null;
+
         // ===== АУДИО СИСТЕМА =====
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -957,6 +962,9 @@
             if (gameState.settings.voice === 0) return;
             if (!('speechSynthesis' in window)) return;
 
+            // Останавливаем предыдущую речь
+            speechSynthesis.cancel();
+
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'ru-RU';
             utterance.volume = gameState.settings.voice;
@@ -970,7 +978,37 @@
                 utterance.rate = 1.0;
             }
 
+            // Синхронизируем текст в пузыре с озвучкой
+            showSpeech(character, text);
+
             speechSynthesis.speak(utterance);
+        }
+
+        // Функция для очередности реплик (каждый 6-й ход)
+        function handleTurnBasedSpeech(successfulMove) {
+            totalMovesMade++;
+            
+            // Каждые 6 ходов персонажи говорят по очереди
+            if (totalMovesMade % 6 === 0) {
+                // Определяем кто говорит следующим (чередование)
+                const nextSpeaker = lastSpeaker === 'yablo' ? 'kepa' : 'yablo';
+                lastSpeaker = nextSpeaker;
+                
+                const reply = randomReply(nextSpeaker);
+                speak(reply, nextSpeaker);
+                return true;
+            }
+            
+            // При комбо тоже говорим
+            if (gameState.combo >= GAME_CONFIG.COMBO_THRESHOLD) {
+                const speaker = lastSpeaker === 'yablo' ? 'kepa' : 'yablo';
+                lastSpeaker = speaker;
+                const reply = randomReply(speaker);
+                speak(reply, speaker);
+                return true;
+            }
+            
+            return false;
         }
 
         // ===== СИСТЕМА РЕПЛИК =====
@@ -1023,6 +1061,8 @@
             gameState.moves = GAME_CONFIG.MOVES_INITIAL + gameState.level * 2;
             gameState.target.collected = 0;
             gameState.combo = 0;
+            totalMovesMade = 0; // Сброс счётчика ходов для очередности реплик
+            lastSpeaker = null;
             createBoard();
             updateUI();
         }
@@ -1050,7 +1090,9 @@
         }
 
         function getRandomGem() {
-            return GAME_CONFIG.GEM_TYPES[Math.floor(Math.random() * GAME_CONFIG.GEM_TYPES.length)];
+            // Используем только основные элементы (без бонусов)
+            const basicGems = ['🍎', '🪙', '🍬', '⭐', '🎁'];
+            return basicGems[Math.floor(Math.random() * basicGems.length)];
         }
 
         function wouldMatch(row, col, gemType) {
@@ -1080,6 +1122,16 @@
             const gem = document.createElement('span');
             gem.className = 'gem';
             gem.textContent = gemType;
+            
+            // Добавляем специальные классы для бонусов
+            if (gemType === '💣') {
+                gem.classList.add('bomb');
+            } else if (gemType === '🌈') {
+                gem.classList.add('star');
+            } else if (gemType === '🌀') {
+                gem.classList.add('vortex');
+            }
+            
             cell.appendChild(gem);
 
             cell.addEventListener('click', () => handleCellClick(row, col));
@@ -1151,26 +1203,20 @@
             if (matches.length > 0) {
                 // Успешный ход
                 gameState.moves--;
+                
+                // Обработка очереди реплик (каждый 6-й ход или комбо)
+                const turnBasedHandled = handleTurnBasedSpeech(true);
+                
                 await processMatches(matches);
                 
-                // Реакция персонажей
-                if (gameState.combo >= GAME_CONFIG.COMBO_THRESHOLD) {
-                    animateCharacter('yablo', 'excited');
-                    animateCharacter('kepa', 'excited');
-                    showCombo(gameState.combo);
-                    // Озвучка обоих персонажей при комбо
-                    speak(randomReply('yablo'), 'yablo');
-                    setTimeout(() => speak(randomReply('kepa'), 'kepa'), 500);
-                } else {
-                    animateCharacter('yablo', 'happy');
-                    showSpeech('yablo', randomReply('yablo'));
-                    speak(randomReply('yablo'), 'yablo');
-                    // Кепа Мита тоже реагирует на успешные ходы
-                    if (Math.random() > 0.5) {
-                        setTimeout(() => {
-                            showSpeech('kepa', randomReply('kepa'));
-                            speak(randomReply('kepa'), 'kepa');
-                        }, 300);
+                // Реакция персонажей (если не было очередности)
+                if (!turnBasedHandled) {
+                    if (gameState.combo >= GAME_CONFIG.COMBO_THRESHOLD) {
+                        animateCharacter('yablo', 'excited');
+                        animateCharacter('kepa', 'excited');
+                        showCombo(gameState.combo);
+                    } else {
+                        animateCharacter('yablo', 'happy');
                     }
                 }
             } else {
@@ -1371,12 +1417,20 @@
             }
 
             if (moved) {
-                renderBoard();
+                // Обновляем только изменённые ячейки, без полной перерисовки
+                for (let col = 0; col < GAME_CONFIG.BOARD_SIZE; col++) {
+                    for (let row = 0; row < GAME_CONFIG.BOARD_SIZE; row++) {
+                        const cell = getCell(row, col);
+                        if (cell) {
+                            const gem = cell.querySelector('.gem');
+                            if (gem && gameState.board[row][col]) {
+                                gem.textContent = gameState.board[row][col];
+                            }
+                        }
+                    }
+                }
                 await sleep(200);
                 await applyGravity();
-            } else {
-                // Финальная перерисовка после гравитации
-                renderBoard();
             }
         }
 
@@ -1394,14 +1448,20 @@
             }
 
             if (filled) {
-                renderBoard();
-                
-                // Анимация падения
-                const cells = document.querySelectorAll('.cell');
-                cells.forEach(cell => {
-                    cell.classList.add('falling');
-                    setTimeout(() => cell.classList.remove('falling'), 300);
-                });
+                // Обновляем только пустые ячейки, без полной перерисовки
+                for (let col = 0; col < GAME_CONFIG.BOARD_SIZE; col++) {
+                    for (let row = 0; row < GAME_CONFIG.BOARD_SIZE; row++) {
+                        const cell = getCell(row, col);
+                        if (cell && gameState.board[row][col]) {
+                            const gem = cell.querySelector('.gem');
+                            if (gem) {
+                                gem.textContent = gameState.board[row][col];
+                                gem.classList.add('falling');
+                                setTimeout(() => gem.classList.remove('falling'), 300);
+                            }
+                        }
+                    }
+                }
                 
                 await sleep(300);
             }
