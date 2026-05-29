@@ -4,693 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мита Кепочка - Path of Exile 2 Гайды</title>
+    <meta name="description" content="Гайды и билды по Path of Exile 2 от Kepa Mita — стартовые сборки, боссеры и фастмаперы для новой лиги.">
+    <meta property="og:title" content="Мита Кепочка — Path of Exile 2 Гайды">
+    <meta property="og:description" content="Гайды и билды по Path of Exile 2 от Kepa Mita">
+    <meta property="og:image" content="KEPA_MITA.png">
+    <link rel="canonical" href="https://yourdomain.com/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Trajan+Pro&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #1a1a2e 100%);
-            color: #d0d0d0;
-            min-height: 100vh;
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* ===== HEADER STYLES ===== */
-        header {
-            text-align: center;
-            padding: 60px 20px 40px;
-            background: linear-gradient(180deg, rgba(10, 10, 15, 0.95) 0%, rgba(26, 26, 46, 0.8) 100%);
-            border-bottom: 3px solid #c9a959;
-            margin-bottom: 50px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(201, 169, 89, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(233, 69, 96, 0.08) 0%, transparent 40%);
-            pointer-events: none;
-        }
-
-        /* Рунические декоративные элементы */
-        header::after {
-            content: 'ᚠᚢᚦᚨᚱᚲ';
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: 'Cinzel', serif;
-            font-size: 1.5em;
-            color: #c9a959;
-            opacity: 0.4;
-            letter-spacing: 15px;
-        }
-
-        .avatar {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            border: 4px solid #c9a959;
-            margin: 0 auto 25px;
-            background: linear-gradient(135deg, #c9a959, #8b6914, #c9a959);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 70px;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 0 30px rgba(201, 169, 89, 0.4), inset 0 0 20px rgba(0, 0, 0, 0.5);
-            animation: glow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { box-shadow: 0 0 20px rgba(201, 169, 89, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.5); }
-            to { box-shadow: 0 0 40px rgba(201, 169, 89, 0.6), inset 0 0 30px rgba(0, 0, 0, 0.5); }
-        }
-
-        h1 {
-            font-family: 'Cinzel', serif;
-            color: #c9a959;
-            font-size: 3em;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.7), 0 0 20px rgba(201, 169, 89, 0.3);
-            letter-spacing: 3px;
-        }
-
-        .subtitle {
-            color: #a0a0a0;
-            font-size: 1.3em;
-            position: relative;
-            z-index: 1;
-            font-weight: 300;
-            letter-spacing: 2px;
-        }
-
-        /* ===== ANCIENTS UPDATE SECTION ===== */
-        .ancients-section {
-            background: linear-gradient(180deg, rgba(26, 26, 46, 0.9) 0%, rgba(15, 52, 96, 0.7) 100%);
-            border-radius: 20px;
-            padding: 50px 40px;
-            margin-bottom: 50px;
-            border: 2px solid #c9a959;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(201, 169, 89, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ancients-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 60%;
-            height: 200%;
-            background: radial-gradient(ellipse, rgba(201, 169, 89, 0.05) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .ancients-logo {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .ancients-logo img {
-            max-width: 500px;
-            width: 90%;
-            filter: drop-shadow(0 0 20px rgba(201, 169, 89, 0.4));
-            transition: transform 0.3s ease;
-        }
-
-        .ancients-logo img:hover {
-            transform: scale(1.02);
-        }
-
-        .section-title {
-            font-family: 'Cinzel', serif;
-            color: #c9a959;
-            font-size: 2.2em;
-            text-align: center;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-            letter-spacing: 2px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #c9a959, transparent);
-            margin: 15px auto 0;
-        }
-
-        .ancients-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .ancient-card {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 15px;
-            padding: 25px;
-            border: 1px solid rgba(201, 169, 89, 0.3);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ancient-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #c9a959, #e94560, #c9a959);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .ancient-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .ancient-card:hover {
-            border-color: #c9a959;
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(201, 169, 89, 0.2);
-        }
-
-        .ancient-card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border: 2px solid rgba(201, 169, 89, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .ancient-card:hover img {
-            transform: scale(1.03);
-        }
-
-        .ancient-card h3 {
-            font-family: 'Cinzel', serif;
-            color: #c9a959;
-            font-size: 1.4em;
-            margin-bottom: 12px;
-            letter-spacing: 1px;
-        }
-
-        .ancient-card p {
-            color: #b0b0b0;
-            font-size: 0.95em;
-            line-height: 1.6;
-        }
-
-        .feature-list {
-            list-style: none;
-            margin-top: 15px;
-        }
-
-        .feature-list li {
-            padding: 8px 0;
-            padding-left: 25px;
-            position: relative;
-            color: #c0c0c0;
-        }
-
-        .feature-list li::before {
-            content: '◈';
-            position: absolute;
-            left: 0;
-            color: #c9a959;
-            font-size: 1.1em;
-        }
-
-        /* ===== MILA OPINION SECTION ===== */
-        .mila-section {
-            background: linear-gradient(180deg, rgba(15, 52, 96, 0.7) 0%, rgba(26, 26, 46, 0.9) 100%);
-            border-radius: 20px;
-            padding: 50px 40px;
-            margin-bottom: 50px;
-            border: 2px solid #e94560;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(233, 69, 96, 0.1);
-            position: relative;
-        }
-
-        .mila-header {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .mila-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 3px solid #e94560;
-            object-fit: cover;
-            box-shadow: 0 0 25px rgba(233, 69, 96, 0.4);
-        }
-
-        .mila-title-block h2 {
-            font-family: 'Cinzel', serif;
-            color: #e94560;
-            font-size: 2em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-        }
-
-        .mila-title-block p {
-            color: #a0a0a0;
-            font-size: 1.1em;
-        }
-
-        .opinion-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .opinion-card {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 15px;
-            padding: 30px;
-            border: 1px solid rgba(233, 69, 96, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .opinion-card:hover {
-            border-color: #e94560;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.15);
-        }
-
-        .opinion-card h3 {
-            font-family: 'Cinzel', serif;
-            color: #e94560;
-            font-size: 1.4em;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid rgba(233, 69, 96, 0.3);
-        }
-
-        .opinion-card ul {
-            list-style: none;
-        }
-
-        .opinion-card ul li {
-            padding: 12px 0;
-            padding-left: 30px;
-            position: relative;
-            color: #c0c0c0;
-            line-height: 1.6;
-        }
-
-        .opinion-card ul li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: #e94560;
-            font-size: 1.3em;
-            line-height: 1.4;
-        }
-
-        .opinion-card strong {
-            color: #f0d060;
-            font-weight: 600;
-        }
-
-        .summary-box {
-            background: linear-gradient(135deg, rgba(233, 69, 96, 0.1) 0%, rgba(201, 169, 89, 0.1) 100%);
-            border: 2px solid #c9a959;
-            border-radius: 15px;
-            padding: 30px;
-            margin-top: 40px;
-            text-align: center;
-        }
-
-        .summary-box h3 {
-            font-family: 'Cinzel', serif;
-            color: #c9a959;
-            font-size: 1.6em;
-            margin-bottom: 20px;
-        }
-
-        .summary-box p {
-            color: #d0d0d0;
-            font-size: 1.1em;
-            line-height: 1.8;
-        }
-
-        .highlight {
-            color: #f0d060;
-            font-weight: 600;
-        }
-
-        /* ===== BUILDS GRID ===== */
-        .builds-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 35px;
-            margin-bottom: 50px;
-        }
-
-        .build-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
-            padding: 30px;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .build-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #c9a959, #e94560);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .build-card:hover::after {
-            transform: scaleX(1);
-        }
-
-        .build-card:hover {
-            border-color: #c9a959;
-            transform: translateY(-8px);
-            box-shadow: 0 15px 50px rgba(201, 169, 89, 0.25);
-        }
-
-        .build-title {
-            font-family: 'Cinzel', serif;
-            color: #c9a959;
-            font-size: 1.6em;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            letter-spacing: 1px;
-        }
-
-        .build-icon {
-            font-size: 1.3em;
-        }
-
-        /* ===== VIDEO PREVIEW ===== */
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            background: #000;
-            border: 2px solid #c9a959;
-            cursor: pointer;
-            display: block;
-            text-decoration: none;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .video-thumbnail {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .video-container:hover .video-thumbnail {
-            opacity: 0.8;
-            transform: scale(1.05);
-        }
-
-        .play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 75px;
-            height: 55px;
-            background: linear-gradient(135deg, #e94560, #c9a959);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            pointer-events: none;
-            box-shadow: 0 5px 20px rgba(233, 69, 96, 0.5);
-        }
-
-        .video-container:hover .play-btn {
-            background: linear-gradient(135deg, #ff6b6b, #f0d060);
-            transform: translate(-50%, -50%) scale(1.15);
-            box-shadow: 0 8px 30px rgba(233, 69, 96, 0.8);
-        }
-
-        .play-btn::after {
-            content: '';
-            display: block;
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 12px 0 12px 22px;
-            border-color: transparent transparent transparent #fff;
-            margin-left: 5px;
-        }
-        /* ========================= */
-
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .link-btn {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 22px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 10px;
-            border: 2px solid #2a4a6a;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            font-size: 0.95em;
-        }
-
-        .link-btn:hover {
-            background: linear-gradient(135deg, #c9a959 0%, #8b6914 100%);
-            border-color: #c9a959;
-            transform: translateX(8px);
-            box-shadow: 0 5px 20px rgba(201, 169, 89, 0.3);
-        }
-
-        .link-icon {
-            font-size: 1.3em;
-        }
-
-        .poe-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.15;
-            background-image: 
-                radial-gradient(circle at 20% 50%, #c9a959 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, #e94560 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, #16213e 0%, transparent 50%);
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px;
-            background: linear-gradient(180deg, rgba(10, 10, 15, 0.9) 0%, rgba(26, 26, 46, 0.95) 100%);
-            border-top: 3px solid #c9a959;
-            margin-top: 60px;
-            color: #888;
-            position: relative;
-        }
-
-        footer::before {
-            content: 'ᛟᛞᚨᛚ ᚱᚢᚾᛖᛋ';
-            display: block;
-            font-family: 'Cinzel', serif;
-            font-size: 1.2em;
-            color: #c9a959;
-            opacity: 0.3;
-            letter-spacing: 10px;
-            margin-bottom: 20px;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .social-link {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #c9a959;
-            text-decoration: none;
-            font-size: 1.6em;
-            transition: all 0.3s ease;
-            border: 2px solid #2a4a6a;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .social-link:hover {
-            background: linear-gradient(135deg, #c9a959, #8b6914);
-            color: #1a1a2e;
-            transform: scale(1.15) rotate(8deg);
-            border-color: #c9a959;
-            box-shadow: 0 8px 25px rgba(201, 169, 89, 0.4);
-        }
-
-        @media (max-width: 768px) {
-            .builds-grid,
-            .ancients-grid,
-            .opinion-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            h1 {
-                font-size: 2em;
-            }
-            
-            .build-card,
-            .ancient-card,
-            .opinion-card {
-                padding: 20px;
-            }
-
-            .ancients-section,
-            .mila-section {
-                padding: 30px 20px;
-            }
-
-            .mila-header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .section-title {
-                font-size: 1.8em;
-            }
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 5px 15px;
-            background: linear-gradient(135deg, #e94560, #c9a959);
-            color: #1a1a2e;
-            border-radius: 20px;
-            font-size: 0.75em;
-            margin-left: 12px;
-            font-weight: bold;
-            font-family: 'Cinzel', serif;
-            letter-spacing: 1px;
-            box-shadow: 0 3px 10px rgba(233, 69, 96, 0.4);
-        }
-
-        .description {
-            color: #b0b0b0;
-            margin-bottom: 18px;
-            font-size: 0.95em;
-            line-height: 1.6;
-        }
-
-        /* Decorative rune elements */
-        .rune-divider {
-            text-align: center;
-            padding: 20px 0;
-            color: #c9a959;
-            opacity: 0.4;
-            font-size: 1.5em;
-            letter-spacing: 20px;
-            font-family: 'Cinzel', serif;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="poe-bg"></div>
-    
+    <div aria-hidden="true" class="poe-bg"></div>
+
     <header>
-        <div class="avatar">🎮</div>
+        <div class="avatar" aria-hidden="true">🎮</div>
         <h1>Мита Кепочка</h1>
         <p class="subtitle">Path of Exile 2 • Гайды и билды</p>
     </header>
 
-    <div class="container">
-        
+    <main class="container">
+
         <!-- ===== ANCIENTS UPDATE SECTION ===== -->
-        <!-- Используем POE2_ReturnoftheAncients_LOGO.png для заголовка обновления -->
-        <section class="ancients-section">
+        <section class="ancients-section" aria-labelledby="ancients-title">
             <div class="ancients-logo">
-                <img src="PressKit/POE2_ReturnoftheAncients_LOGO.png" alt="Path of Exile 2: Возвращение Древних">
+                <img
+                    src="PressKit/POE2_ReturnoftheAncients_LOGO.png"
+                    alt="Path of Exile 2: Возвращение Древних"
+                    width="500"
+                    height="150"
+                    loading="lazy"
+                >
             </div>
-            
-            <h2 class="section-title">Обновление: Возвращение Древних</h2>
-            
+
+            <h2 class="section-title" id="ancients-title">Обновление: Возвращение Древних</h2>
+
             <div class="ancients-grid">
-                <!-- Key-Art-No-Logo.jpg - основная арт-иллюстрация обновления -->
                 <div class="ancient-card">
-                    <img src="PressKit/Key-Art-No-Logo.jpg" alt="Ключевой арт обновления">
+                    <img
+                        src="PressKit/Key-Art-No-Logo.jpg"
+                        alt="Ключевой арт обновления Возвращение Древних"
+                        width="800"
+                        height="250"
+                        loading="lazy"
+                    >
                     <h3>🏛️ Древние Возвращаются</h3>
                     <p>Алдур и другие Древние пробуждаются после векового сна. Новые рунические механики, ритуалы призыва и эпические сражения ждут вас в этом масштабном обновлении.</p>
                     <ul class="feature-list">
@@ -700,9 +57,14 @@
                     </ul>
                 </div>
 
-                <!-- Martial_Artist_Ascendancy_Art.png - иллюстрация для класса Монах -->
                 <div class="ancient-card">
-                    <img src="PressKit/Martial_Artist_Ascendancy_Art.png" alt="Монах - класс восхождения">
+                    <img
+                        src="PressKit/Martial_Artist_Ascendancy_Art.png"
+                        alt="Монах — класс восхождения в Path of Exile 2"
+                        width="800"
+                        height="250"
+                        loading="lazy"
+                    >
                     <h3>🥷 Класс: Монах</h3>
                     <p>Мастер боевых искусств, использующий силу духа и тела. Специализируется на ближнем бою, комбо-атаках и молниеносных перемещениях.</p>
                     <ul class="feature-list">
@@ -712,9 +74,14 @@
                     </ul>
                 </div>
 
-                <!-- Masters_Cinematic.jpg - атмосферная иллюстрация для лиги -->
                 <div class="ancient-card">
-                    <img src="PressKit/Masters_Cinematic.jpg" alt="Мастера и союзники">
+                    <img
+                        src="PressKit/Masters_Cinematic.jpg"
+                        alt="Мастера и союзники — новая лига"
+                        width="800"
+                        height="250"
+                        loading="lazy"
+                    >
                     <h3>⚔️ Новая Лига</h3>
                     <p>Ритуалы Механик, Делириум и другие возвращающиеся механики в новом исполнении. Испытайте свои билды в изменённых локациях.</p>
                     <ul class="feature-list">
@@ -726,15 +93,21 @@
             </div>
         </section>
 
-        <div class="rune-divider">ᚠᚢᚦᚨᚱᚲ</div>
+        <div class="rune-divider" aria-hidden="true">ᚠᚢᚦᚨᚱᚲ</div>
 
         <!-- ===== MILA OPINION SECTION ===== -->
-        <section class="mila-section">
+        <section class="mila-section" aria-labelledby="mila-title">
             <div class="mila-header">
-                <!-- KEPA_MITA.png - аватар Милы -->
-                <img src="KEPA_MITA.png" alt="Kepa Mita" class="mila-avatar">
+                <img
+                    src="KEPA_MITA.png"
+                    alt="Аватар стримера Kepa Mita"
+                    class="mila-avatar"
+                    width="120"
+                    height="120"
+                    loading="lazy"
+                >
                 <div class="mila-title-block">
-                    <h2>Мнение Kepa Mita</h2>
+                    <h2 id="mila-title">Мнение Kepa Mita</h2>
                     <p>О новой лиге, билдах и стратегиях</p>
                 </div>
             </div>
@@ -764,146 +137,236 @@
                 <p>Kepa Mita считает новую лигу интересной с точки зрения контента и механик, но не предлагает чётких рекомендаций по билдам за пределами своего личного опыта. Её позиция: <span class="highlight">Монах через Фликер (Чи Юла) — рабочий вариант; Ветерки — допустимы, но менее захватывающие из-за низкой стоимости сборки</span>.</p>
             </div>
 
-            <div style="margin-top: 25px; text-align: center; color: #888; font-size: 0.9em; font-style: italic;">
+            <p class="disclaimer">
                 ⚠️ Мила часто шутит над аудиторией и чатом, поэтому некоторые её высказывания следует воспринимать с долей иронии или как импровизацию.
+            </p>
+        </section>
+
+        <div class="rune-divider" aria-hidden="true">ᚠᚢᚦᚨᚱᚲ</div>
+
+        <!-- ===== BUILDS GRID ===== -->
+        <section class="builds-section" aria-labelledby="builds-title">
+            <h2 class="section-title" id="builds-title">Актуальные билды</h2>
+
+            <div class="builds-grid">
+
+                <!-- Chiula Starter -->
+                <article class="build-card">
+                    <h3 class="build-title">
+                        <span class="build-icon" aria-hidden="true">⚔️</span>
+                        Чиула Стартер
+                        <span class="badge">START</span>
+                    </h3>
+                    <p class="description">Стартовый билд для начала лиги. Отлично подходит для прокачки и первых карт.</p>
+
+                    <a
+                        href="https://www.youtube.com/watch?v=x18SPik1yrI"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="video-container"
+                        aria-label="Смотреть гайд Чиула Стартер на YouTube"
+                    >
+                        <img
+                            class="video-thumbnail"
+                            src="https://img.youtube.com/vi/x18SPik1yrI/hqdefault.jpg"
+                            alt="Превью видео: Чиула Стартер гайд"
+                            width="480"
+                            height="360"
+                            loading="lazy"
+                        >
+                        <div class="play-btn" aria-hidden="true"></div>
+                    </a>
+
+                    <div class="links">
+                        <a
+                            href="https://www.youtube.com/watch?v=x18SPik1yrI"
+                            class="link-btn"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <span class="link-icon" aria-hidden="true">📺</span>
+                            Видео гайд на YouTube
+                        </a>
+                        <a
+                            href="https://pobb.in/Ff0fnOAHUk1r"
+                            class="link-btn"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <span class="link-icon" aria-hidden="true">📋</span>
+                            Path of Building
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Chiula Boss -->
+                <article class="build-card">
+                    <h3 class="build-title">
+                        <span class="build-icon" aria-hidden="true">💀</span>
+                        Чиула Боссер
+                        <span class="badge">BOSS</span>
+                    </h3>
+                    <p class="description">Усиленная версия для фарма боссов и эндгейм контента. Максимальный урон по целям.</p>
+
+                    <a
+                        href="https://youtu.be/9c2XLW6AM1M"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="video-container"
+                        aria-label="Смотреть гайд Чиула Боссер на YouTube"
+                    >
+                        <img
+                            class="video-thumbnail"
+                            src="https://img.youtube.com/vi/9c2XLW6AM1M/hqdefault.jpg"
+                            alt="Превью видео: Чиула Боссер гайд"
+                            width="480"
+                            height="360"
+                            loading="lazy"
+                        >
+                        <div class="play-btn" aria-hidden="true"></div>
+                    </a>
+
+                    <div class="links">
+                        <a
+                            href="https://youtu.be/9c2XLW6AM1M"
+                            class="link-btn"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <span class="link-icon" aria-hidden="true">📺</span>
+                            Видео гайд на YouTube
+                        </a>
+                        <a
+                            href="https://pobb.in/ZYKe-r4IIkls"
+                            class="link-btn"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <span class="link-icon" aria-hidden="true">📋</span>
+                            Path of Building
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Bear Fast Mapper -->
+                <article class="build-card">
+                    <h3 class="build-title">
+                        <span class="build-icon" aria-hidden="true">🐻</span>
+                        Мишка Фастмапер
+                        <span class="badge">FARM</span>
+                    </h3>
+                    <p class="description">Быстрый фарм карт. Отличная скорость зачистки для эффективного фарма.</p>
+
+                    <a
+                        href="https://www.youtube.com/watch?v=I2HCa-GmUVU"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="video-container"
+                        aria-label="Смотреть гайд Мишка Фастмапер на YouTube"
+                    >
+                        <img
+                            class="video-thumbnail"
+                            src="https://img.youtube.com/vi/I2HCa-GmUVU/hqdefault.jpg"
+                            alt="Превью видео: Мишка Фастмапер гайд"
+                            width="480"
+                            height="360"
+                            loading="lazy"
+                        >
+                        <div class="play-btn" aria-hidden="true"></div>
+                    </a>
+
+                    <div class="links">
+                        <a
+                            href="https://www.youtube.com/watch?v=I2HCa-GmUVU"
+                            class="link-btn"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <span class="link-icon" aria-hidden="true">📺</span>
+                            Видео гайд на YouTube
+                        </a>
+                        <a
+                            href="https://poe.ninja/poe2/pob/13d05"
+                            class="link-btn"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <span class="link-icon" aria-hidden="true">📋</span>
+                            PoB на Poe.ninja
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Amazon Twister Starter -->
+                <article class="build-card">
+                    <h3 class="build-title">
+                        <span class="build-icon" aria-hidden="true">🌪️</span>
+                        Амазонка Смерч Стартер
+                        <span class="badge">START</span>
+                    </h3>
+                    <p class="description">
+                        Неадекватно сильный стартер с огромным уроном по боссам и молниеносной зачисткой за экран.
+                        Смерч бафает ветерков нажатием пары кнопок — дальше они сами перемалывают всё на экране.
+                        Заводится уже в первом акте, легко прогрессирует через всю кампанию и превращается в машину смерти к четвёртому акту.
+                        Работает на Амазонке-Хантрессе, а после актов открывает путь в Фликер, Вихрь или Дракона.
+                    </p>
+
+                    <a
+                        href="https://www.youtube.com/watch?v=ev6nIEjoyJc"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="video-container"
+                        aria-label="Смотреть гайд Амазонка Смерч Стартер на YouTube"
+                    >
+                        <img
+                            class="video-thumbnail"
+                            src="https://img.youtube.com/vi/ev6nIEjoyJc/hqdefault.jpg"
+                            alt="Превью видео: Амазонка Смерч Стартер гайд"
+                            width="480"
+                            height="360"
+                            loading="lazy"
+                        >
+                        <div class="play-btn" aria-hidden="true"></div>
+                    </a>
+
+                    <div class="links">
+                        <a
+                            href="https://www.youtube.com/watch?v=ev6nIEjoyJc"
+                            class="link-btn"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <span class="link-icon" aria-hidden="true">📺</span>
+                            Видео гайд на YouTube
+                        </a>
+						    <a
+							href="https://maxroll.gg/poe2/pob/ee2jse0y"
+							class="link-btn"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<span class="link-icon" aria-hidden="true">📋</span>
+							Path of Building (Maxroll)
+						</a>
+                    </div>
+                </article>
+
             </div>
         </section>
 
-        <div class="rune-divider">ᚠᚢᚦᚨᚱᚲ</div>
+        <nav class="social-links" aria-label="Социальные сети">
+            <a href="https://www.twitch.tv/kepa_mita" class="social-link" target="_blank" rel="noopener noreferrer" title="Twitch" aria-label="Twitch канал Kepa Mita">📡</a>
+            <a href="https://www.youtube.com/@Kepa_mita" class="social-link" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube канал Kepa Mita">🎬</a>
+            <a href="https://discord.gg/Gefd6QDrB4" class="social-link" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord сервер Kepa Mita">💬</a>
+            <a href="https://t.me/kepa_mita" class="social-link" target="_blank" rel="noopener noreferrer" title="Telegram" aria-label="Telegram канал Kepa Mita">✈️</a>
+        </nav>
 
-        <!-- ===== BUILDS GRID ===== -->
-        <div class="builds-grid">
-
-            <!-- Chiula Starter -->
-            <div class="build-card">
-                <h2 class="build-title">
-                    <span class="build-icon">⚔️</span>
-                    Чиула Стартер
-                    <span class="badge">START</span>
-                </h2>
-                <p class="description">Стартовый билд для начала лиги. Отлично подходит для прокачки и первых карт.</p>
-                
-                <a href="https://www.youtube.com/watch?v=x18SPik1yrI" target="_blank" class="video-container">
-                    <img
-                        class="video-thumbnail"
-                        src="https://img.youtube.com/vi/x18SPik1yrI/hqdefault.jpg"
-                        alt="Чиула Стартер гайд"
-                    >
-                    <div class="play-btn"></div>
-                </a>
-                
-                <div class="links">
-                    <a href="https://www.youtube.com/watch?v=x18SPik1yrI" class="link-btn" target="_blank">
-                        <span class="link-icon">📺</span>
-                        Видео гайд на YouTube
-                    </a>
-                    <a href="https://pobb.in/Ff0fnOAHUk1r" class="link-btn" target="_blank">
-                        <span class="link-icon">📋</span>
-                        Path of Building
-                    </a>
-                </div>
-            </div>
-
-            <!-- Chiula Boss -->
-            <div class="build-card">
-                <h2 class="build-title">
-                    <span class="build-icon">💀</span>
-                    Чиула Боссер
-                    <span class="badge">BOSS</span>
-                </h2>
-                <p class="description">Усиленная версия для фарма боссов и эндгейм контента. Максимальный урон по целям.</p>
-                
-                <a href="https://youtu.be/9c2XLW6AM1M?si=vK5M6Ese1bcptdco" target="_blank" class="video-container">
-                    <img
-                        class="video-thumbnail"
-                        src="https://img.youtube.com/vi/9c2XLW6AM1M/hqdefault.jpg"
-                        alt="Чиула Боссер гайд"
-                    >
-                    <div class="play-btn"></div>
-                </a>
-                
-                <div class="links">
-                    <a href="https://youtu.be/9c2XLW6AM1M?si=vK5M6Ese1bcptdco" class="link-btn" target="_blank">
-                        <span class="link-icon">📺</span>
-                        Видео гайд на YouTube
-                    </a>
-                    <a href="https://pobb.in/ZYKe-r4IIkls" class="link-btn" target="_blank">
-                        <span class="link-icon">📋</span>
-                        Path of Building
-                    </a>
-                </div>
-            </div>
-
-            <!-- Bear Fast Mapper -->
-            <div class="build-card">
-                <h2 class="build-title">
-                    <span class="build-icon">🐻</span>
-                    Мишка Фастмапер
-                    <span class="badge">FARM</span>
-                </h2>
-                <p class="description">Быстрый фарм карт. Отличная скорость зачистки для эффективного фарма.</p>
-                
-                <a href="https://www.youtube.com/watch?v=I2HCa-GmUVU" target="_blank" class="video-container">
-                    <img
-                        class="video-thumbnail"
-                        src="https://img.youtube.com/vi/I2HCa-GmUVU/hqdefault.jpg"
-                        alt="Мишка Фастмапер гайд"
-                    >
-                    <div class="play-btn"></div>
-                </a>
-                
-                <div class="links">
-                    <a href="https://www.youtube.com/watch?v=I2HCa-GmUVU" class="link-btn" target="_blank">
-                        <span class="link-icon">📺</span>
-                        Видео гайд на YouTube
-                    </a>
-                    <a href="https://poe.ninja/poe2/pob/13d05" class="link-btn" target="_blank">
-                        <span class="link-icon">📋</span>
-                        PoB на Poe.ninja
-                    </a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="social-links">
-            <a href="https://www.twitch.tv/kepa_mita" class="social-link" title="Twitch">📡</a>
-            <a href="https://www.youtube.com/@Kepa_mita" class="social-link" title="YouTube">🎬</a>
-            <a href="https://discord.gg/Gefd6QDrB4" class="social-link" title="Discord">💬</a>
-            <a href="https://t.me/kepa_mita" class="social-link" title="Telegram">✈️</a>
-        </div>
-    </div>
+    </main>
 
     <footer>
         <p>© 2025 Мита Кепочка • Path of Exile 2 Community</p>
-        <p style="margin-top: 10px; font-size: 0.9em;">Сделано с ❤️ для сообщества PoE2</p>
+        <p class="footer-sub">Сделано с ❤️ для сообщества PoE2</p>
     </footer>
 
-    <script>
-        // Add some interactivity
-        document.querySelectorAll('.build-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-8px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
 </body>
 </html>
