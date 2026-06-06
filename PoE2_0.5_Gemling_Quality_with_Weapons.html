@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoE2 0.5 Gemling Quality with Weapons</title>
+    <style>
+        :root {
+            --bg-primary: #0d0d0d;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #1e1e1e;
+            --bg-hover: #252525;
+            --accent: #c8a84b;
+            --accent-dark: #8b6914;
+            --accent-glow: rgba(200, 168, 75, 0.15);
+            --text-primary: #e8e0d0;
+            --text-secondary: #a09880;
+            --text-muted: #605850;
+            --border: #2a2a2a;
+            --border-accent: #3a3020;
+            --gemling: #4a9fd4;
+            --gemling-bg: rgba(74, 159, 212, 0.1);
+            --normal: #d4944a;
+            --normal-bg: rgba(212, 148, 74, 0.1);
+            --yes-color: #4dba6f;
+            --no-color: #ba4d4d;
+            --tag-bg: #252015;
+            --tag-border: #3a3020;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(180deg, #0a0a0a 0%, #141410 100%);
+            border-bottom: 2px solid var(--accent-dark);
+            padding: 20px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .header-logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 1px;
+            text-shadow: 0 0 20px rgba(200,168,75,0.4);
+            white-space: nowrap;
+        }
+
+        .header-logo span {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .search-bar {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            background: #111;
+            border: 1px solid var(--border-accent);
+            border-radius: 6px;
+            padding: 10px 16px 10px 42px;
+            color: var(--text-primary);
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-bar input:focus {
+            border-color: var(--accent-dark);
+            box-shadow: 0 0 0 2px var(--accent-glow);
+        }
+
+        .search-bar input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 18px;
+            pointer-events: none;
+        }
+
+        .clear-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 18px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: none;
+            transition: color 0.2s;
+        }
+
+        .clear-btn:hover { color: var(--accent); }
+
+        /* FILTERS */
+        .filters {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-btn {
+            background: #111;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 5px 12px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-dark);
+            color: var(--accent);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-glow);
+            border-color: var(--accent-dark);
+            color: var(--accent);
+        }
+
+        .stats-bar {
+            margin-left: auto;
+            font-size: 12px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .stats-bar strong {
+            color: var(--accent);
+        }
+
+        /* SORT BUTTONS */
+        .sort-group {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        /* MAIN */
+        .main {
+            padding: 20px 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* VIEW TOGGLE */
+        .view-toggle {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 16px;
+            align-items: center;
+        }
+
+        .view-btn {
+            background: #111;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 6px 14px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .view-btn.active {
+            background: var(--accent-glow);
+            border-color: var(--accent-dark);
+            color: var(--accent);
+        }
+
+        /* GRID VIEW */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 12px;
+        }
+
+        /* TABLE VIEW */
+        .skills-table-wrap {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .skills-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .skills-table th {
+            background: #141410;
+            color: var(--accent);
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 2px solid var(--accent-dark);
+            white-space: nowrap;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .skills-table th:hover { background: #1a1a14; }
+
+        .skills-table th .sort-arrow {
+            margin-left: 4px;
+            opacity: 0.4;
+            font-size: 10px;
+        }
+
+        .skills-table th.sorted .sort-arrow { opacity: 1; }
+
+        .skills-table tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+
+        .skills-table tr:hover { background: var(--bg-hover); }
+
+        .skills-table td {
+            padding: 9px 14px;
+            vertical-align: middle;
+        }
+
+        .skills-table tr.hidden { display: none; }
+
+        /* CARD */
+        .skill-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-dark), transparent);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .skill-card:hover {
+            border-color: var(--border-accent);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            transform: translateY(-1px);
+        }
+
+        .skill-card:hover::before { opacity: 1; }
+
+        .skill-card.no-gemling {
+            opacity: 0.6;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            gap: 8px;
+        }
+
+        .skill-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--accent);
+            line-height: 1.3;
+        }
+
+        .gemling-badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 3px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            font-weight: 600;
+        }
+
+        .gemling-badge.yes {
+            background: rgba(77, 186, 111, 0.15);
+            color: var(--yes-color);
+            border: 1px solid rgba(77, 186, 111, 0.3);
+        }
+
+        .gemling-badge.no {
+            background: rgba(186, 77, 77, 0.1);
+            color: var(--no-color);
+            border: 1px solid rgba(186, 77, 77, 0.2);
+        }
+
+        .weapon-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 10px;
+        }
+
+        .weapon-tag {
+            font-size: 10px;
+            padding: 2px 7px;
+            background: var(--tag-bg);
+            border: 1px solid var(--tag-border);
+            border-radius: 3px;
+            color: var(--text-muted);
+        }
+
+        .weapon-tag.any {
+            color: var(--text-secondary);
+            border-color: var(--border);
+        }
+
+        .quality-block {
+            border-radius: 6px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+        }
+
+        .quality-block.normal {
+            background: var(--normal-bg);
+            border: 1px solid rgba(212, 148, 74, 0.2);
+        }
+
+        .quality-block.gemling {
+            background: var(--gemling-bg);
+            border: 1px solid rgba(74, 159, 212, 0.2);
+        }
+
+        .quality-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .quality-label.normal { color: var(--normal); }
+        .quality-label.gemling { color: var(--gemling); }
+
+        .quality-stat {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 3px;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+        }
+
+        .quality-value {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .quality-value.normal { color: var(--normal); }
+        .quality-value.gemling { color: var(--gemling); }
+
+        .internal-id {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-family: monospace;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+            word-break: break-all;
+        }
+
+        /* TABLE SPECIFIC */
+        .td-name {
+            font-weight: 600;
+            color: var(--accent);
+            white-space: nowrap;
+        }
+
+        .td-weapon {
+            font-size: 11px;
+            color: var(--text-muted);
+            max-width: 200px;
+        }
+
+        .td-stat {
+            font-family: monospace;
+            font-size: 11px;
+            color: var(--text-secondary);
+            max-width: 220px;
+            word-break: break-all;
+        }
+
+        .td-value-normal {
+            font-weight: 600;
+            color: var(--normal);
+            white-space: nowrap;
+        }
+
+        .td-value-gemling {
+            font-weight: 600;
+            color: var(--gemling);
+            white-space: nowrap;
+        }
+
+        .td-badge { }
+
+        /* NO RESULTS */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+            display: none;
+        }
+
+        .no-results-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.3;
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-dark); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        /* HIGHLIGHT */
+        .highlight {
+            background: rgba(200, 168, 75, 0.25);
+            color: var(--accent);
+            border-radius: 2px;
+            padding: 0 1px;
+        }
+
+        @media (max-width: 768px) {
+            .header-top { flex-direction: column; align-items: stretch; }
+            .filters { gap: 8px; }
+            .main { padding: 12px; }
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-top">
+        <div class="header-logo">
+            PoE2 0.5 <span>Gemling Quality & Weapons</span>
+        </div>
+        <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Поиск по названию, стату, internal ID, оружию...">
+            <button class="clear-btn" id="clearBtn" onclick="clearSearch()">✕</button>
+        </div>
+    </div>
+    <div class="filters">
+        <div class="filter-group">
+            <span class="filter-label">Gemling:</span>
+            <button class="filter-btn active" data-filter="all" onclick="setFilter('gemling', 'all', this)">Все</button>
+            <button class="filter-btn" data-filter="yes" onclick="setFilter('gemling', 'yes', this)">✓ Есть</button>
+            <button class="filter-btn" data-filter="no" onclick="setFilter('gemling', 'no', this)">✗ Нет</button>
+        </div>
+        <div class="filter-group">
+            <span class="filter-label">Тип:</span>
+            <button class="filter-btn active" data-filter="all" onclick="setFilter('support', 'all', this)">Все</button>
+            <button class="filter-btn" data-filter="skill" onclick="setFilter('support', 'skill', this)">Скиллы</button>
+            <button class="filter-btn" data-filter="support" onclick="setFilter('support', 'support', this)">Саппорты</button>
+        </div>
+        <div class="filter-group">
+            <span class="filter-label">Оружие:</span>
+            <select id="weaponFilter" onchange="applyFilters()" style="background:#111;border:1px solid var(--border);border-radius:4px;padding:5px 10px;color:var(--text-secondary);font-size:12px;outline:none;cursor:pointer;">
+                <option value="all">Все</option>
+                <option value="any">Any / no weapon req</option>
+                <option value="Bows">Bows</option>
+                <option value="Crossbows">Crossbows</option>
+                <option value="Spears">Spears</option>
+                <option value="Quarterstaves">Quarterstaves</option>
+                <option value="Maces">Maces</option>
+                <option value="Swords">Swords</option>
+                <option value="Axes">Axes</option>
+                <option value="Daggers">Daggers</option>
+                <option value="Claws">Claws</option>
+                <option value="Shields">Shields</option>
+                <option value="Talismans">Talismans</option>
+                <option value="Flails">Flails</option>
+            </select>
+        </div>
+        <span class="stats-bar">Показано: <strong id="countShown">0</strong> / <strong id="countTotal">0</strong></span>
+    </div>
+</div>
+
+<div class="main">
+    <div class="view-toggle">
+        <span style="font-size:12px;color:var(--text-muted);margin-right:4px;">Вид:</span>
+        <button class="view-btn active" onclick="setView('grid', this)">⊞ Карточки</button>
+        <button class="view-btn" onclick="setView('table', this)">☰ Таблица</button>
+    </div>
+
+    <div id="gridView">
+        <div class="skills-grid" id="skillsGrid"></div>
+    </div>
+
+    <div id="tableView" style="display:none;">
+        <div class="skills-table-wrap">
+            <table class="skills-table" id="skillsTable">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(0)" data-col="0">Название <span class="sort-arrow">↕</span></th>
+                        <th onclick="sortTable(1)" data-col="1">Оружие <span class="sort-arrow">↕</span></th>
+                        <th onclick="sortTable(2)" data-col="2">Normal Stat <span class="sort-arrow">↕</span></th>
+                        <th onclick="sortTable(3)" data-col="3">Normal Value <span class="sort-arrow">↕</span></th>
+                        <th onclick="sortTable(4)" data-col="4">Gemling Stat <span class="sort-arrow">↕</span></th>
+                        <th onclick="sortTable(5)" data-col="5">Gemling Value <span class="sort-arrow">↕</span></th>
+                        <th onclick="sortTable(6)" data-col="6">Gemling <span class="sort-arrow">↕</span></th>
+                    </tr>
+                </thead>
+                <tbody id="skillsTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="no-results" id="noResults">
+        <div class="no-results-icon">🔮</div>
+        <div>Ничего не найдено</div>
+        <div style="font-size:12px;margin-top:8px;">Попробуйте изменить фильтры или поисковый запрос</div>
+    </div>
+</div>
+
+<script>
+const SKILLS = [
+  {name:"Alchemist's Boon",weapon:"Any / no weapon req",support:false,id:"AlchemistsBoonPlayer",normalStat:"skill_alchemists_boon_generate_x_charges_for_any_flask_per_minute",normalVal:"100",gemStat:"alchemists_boon_attack_speed_granted_+%_during_life_flask",gemVal:"1000",hasGemling:true},
+  {name:"Ancestral Cry",weapon:"One Hand Swords, Two Hand Swords, One Hand Axes, Two Hand Axes, One Hand Maces, Two Hand Maces, Quarterstaves, Claws, Daggers, Spears, Flails, Talismans",support:false,id:"AncestralCryPlayer",normalStat:"ancestral_cry_duration_+%_final_per_removable_endurance_charge",normalVal:"1000",gemStat:"gem_quality_ancestral_cry_global_fire_damage_granted_+%_final",gemVal:"500",hasGemling:true},
+  {name:"Ancestral Warrior Totem",weapon:"One Hand Maces, Two Hand Maces",support:false,id:"AncestralWarriorTotemPlayer",normalStat:"base_totem_duration",normalVal:"100000",gemStat:"totem_life_+%",gemVal:"2500",hasGemling:true},
+  {name:"Animus Exchange",weapon:"Any / no weapon req",support:false,id:"AnimusExchangePlayer",normalStat:"base_cooldown_speed_+%",normalVal:"1000",gemStat:"animus_exchange_gain_%_maximum_life_spent_as_ward",gemVal:"250",hasGemling:true},
+  {name:"Animus Splinters",weapon:"Any / no weapon req",support:false,id:"MetaAnimusSplintersPlayer",normalStat:"base_skill_cost_efficiency_+%",normalVal:"1000",gemStat:"skill_effect_duration_+%",gemVal:"1000",hasGemling:true},
+  {name:"Arc",weapon:"Any / no weapon req",support:false,id:"ArcPlayer",normalStat:"number_of_chains",normalVal:"100",gemStat:"active_skill_projectile_damage_+%_final_for_each_remaining_chain",gemVal:"150",hasGemling:true},
+  {name:"Archmage",weapon:"Any / no weapon req",support:false,id:"ArchmagePlayer",normalStat:"base_reservation_efficiency_+%",normalVal:"500",gemStat:"archmage_all_damage_%_to_gain_as_lightning_to_grant_to_non_channelling_spells_per_100_max_mana",gemVal:"50",hasGemling:true},
+  {name:"Arctic Armour",weapon:"Any / no weapon req",support:false,id:"ArcticArmourPlayer",normalStat:"maximum_number_of_arctic_armour_stationary_stacks",normalVal:"50",gemStat:"arctic_armour_armour_granted_+%_per_stage",gemVal:"1000",hasGemling:true},
+  {name:"Arctic Howl",weapon:"Talismans",support:false,id:"WolfArcticHowlPlayer",normalStat:"wolf_warcry_buff_freeze_buildup_+%",normalVal:"1000",gemStat:"chance_for_exerted_attacks_to_not_reduce_count_%",gemVal:"1000",hasGemling:true},
+  {name:"Armour Breaker",weapon:"One Hand Maces, Two Hand Maces",support:false,id:"ArmourBreakerPlayer",normalStat:"armour_break_amount_+%",normalVal:"1000",gemStat:"active_skill_physical_damage_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Armour Piercing Rounds",weapon:"Crossbows",support:false,id:"ArmourPiercingBoltsPlayer",normalStat:"armour_break_amount_+%",normalVal:"1000",gemStat:"active_skill_attack_speed_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Attrition",weapon:"Any / no weapon req",support:false,id:"AttritionPlayer",normalStat:"skill_attrition_culling_strike_at_x_or_more_stacks",normalVal:"-250",gemStat:"presence_area_+%",gemVal:"2000",hasGemling:true},
+  {name:"Ball Lightning",weapon:"Any / no weapon req",support:false,id:"BallLightningPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"active_skill_projectile_speed_+%_final",gemVal:"-1500",hasGemling:true},
+  {name:"Barkskin",weapon:"Any / no weapon req",support:false,id:"BarkskinPlayer",normalStat:"barkskin_armour_to_gain_as_%_of_energy_shield_lost_to_enemy_hits",normalVal:"250",gemStat:"active_skill_quality_duration_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Barrage",weapon:"Spears, Bows",support:false,id:"BarragePlayer",normalStat:"empower_barrage_damage_-%_final_with_repeated_projectiles",normalVal:"-250",gemStat:"charge_skip_consume_chance_%",gemVal:"1000",hasGemling:true},
+  {name:"Barrier Invocation",weapon:"Any / no weapon req",support:false,id:"MetaBarrierInvocationPlayer",normalStat:"energy_generated_+%",normalVal:"750",gemStat:"triggered_skill_damage_+%",gemVal:"1000",hasGemling:true},
+  {name:"Berserk",weapon:"Any / no weapon req",support:false,id:"BerserkPlayer",normalStat:"skill_base_rage_effect_+%_to_apply",normalVal:"500",gemStat:"berserk_maximum_rage_granted_+",gemVal:"400",hasGemling:true},
+  {name:"Bind Spectre",weapon:"Any / no weapon req",support:false,id:"BindSpectrePlayer",normalStat:"active_skill_minion_damage_+%_final",normalVal:"1000",gemStat:"base_reservation_efficiency_+%",gemVal:"1000",hasGemling:true},
+  {name:"Bitter Dead",weapon:"Any / no weapon req",support:false,id:"BitterDeadPlayer",normalStat:"volatile_dead_base_number_of_corpses_to_consume",normalVal:"50",gemStat:"base_chance_to_not_consume_corpse_%",gemVal:"500",hasGemling:true},
+  {name:"Blink",weapon:"Any / no weapon req",support:false,id:"BlinkPlayer",normalStat:"base_cooldown_speed_+%",normalVal:"500",gemStat:"blink_travel_distance",gemVal:"1250",hasGemling:true},
+  {name:"Blood Explosion",weapon:"Any / no weapon req",support:false,id:"BloodhoundsMarkExplosionPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"1",gemStat:"active_skill_physical_damage_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Blood Hunt",weapon:"Spears",support:false,id:"BloodHuntPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"blood_hunt_explosion_%_blood_loss_to_deal_as_life_loss",gemVal:"200",hasGemling:true},
+  {name:"Bone Cage",weapon:"Any / no weapon req",support:false,id:"BoneCagePlayer",normalStat:"active_skill_pins_as_though_dealt_damage_+%_final",normalVal:"2500",gemStat:"active_skill_bleeding_effect_+%_final",gemVal:"2000",hasGemling:true},
+  {name:"Bone Offering",weapon:"Any / no weapon req",support:false,id:"BoneOfferingPlayer",normalStat:"bone_offering_damage_taken_+%_final_after_shield_loss",normalVal:"-1500",gemStat:"active_skill_quality_duration_+%_final",gemVal:"1500",hasGemling:true},
+  {name:"Boneshatter",weapon:"One Hand Maces, Two Hand Maces",support:false,id:"BoneshatterPlayer",normalStat:"attack_speed_+%",normalVal:"1000",gemStat:"active_skill_base_area_of_effect_radius",gemVal:"1000",hasGemling:true},
+  {name:"Bonestorm",weapon:"Any / no weapon req",support:false,id:"BonestormPlayer",normalStat:"active_skill_cast_speed_+%_final",normalVal:"500",gemStat:"charge_skip_consume_chance_%",gemVal:"1000",hasGemling:true},
+  {name:"Briarpatch",weapon:"Any / no weapon req",support:false,id:"BriarpatchPlayer",normalStat:"spells_chance_to_hinder_on_hit_%",normalVal:"250",gemStat:"active_skill_base_area_of_effect_radius",gemVal:"300",hasGemling:true},
+  {name:"Caltrops",weapon:"Any / no weapon req",support:false,id:"TriggeredTrailOfCaltropsPlayer",normalStat:"maximum_caltrops_allowed",normalVal:"250",gemStat:"active_skill_physical_damage_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Cast on Critical",weapon:"Any / no weapon req",support:false,id:"MetaCastOnCritPlayer",normalStat:"base_reservation_efficiency_+%",normalVal:"500",gemStat:"cast_on_crit_global_critical_hit_chance_granted_+%",gemVal:"1000",hasGemling:true},
+  {name:"Cast on Dodge",weapon:"Any / no weapon req",support:false,id:"MetaCastOnDodgePlayer",normalStat:"base_reservation_efficiency_+%",normalVal:"500",gemStat:"cast_on_dodge_dodge_roll_distance_granted_+",gemVal:"500",hasGemling:true},
+  {name:"Cast on Elemental Ailment",weapon:"Any / no weapon req",support:false,id:"MetaCastOnElementalAilmentPlayer",normalStat:"energy_generated_+%",normalVal:"750",gemStat:"base_spirit_reservation_efficiency_+%",gemVal:"2000",hasGemling:true},
+  {name:"Cast on Minion Death",weapon:"Any / no weapon req",support:false,id:"MetaCastOnMinionDeathPlayer",normalStat:"energy_generated_+%",normalVal:"1000",gemStat:"triggered_skill_damage_+%",gemVal:"1000",hasGemling:true},
+  {name:"Charge Infusion",weapon:"Any / no weapon req",support:false,id:"ChargeRegulationPlayer",normalStat:"consume_frenzy_power_and_endurance_charge_every_x_ms",normalVal:"120000",gemStat:"charge_regulation_damage_per_charge_granted_+%",gemVal:"100",hasGemling:true},
+  {name:"Charged Staff",weapon:"Quarterstaves",support:false,id:"ChargedStaffPlayer",normalStat:"skill_effect_duration_+%",normalVal:"1000",gemStat:"charge_skip_consume_chance_%",gemVal:"1000",hasGemling:true},
+  {name:"Cluster Grenade",weapon:"Crossbows",support:false,id:"ClusterGrenadePlayer",normalStat:"base_cooldown_speed_+%",normalVal:"1000",gemStat:"skill_detonation_time_+%",gemVal:"-2000",hasGemling:true},
+  {name:"Combat Frenzy",weapon:"Any / no weapon req",support:false,id:"CombatFrenzyPlayer",normalStat:"chance_to_gain_1_more_charge_%",normalVal:"500",gemStat:"skill_combat_frenzy_x_ms_cooldown",gemVal:"-50000",hasGemling:true},
+  {name:"Comet",weapon:"Any / no weapon req",support:false,id:"CometPlayer",normalStat:"base_spell_%_chance_to_echo",normalVal:"500",gemStat:"damage_+%_vs_frozen_enemies",gemVal:"2000",hasGemling:true},
+  {name:"Companion",weapon:"Any / no weapon req",support:false,id:"SummonBeastPlayer",normalStat:"base_reservation_efficiency_+%",normalVal:"500",gemStat:"active_skill_minion_attack_speed_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Conductive Runes",weapon:"Any / no weapon req",support:false,id:"ConductiveRunesPlayer",normalStat:"rune_hazard_arming_time_ms",normalVal:"-5000",gemStat:"active_skill_base_area_of_effect_radius",gemVal:"300",hasGemling:true},
+  {name:"Conductivity",weapon:"Any / no weapon req",support:false,id:"ConductivityPlayer",normalStat:"curse_effect_+%",normalVal:"500",gemStat:"curse_delay_+%",gemVal:"-2500",hasGemling:true},
+  {name:"Contagion",weapon:"Any / no weapon req",support:false,id:"ContagionPlayer",normalStat:"contagion_number_of_additional_targets",normalVal:"100",gemStat:"active_skill_area_of_effect_+%_final",gemVal:"2500",hasGemling:true},
+  {name:"Convalescence",weapon:"Any / no weapon req",support:false,id:"ConvalescenceActivePlayer",normalStat:"base_skill_effect_duration",normalVal:"25000",gemStat:"base_cooldown_speed_+%",gemVal:"1500",hasGemling:true},
+  {name:"create_mirage",weapon:"Spears, Bows, Crossbows",support:false,id:"MirageArcherSpawnPlayer",normalStat:"base_skill_effect_duration",normalVal:"50000",gemStat:"base_spirit_reservation_efficiency_+%",gemVal:"2000",hasGemling:true},
+  {name:"Cross Slash",weapon:"Talismans",support:false,id:"WolfCrossSlashPlayer",normalStat:"active_skill_base_secondary_area_of_effect_radius",normalVal:"200",gemStat:"active_skill_base_physical_damage_%_to_convert_to_cold",gemVal:"2000",hasGemling:true},
+  {name:"Cull the Weak",weapon:"Spears",support:false,id:"CullTheWeakPlayer",normalStat:"chance_to_gain_1_more_charge_%",normalVal:"1000",gemStat:"chance_to_gain_1_more_random_charge_%",gemVal:"1000",hasGemling:true},
+  {name:"Dark Effigy",weapon:"Any / no weapon req",support:false,id:"DarkEffigyPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"0",gemStat:"base_number_of_totems_allowed",gemVal:"50",hasGemling:true},
+  {name:"Defiance Banner",weapon:"Any / no weapon req",support:false,id:"DefianceBannerReservationPlayer",normalStat:"base_reservation_efficiency_+%",normalVal:"500",gemStat:"active_skill_area_of_effect_+%_final",gemVal:"1500",hasGemling:true},
+  {name:"Despair",weapon:"Any / no weapon req",support:false,id:"DespairPlayer",normalStat:"curse_effect_+%",normalVal:"500",gemStat:"base_mana_cost_-%",gemVal:"2500",hasGemling:true},
+  {name:"Detonate Dead",weapon:"Any / no weapon req",support:false,id:"DetonateDeadPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"active_skill_base_physical_damage_%_to_convert_to_fire",gemVal:"3000",hasGemling:true},
+  {name:"Detonate Living",weapon:"Any / no weapon req",support:false,id:"DetonateLivingPlayer",normalStat:"corpse_explosion_monster_life_permillage_physical",normalVal:"1000",gemStat:"active_skill_base_area_of_effect_radius",gemVal:"200",hasGemling:true},
+  {name:"Detonating Arrow",weapon:"Bows",support:false,id:"DetonatingArrowPlayer",normalStat:"detonating_arrow_max_number_of_stages",normalVal:"50",gemStat:"active_skill_ignite_effect_+%_final",gemVal:"2000",hasGemling:true},
+  {name:"Devour",weapon:"Talismans",support:false,id:"WyvernDevourPlayer",normalStat:"wyvern_devour_flask_charm_charge_gain_chance_%",normalVal:"2500",gemStat:"chance_to_gain_1_more_charge_%",gemVal:"1000",hasGemling:true},
+  {name:"Disengage",weapon:"Spears",support:false,id:"DisengagePlayer",normalStat:"disengage_%_chance_for_additional_shockwave",normalVal:"1000",gemStat:"melee_range_+",gemVal:"500",hasGemling:true},
+  {name:"Dread Banner",weapon:"Any / no weapon req",support:false,id:"DreadBannerReservationPlayer",normalStat:"base_reservation_efficiency_+%",normalVal:"500",gemStat:"active_skill_area_of_effect_+%_final",gemVal:"1500",hasGemling:true},
+  {name:"Earthquake",weapon:"One Hand Maces, Two Hand Maces",support:false,id:"EarthquakePlayer",normalStat:"base_number_of_earthquakes_allowed",normalVal:"100",gemStat:"gem_quality_earthquake_damaging_ailment_effect_+%_final",gemVal:"2000",hasGemling:true},
+  {name:"Earthshatter",weapon:"One Hand Maces, Two Hand Maces",support:false,id:"EarthshatterPlayer",normalStat:"earthshatter_damage_+%_final_per_spike",normalVal:"300",gemStat:"slam_aftershock_chance_%",gemVal:"1000",hasGemling:true},
+  {name:"Electrocuting Arrow",weapon:"Bows",support:false,id:"ElectrocutingArrowPlayer",normalStat:"electrocuting_arrow_%_damage_gained_as_extra_lightning_on_debuffed_target",normalVal:"500",gemStat:"electrocuting_arrow_damage_taken_+%",gemVal:"1000",hasGemling:true},
+  {name:"Elemental Conflux",weapon:"Any / no weapon req",support:false,id:"ElementalConfluxPlayer",normalStat:"skill_elemental_conflux_active_element_damage_+%_final",normalVal:"500",gemStat:"base_skill_effect_duration",gemVal:"200000",hasGemling:true},
+  {name:"Elemental Invocation",weapon:"Any / no weapon req",support:false,id:"MetaElementalInvocationPlayer",normalStat:"generic_ongoing_trigger_maximum_energy",normalVal:"5000",gemStat:"triggered_skill_damage_+%",gemVal:"1000",hasGemling:true},
+  {name:"Elemental Sundering",weapon:"Spears",support:false,id:"ElementalSunderingPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"100",gemStat:"active_skill_critical_strike_chance_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Elemental Weakness",weapon:"Any / no weapon req",support:false,id:"ElementalWeaknessPlayer",normalStat:"curse_effect_+%",normalVal:"500",gemStat:"curse_delay_+%",gemVal:"-2500",hasGemling:true},
+  {name:"Ember Fusillade",weapon:"Any / no weapon req",support:false,id:"EmberFusilladePlayer",normalStat:"ember_fusillade_damage_+%_final_per_ember_fired",normalVal:"100",gemStat:"skill_effect_duration_+%",gemVal:"-2000",hasGemling:true},
+  {name:"Emergency Reload",weapon:"Crossbows",support:false,id:"EmergencyReloadPlayer",normalStat:"base_cooldown_speed_+%",normalVal:"500",gemStat:"emergency_reload_damage_+%_final",gemVal:"500",hasGemling:true},
+  {name:"Enfeeble",weapon:"Any / no weapon req",support:false,id:"EnfeeblePlayer",normalStat:"curse_effect_+%",normalVal:"500",gemStat:"base_mana_cost_-%",gemVal:"2500",hasGemling:true},
+  {name:"Entangle",weapon:"Any / no weapon req",support:false,id:"EntanglePlayer",normalStat:"skill_additional_fissure_chance_%",normalVal:"1000",gemStat:"base_number_of_entangle_roots_allowed",gemVal:"200",hasGemling:true},
+  {name:"Escape Shot",weapon:"Bows",support:false,id:"EscapeShotPlayer",normalStat:"active_skill_hit_damage_freeze_multiplier_+%_final",normalVal:"6000",gemStat:"damage_+%_vs_frozen_enemies",gemVal:"2000",hasGemling:true},
+  {name:"Essence Drain",weapon:"Any / no weapon req",support:false,id:"EssenceDrainPlayer",normalStat:"base_skill_effect_duration",normalVal:"50000",gemStat:"number_of_chains",gemVal:"200",hasGemling:true},
+  {name:"Eternal March",weapon:"Any / no weapon req",support:false,id:"EternalMarchPlayer",normalStat:"skill_eternal_march_maximum_ward_cost",normalVal:"10000",gemStat:"base_cooldown_speed_+%",gemVal:"2000",hasGemling:true},
+  {name:"Eternal Rage",weapon:"Any / no weapon req",support:false,id:"EternalRagePlayer",normalStat:"ceaseless_rage_base_rage_regeneration_per_minute",normalVal:"1500",gemStat:"base_spirit_reservation_efficiency_+%",gemVal:"750",hasGemling:true},
+  {name:"Explosive Grenade",weapon:"Crossbows",support:false,id:"ExplosiveGrenadePlayer",normalStat:"base_cooldown_speed_+%",normalVal:"1000",gemStat:"base_number_of_projectiles",gemVal:"100",hasGemling:true},
+  {name:"Explosive Spear",weapon:"Spears",support:false,id:"ExplosiveSpearPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"charge_skip_consume_chance_%",gemVal:"1000",hasGemling:true},
+  {name:"Eye of Winter",weapon:"Any / no weapon req",support:false,id:"EyeOfWinterPlayer",normalStat:"base_projectile_speed_+%",normalVal:"1500",gemStat:"projectile_return_%_chance",gemVal:"2500",hasGemling:true},
+  {name:"Falling Blade",weapon:"Any weapon",support:false,id:"RainOfBladesTriggeredPlayer",normalStat:"base_cooldown_speed_+%",normalVal:"1000",gemStat:"hit_damage_immobilisation_multiplier_+%",gemVal:"1500",hasGemling:true},
+  {name:"Falling Thunder",weapon:"Quarterstaves",support:false,id:"FallingThunderPlayer",normalStat:"lightning_strike_damage_+%_final_per_power_charge",normalVal:"1000",gemStat:"charge_skip_consume_chance_%",gemVal:"1000",hasGemling:true},
+  {name:"Fangs of Frost",weapon:"Spears",support:false,id:"FangsOfFrostPlayer",normalStat:"chance_to_not_consume_parried_%",normalVal:"750",gemStat:"melee_range_+",gemVal:"500",hasGemling:true},
+  {name:"Feral Invocation",weapon:"Talismans",support:false,id:"MetaFeralInvocationPlayer",normalStat:"energy_generated_+%",normalVal:"1000",gemStat:"base_reservation_efficiency_+%",gemVal:"2000",hasGemling:true},
+  {name:"Fireball",weapon:"Any / no weapon req",support:false,id:"FireballPlayer",normalStat:"spell_skills_fire_2_additional_projectiles_final_chance_%",normalVal:"500",gemStat:"spell_skill_%_chance_to_fire_8_additional_projectiles_in_nova",gemVal:"500",hasGemling:true},
+  {name:"Firestorm",weapon:"Any / no weapon req",support:false,id:"FirestormPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"100",gemStat:"chance_to_not_consume_infusion_%",gemVal:"1000",hasGemling:true},
+  {name:"Flame Breath",weapon:"Talismans",support:false,id:"WyvernFlameBreathPlayer",normalStat:"channelled_skill_suppress_ongoing_rage_cost_for_first_X_ms",normalVal:"50000",gemStat:"active_skill_area_of_effect_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Flame Wall",weapon:"Any / no weapon req",support:false,id:"FlameWallPlayer",normalStat:"active_skill_ignite_chance_+%_final",normalVal:"1000",gemStat:"active_skill_fire_damage_+%_final",gemVal:"2000",hasGemling:true},
+  {name:"Flameblast",weapon:"Any / no weapon req",support:false,id:"FlameblastPlayer",normalStat:"active_skill_cast_speed_+%_final",normalVal:"1000",gemStat:"gem_quality_flameblast_damaging_ailment_effect_per_stage_+%_final",gemVal:"2000",hasGemling:true},
+  {name:"Flammability",weapon:"Any / no weapon req",support:false,id:"FlammabilityPlayer",normalStat:"curse_effect_+%",normalVal:"500",gemStat:"curse_delay_+%",gemVal:"-2500",hasGemling:true},
+  {name:"Flash Grenade",weapon:"Crossbows",support:false,id:"FlashGrenadePlayer",normalStat:"base_cooldown_speed_+%",normalVal:"1000",gemStat:"active_skill_base_all_damage_%_to_gain_as_lightning",gemVal:"500",hasGemling:true},
+  {name:"Flicker Strike",weapon:"Quarterstaves",support:false,id:"FlickerStrikePlayer",normalStat:"active_skill_critical_strike_chance_+%_final",normalVal:"1000",gemStat:"charge_skip_consume_chance_%",gemVal:"1000",hasGemling:true},
+  {name:"Forge Hammer",weapon:"One Hand Maces, Two Hand Maces",support:false,id:"ForgeHammerPlayer",normalStat:"base_cooldown_speed_+%",normalVal:"500",gemStat:"active_skill_base_all_damage_%_to_gain_as_fire",gemVal:"1000",hasGemling:true},
+  {name:"Fortifying Cry",weapon:"Shields",support:false,id:"FortifyingCryPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"1",gemStat:"fortifying_cry_guard_gained_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Fragments of the Past",weapon:"Any weapon",support:false,id:"FragmentsOfThePastPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"base_skill_effect_duration",gemVal:"50000",hasGemling:true},
+  {name:"Freezing Explosion",weapon:"Quarterstaves",support:false,id:"ShatteringPalmExplosionPlayer",normalStat:"active_skill_critical_strike_chance_+%_final",normalVal:"1000",gemStat:"active_skill_area_of_effect_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Freezing Mark",weapon:"Any / no weapon req",support:false,id:"FreezingMarkPlayer",normalStat:"freezing_mark_hit_damage_freeze_multiplier_+%_final",normalVal:"1000",gemStat:"base_mana_cost_-%",gemVal:"2500",hasGemling:true},
+  {name:"Freezing Salvo",weapon:"Bows",support:false,id:"FreezingSalvoPlayer",normalStat:"active_skill_hit_damage_freeze_multiplier_+%_final",normalVal:"2000",gemStat:"base_maximum_seals_for_skill",gemVal:"200",hasGemling:true},
+  {name:"Frost Bomb",weapon:"Any / no weapon req",support:false,id:"FrostBombPlayer",normalStat:"active_skill_all_elemental_exposure_compounding_magnitude_cap",normalVal:"500",gemStat:"base_maximum_number_of_frost_bombs",gemVal:"150",hasGemling:true},
+  {name:"Frost Darts",weapon:"Any / no weapon req",support:false,id:"FrostDartsPlayer",normalStat:"spell_skills_fire_2_additional_projectiles_final_chance_%",normalVal:"500",gemStat:"number_of_additional_forks_base",gemVal:"100",hasGemling:true},
+  {name:"Frost Wall",weapon:"Any / no weapon req",support:false,id:"FrostWallPlayer",normalStat:"base_cooldown_speed_+%",normalVal:"1000",gemStat:"ice_crystal_maximum_life_+%",gemVal:"20000",hasGemling:true},
+  {name:"Frostbolt",weapon:"Any / no weapon req",support:false,id:"FrostboltPlayer",normalStat:"active_skill_projectile_damage_+%_final_if_pierced_enemy",normalVal:"1000",gemStat:"active_skill_projectile_speed_+%_final",gemVal:"2000",hasGemling:true},
+  {name:"Frostflame Nova",weapon:"Any / no weapon req",support:false,id:"FrostflameNovaPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"500",gemStat:"damage_+%_vs_frozen_enemies",gemVal:"1000",hasGemling:true},
+  {name:"Frozen Locus",weapon:"Quarterstaves",support:false,id:"FrozenLocusPlayer",normalStat:"active_skill_chill_effect_+%_final",normalVal:"1000",gemStat:"base_number_of_frozen_locus_allowed",gemVal:"50",hasGemling:true},
+  {name:"Furious Slam",weapon:"Talismans",support:false,id:"FuriousSlamPlayer",normalStat:"active_skill_stun_threshold_+%_while_performing_action",normalVal:"2000",gemStat:"active_skill_area_of_effect_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Fury of the Mountain",weapon:"Talismans",support:false,id:"BearFuryOfTheMountainPlayer",normalStat:"gain_x_rage_on_attack_hit",normalVal:"100",gemStat:"active_skill_attack_speed_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Gale Force",weapon:"Any weapon",support:false,id:"TriggeredWindDancerPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"wind_dancer_damage_+%_final_per_stage",gemVal:"2500",hasGemling:true},
+  {name:"Gas Arrow (Skeleton)",weapon:"Any / no weapon req",support:false,id:"GasShotSkeletonSniperMinion",normalStat:"dummy_stat_display_nothing",normalVal:"1",gemStat:"active_skill_fire_damage_+%_final",gemVal:"2500",hasGemling:true},
+  {name:"Gas Arrow",weapon:"Bows",support:false,id:"GasArrowPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"active_skill_fire_damage_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Gas Grenade",weapon:"Crossbows",support:false,id:"ToxicGrenadePlayer",normalStat:"base_cooldown_speed_+%",normalVal:"1000",gemStat:"active_skill_fire_damage_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Gathering Storm",weapon:"Quarterstaves",support:false,id:"GatheringStormPlayer",normalStat:"perfect_timing_window_ms_+%",normalVal:"1000",gemStat:"chance_for_extra_damage_roll_with_lightning_damage_%",gemVal:"1500",hasGemling:true},
+  {name:"Ghost Dance",weapon:"Any / no weapon req",support:false,id:"GhostDancePlayer",normalStat:"base_reservation_efficiency_+%",normalVal:"1000",gemStat:"ghost_dance_max_stacks",gemVal:"50",hasGemling:true},
+  {name:"Glacial Bolt",weapon:"Crossbows",support:false,id:"GlacialBoltPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"1",gemStat:"active_skill_base_area_of_effect_radius",gemVal:"500",hasGemling:true},
+  {name:"Glacial Cascade",weapon:"Quarterstaves",support:false,id:"GlacialCascadePlayer",normalStat:"active_skill_base_physical_damage_%_to_gain_as_cold",normalVal:"750",gemStat:"active_skill_attack_speed_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Glacial Lance",weapon:"Spears",support:false,id:"GlacialLancePlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"charge_skip_consume_chance_%",gemVal:"1000",hasGemling:true},
+  {name:"Grim Feast",weapon:"Any / no weapon req",support:false,id:"GrimFeastPlayer",normalStat:"grim_remnant_health_stored_in_globe_%",normalVal:"250",gemStat:"remnant_pickup_range_+%",gemVal:"2000",hasGemling:true},
+  {name:"Grim Pillars",weapon:"Any / no weapon req",support:false,id:"GrimPillarsPlayer",normalStat:"grim_pillars_number_of_pillars_to_create",normalVal:"100",gemStat:"active_skill_base_secondary_area_of_effect_radius",gemVal:"200",hasGemling:true},
+  {name:"Hailstorm Rounds",weapon:"Crossbows",support:false,id:"HailstormRoundsPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"1",gemStat:"base_reduce_enemy_cold_resistance_%",gemVal:"3000",hasGemling:true},
+  {name:"Hammer of the Gods",weapon:"One Hand Maces, Two Hand Maces",support:false,id:"HammerOfTheGodsPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"chance_to_not_consume_glory_%",gemVal:"2500",hasGemling:true},
+  {name:"Herald of Ash",weapon:"Any weapon",support:false,id:"HeraldOfAshPlayer",normalStat:"herald_of_ash_burning_%_overkill_damage_per_minute",normalVal:"15000",gemStat:"herald_of_ash_fire_damage_+%",gemVal:"1000",hasGemling:true},
+  {name:"Herald of Blood",weapon:"Any weapon",support:false,id:"HeraldOfBloodPlayer",normalStat:"skill_herald_bleeding_enemies_explode_for_%_blood_loss_as_unscalable_physical_damage",normalVal:"200",gemStat:"herald_of_blood_global_physical_damage_granted_+%",gemVal:"750",hasGemling:true},
+  {name:"Herald of Ice",weapon:"Any weapon",support:false,id:"HeraldOfIcePlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"herald_of_ice_cold_damage_+%",gemVal:"1000",hasGemling:true},
+  {name:"Herald of Plague",weapon:"Any weapon",support:false,id:"HeraldOfPlaguePlayer",normalStat:"hinder_chance_%_on_spreading_poioson",normalVal:"1000",gemStat:"active_skill_area_of_effect_+%_final",gemVal:"1500",hasGemling:true},
+  {name:"Herald of Thunder",weapon:"Any weapon",support:false,id:"HeraldOfThunderPlayer",normalStat:"herald_of_thunder_storm_max_hits",normalVal:"100",gemStat:"herald_of_thunder_lightning_damage_+%",gemVal:"1000",hasGemling:true},
+  {name:"Hexblast",weapon:"Any / no weapon req",support:false,id:"HexblastPlayer",normalStat:"hexblast_damage_+%_final_per_second_remaining_curse_duration",normalVal:"500",gemStat:"active_skill_critical_strike_chance_+%_final",gemVal:"2000",hasGemling:true},
+  {name:"High Velocity Rounds",weapon:"Crossbows",support:false,id:"HighVelocityRoundsPlayer",normalStat:"active_skill_projectile_damage_+%_final_if_pierced_enemy",normalVal:"1000",gemStat:"active_skill_physical_damage_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Hollow Shell",weapon:"Any / no weapon req",support:false,id:"HollowShellPlayer",normalStat:"skill_hollow_shell_spent_ward_%_to_grant_as_guard",normalVal:"250",gemStat:"base_skill_effect_duration",gemVal:"100000",hasGemling:true},
+  {name:"Hypothermia",weapon:"Any / no weapon req",support:false,id:"HypothermiaPlayer",normalStat:"curse_effect_+%",normalVal:"500",gemStat:"curse_delay_+%",gemVal:"-2500",hasGemling:true},
+  {name:"Ice Nova",weapon:"Any / no weapon req",support:false,id:"IceNovaPlayer",normalStat:"active_skill_damage_+%_final_vs_chilled_enemies",normalVal:"1000",gemStat:"chance_to_not_consume_infusion_%",gemVal:"2000",hasGemling:true},
+  {name:"Ice Shards",weapon:"Crossbows",support:false,id:"IceShardsPlayer",normalStat:"active_skill_chill_as_though_damage_+%_final",normalVal:"5000",gemStat:"active_skill_hit_damage_freeze_multiplier_+%_final",gemVal:"10000",hasGemling:true},
+  {name:"Ice Shot",weapon:"Bows",support:false,id:"IceShotPlayer",normalStat:"active_skill_chill_effect_+%_final",normalVal:"1500",gemStat:"movement_speed_penalty_+%_while_performing_action",gemVal:"-2000",hasGemling:true},
+  {name:"Ice Strike",weapon:"Quarterstaves",support:false,id:"IceStrikePlayer",normalStat:"attack_speed_+%",normalVal:"1000",gemStat:"active_skill_critical_strike_chance_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Incendiary Shot",weapon:"Crossbows",support:false,id:"IncendiaryShotPlayer",normalStat:"ignite_duration_+%_per_shotgun_pellet_hit",normalVal:"750",gemStat:"base_number_of_projectiles",gemVal:"200",hasGemling:true},
+  {name:"Incinerate",weapon:"Any / no weapon req",support:false,id:"IncineratePlayer",normalStat:"active_skill_ignite_duration_+%_final",normalVal:"1000",gemStat:"incinerate_maximum_fuel",gemVal:"100000",hasGemling:true},
+  {name:"Infernal Cry",weapon:"Any / no weapon req",support:false,id:"InfernalCryPlayer",normalStat:"infernal_cry_exerted_attack_all_damage_%_to_gain_as_fire_%",normalVal:"500",gemStat:"active_skill_base_area_of_effect_radius",gemVal:"1500",hasGemling:true},
+  {name:"Iron Ward",weapon:"Any / no weapon req",support:false,id:"IronWardNovaPlayer",normalStat:"active_skill_hit_damage_stun_multiplier_+%_final",normalVal:"2500",gemStat:"active_skill_physical_damage_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Killing Palm",weapon:"Quarterstaves",support:false,id:"KillingPalmPlayer",normalStat:"recover_%_maximum_mana_on_cull",normalVal:"200",gemStat:"recover_%_maximum_life_on_cull",gemVal:"500",hasGemling:true},
+  {name:"Leap Slam",weapon:"One Hand Maces, Two Hand Maces",support:false,id:"LeapSlamPlayer",normalStat:"active_skill_damage_+%_final_vs_fully_broken_armour",normalVal:"1000",gemStat:"active_skill_area_of_effect_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Leylines",weapon:"Any / no weapon req",support:false,id:"LeylinesPlayer",normalStat:"base_skill_effect_duration",normalVal:"100000",gemStat:"skill_leylines_spell_damage_+%_final",gemVal:"500",hasGemling:true},
+  {name:"Lightning Arrow",weapon:"Bows",support:false,id:"LightningArrowPlayer",normalStat:"active_skill_shock_chance_+%_final",normalVal:"2000",gemStat:"chance_for_extra_damage_roll_with_lightning_damage_%",gemVal:"1500",hasGemling:true},
+  {name:"Lightning Conduit",weapon:"Any / no weapon req",support:false,id:"LightningConduitPlayer",normalStat:"active_skill_lightning_damage_+%_final",normalVal:"1000",gemStat:"lightning_conduit_x_additional_strikes_if_consumed_a_shock",gemVal:"200",hasGemling:true},
+  {name:"Lightning Rod",weapon:"Bows",support:false,id:"LightningRodPlayer",normalStat:"lightning_rod_%_chance_for_additional_burst_on_landing",normalVal:"1000",gemStat:"active_skill_attack_speed_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Lightning Spear",weapon:"Spears",support:false,id:"LightningSpearPlayer",normalStat:"base_number_of_projectiles",normalVal:"100",gemStat:"chance_%_to_double_effect_of_removing_charges",gemVal:"1000",hasGemling:true},
+  {name:"Lightning Warp",weapon:"Any / no weapon req",support:false,id:"LightningWarpPlayer",normalStat:"shock_effect_+%",normalVal:"500",gemStat:"active_skill_cast_speed_+%_final",gemVal:"2000",hasGemling:true},
+  {name:"Lingering Illusion",weapon:"Any / no weapon req",support:false,id:"LingeringIllusionPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"1",gemStat:"base_spirit_reservation_efficiency_+%",gemVal:"2000",hasGemling:true},
+  {name:"Living Bomb",weapon:"Any / no weapon req",support:false,id:"LivingBombPlayer",normalStat:"active_skill_ignite_chance_+%_final",normalVal:"1000",gemStat:"active_skill_fire_damage_+%_final",gemVal:"2500",hasGemling:true},
+  {name:"Load Explosive Shot",weapon:"Crossbows",support:false,id:"ExplosiveShotAmmoPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"1",gemStat:"base_number_of_crossbow_bolts",gemVal:"100",hasGemling:true},
+  {name:"Load Fragmentation Rounds",weapon:"Crossbows",support:false,id:"FragmentationRoundsAmmoPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"0",gemStat:"active_skill_reload_speed_+%_final",gemVal:"5000",hasGemling:true},
+  {name:"Load Galvanic Shards",weapon:"Crossbows",support:false,id:"GalvanicShardsAmmoPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"1",gemStat:"base_number_of_crossbow_bolts",gemVal:"100",hasGemling:true},
+  {name:"Load Permafrost Bolts",weapon:"Crossbows",support:false,id:"PermafrostBoltsAmmoPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"0",gemStat:"active_skill_reload_speed_+%_final",gemVal:"5000",hasGemling:true},
+  {name:"Load Siege Cascade",weapon:"Crossbows",support:false,id:"SiegeCascadeAmmoPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"1",gemStat:"base_number_of_crossbow_bolts",gemVal:"150",hasGemling:true},
+  {name:"Load Stormblast Bolts",weapon:"Crossbows",support:false,id:"StormblastBoltsAmmoPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"1",gemStat:"base_number_of_crossbow_bolts",gemVal:"100",hasGemling:true},
+  {name:"Lunar Assault",weapon:"Talismans",support:false,id:"LunarAssaultPlayer",normalStat:"active_skill_base_physical_damage_%_to_gain_as_cold",normalVal:"500",gemStat:"base_reduce_enemy_cold_resistance_%",gemVal:"1000",hasGemling:true},
+  {name:"Lunar Blessing",weapon:"Talismans",support:false,id:"WolfLunarBlessingPlayer",normalStat:"wolf_lunar_blessing_all_damage_%_to_gain_as_cold_damage",normalVal:"500",gemStat:"base_cooldown_speed_+%",gemVal:"2000",hasGemling:true},
+  {name:"Magma Barrier",weapon:"Shields, Bucklers",support:false,id:"MagmaBarrierPlayer",normalStat:"skill_igneous_shield_grants_block_chance_+%",normalVal:"250",gemStat:"magma_barrier_maximum_block_chance_granted_%",gemVal:"250",hasGemling:true},
+  {name:"Magnetic Salvo",weapon:"Bows",support:false,id:"MagneticSalvoPlayer",normalStat:"base_number_of_projectiles",normalVal:"200",gemStat:"active_skill_lightning_damage_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Mana Remnants",weapon:"Any / no weapon req",support:false,id:"ManaRemnantsPlayer",normalStat:"mana_remnants_mana_gain_per_globe",normalVal:"2000",gemStat:"mana_remnants_global_mana_regeneration_rate_granted_+%",gemVal:"2000",hasGemling:true},
+  {name:"Mana Tempest",weapon:"Any / no weapon req",support:false,id:"ManaTempestPlayer",normalStat:"mana_tempest_effects_linger_X_ms",normalVal:"100000",gemStat:"mana_tempest_mana_cost_%_to_add_to_cost_per_second",gemVal:"-400",hasGemling:true},
+  {name:"Manifest Rune",weapon:"Any / no weapon req",support:false,id:"TriggeredManifestRunePlayer",normalStat:"base_skill_effect_duration",normalVal:"100000",gemStat:"base_number_of_verisium_runes_allowed",gemVal:"100",hasGemling:true},
+  {name:"Mantra of Destruction",weapon:"Quarterstaves",support:false,id:"MantraOfDestructionPlayer",normalStat:"active_skill_required_number_of_combo_stacks",normalVal:"-50",gemStat:"base_secondary_skill_effect_duration",gemVal:"2500",hasGemling:true},
+  {name:"Molten Blast",weapon:"One Hand Maces, Two Hand Maces",support:false,id:"MoltenBlastPlayer",normalStat:"inflict_exposure_on_hit_%_chance",normalVal:"1500",gemStat:"number_of_additional_projectiles",gemVal:"100",hasGemling:true},
+  {name:"Mortar Cannon",weapon:"Crossbows",support:false,id:"MetaMortarCannonPlayer",normalStat:"totem_skill_area_of_effect_+%",normalVal:"1000",gemStat:"base_number_of_totems_allowed",gemVal:"50",hasGemling:true},
+  {name:"Oil Barrage",weapon:"Talismans",support:false,id:"OilBarragePlayer",normalStat:"skill_base_oil_exposure_-_to_total_elemental_resistance",normalVal:"250",gemStat:"charge_skip_consume_chance_%",gemVal:"1000",hasGemling:true},
+  {name:"Oil Grenade",weapon:"Crossbows",support:false,id:"OilGrenadePlayer",normalStat:"base_cooldown_speed_+%",normalVal:"1000",gemStat:"skill_base_oil_exposure_-_to_total_elemental_resistance",gemVal:"500",hasGemling:true},
+  {name:"Orb of Storms",weapon:"Any / no weapon req",support:false,id:"OrbOfStormsPlayer",normalStat:"number_of_chains",normalVal:"150",gemStat:"orb_of_storms_maximum_number_of_hits",gemVal:"300",hasGemling:true},
+  {name:"Pain Offering",weapon:"Any / no weapon req",support:false,id:"PainOfferingPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"1200",gemStat:"pain_offering_attack_and_cast_speed_+%",gemVal:"1000",hasGemling:true},
+  {name:"Perfect Strike",weapon:"One Hand Maces, Two Hand Maces",support:false,id:"PerfectStrikePlayer",normalStat:"active_skill_ignite_chance_+%_final",normalVal:"1000",gemStat:"active_skill_attack_speed_+%_final",gemVal:"2000",hasGemling:true},
+  {name:"Plague Bearer",weapon:"Any / no weapon req",support:false,id:"PlagueBearerPlayer",normalStat:"plague_bearer_gains_%_of_damage_from_inflicted_poisons",normalVal:"100",gemStat:"poison_effect_+%_vs_non_poisoned_enemies",gemVal:"2500",hasGemling:true},
+  {name:"Plasma Blast",weapon:"Crossbows",support:false,id:"PlasmaBlastPlayer",normalStat:"active_skill_shock_duration_+%_final",normalVal:"1500",gemStat:"base_number_of_projectiles",gemVal:"100",hasGemling:true},
+  {name:"Poisonburst Arrow",weapon:"Bows",support:false,id:"PoisonBurstArrowPlayer",normalStat:"active_skill_poison_effect_+%_final",normalVal:"500",gemStat:"armour_break_for_%_of_poison_damage_over_poison_duration",gemVal:"1000",hasGemling:true},
+  {name:"Powered by Verisium",weapon:"Any / no weapon req",support:false,id:"PoweredByVerisiumPlayer",normalStat:"verisium_infusion_duration_+%",normalVal:"2500",gemStat:"additional_infusion_gain_chance_%",gemVal:"1000",hasGemling:true},
+  {name:"Primal Strikes",weapon:"Spears",support:false,id:"PrimalStrikesPlayer",normalStat:"attack_speed_+%",normalVal:"1000",gemStat:"active_skill_critical_strike_chance_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Profane Ritual",weapon:"Any / no weapon req",support:false,id:"ProfaneRitualPlayer",normalStat:"base_chance_to_not_consume_corpse_%",normalVal:"500",gemStat:"active_skill_quality_duration_+%_final",gemVal:"5000",hasGemling:true},
+  {name:"Projectile (Staggering Palm)",weapon:"Quarterstaves",support:false,id:"StaggeringPalmProjectilePlayer",normalStat:"attacks_chance_to_blind_on_hit_%",normalVal:"2000",gemStat:"number_of_additional_projectiles",gemVal:"100",hasGemling:true},
+  {name:"Raging Spirits",weapon:"Any / no weapon req",support:false,id:"RagingSpiritsPlayer",normalStat:"base_number_of_raging_spirits_allowed",normalVal:"100",gemStat:"active_skill_minion_damage_+%_final",gemVal:"2500",hasGemling:true},
+  {name:"Rain of Arrows",weapon:"Bows",support:false,id:"RainOfArrowsPlayer",normalStat:"rain_of_arrows_arrow_speed_+%",normalVal:"1000",gemStat:"active_skill_damage_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Raise Zombie",weapon:"Any / no weapon req",support:false,id:"RaiseZombiePlayer",normalStat:"raise_zombie_empowerment_effect_+%",normalVal:"1250",gemStat:"base_number_of_zombies_allowed",gemVal:"200",hasGemling:true},
+  {name:"Rake",weapon:"Spears",support:false,id:"RakePlayer",normalStat:"base_additional_damage_from_distance_+%_final",normalVal:"1500",gemStat:"base_aggravate_bleeding_on_attack_hit_chance_%",gemVal:"1000",hasGemling:true},
+  {name:"Rampage",weapon:"Talismans",support:false,id:"BearRampagePlayer",normalStat:"channelled_skill_suppress_ongoing_rage_cost_for_first_X_ms",normalVal:"50000",gemStat:"active_skill_area_of_effect_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Rapid Assault",weapon:"Spears",support:false,id:"RapidAssaultPlayer",normalStat:"rapid_assault_%_chance_to_attach_additional_spear",normalVal:"1000",gemStat:"active_skill_bleeding_effect_+%_final",gemVal:"2000",hasGemling:true},
+  {name:"Rapid Shot",weapon:"Crossbows",support:false,id:"RapidShotPlayer",normalStat:"maximum_number_of_crossbow_heat_stacks",normalVal:"750",gemStat:"maximum_number_of_crossbow_heat_stacks",gemVal:"1500",hasGemling:true},
+  {name:"Ravenous Swarm",weapon:"Any / no weapon req",support:false,id:"RavenousSwarmPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"500",gemStat:"base_cooldown_modifiable_repeat_interval_ms",gemVal:"-100000",hasGemling:true},
+  {name:"Reaper's Invocation",weapon:"Any / no weapon req",support:false,id:"MetaReapersInvocationPlayer",normalStat:"energy_generated_+%",normalVal:"1000",gemStat:"triggered_skill_damage_+%",gemVal:"1000",hasGemling:true},
+  {name:"Refutation",weapon:"Any / no weapon req",support:false,id:"RefutationPlayer",normalStat:"runic_fortress_stun_threshold_+%_final",normalVal:"1000",gemStat:"base_skill_effect_duration",gemVal:"50000",hasGemling:true},
+  {name:"Remnants of Kalguur",weapon:"Any / no weapon req",support:false,id:"MetaRemnantsOfKalguurPlayer",normalStat:"ward_remnants_chance_to_spawn_orb_on_killing_enemy_%",normalVal:"250",gemStat:"ward_remnants_spawn_remnant_on_stun_cooldown_ms",gemVal:"-2500",hasGemling:true},
+  {name:"Repulsion Wave",weapon:"Any / no weapon req",support:false,id:"CurseOfRepulsionShockwavePlayer",normalStat:"active_skill_hit_damage_stun_multiplier_+%_final",normalVal:"2000",gemStat:"active_skill_damage_+%_final_vs_immobilised_enemies",gemVal:"1000",hasGemling:true},
+  {name:"Resonating Shield",weapon:"Shields",support:false,id:"ResonatingShieldPlayer",normalStat:"armour_break_amount_+%",normalVal:"1000",gemStat:"stun_threshold_+%_while_channelling",gemVal:"5000",hasGemling:true},
+  {name:"Rhoa Mount",weapon:"Any / no weapon req",support:false,id:"RhoaMountPlayer",normalStat:"active_skill_minion_life_+%_final",normalVal:"1000",gemStat:"base_reservation_efficiency_+%",gemVal:"1500",hasGemling:true},
+  {name:"ripwire_arrow",weapon:"Crossbows",support:false,id:"ArtilleryBallistaProjectilePlayer",normalStat:"active_skill_pins_as_though_dealt_damage_+%_final",normalVal:"10000",gemStat:"base_number_of_totems_allowed",gemVal:"50",hasGemling:true},
+  {name:"Rolling Magma",weapon:"Talismans",support:false,id:"RollingMagmaPlayer",normalStat:"active_skill_damage_+%_final_per_time_chained",normalVal:"500",gemStat:"number_of_chains",gemVal:"200",hasGemling:true},
+  {name:"Rolling Slam",weapon:"One Hand Maces, Two Hand Maces",support:false,id:"RollingSlamPlayer",normalStat:"active_skill_stun_threshold_+%_while_performing_action",normalVal:"5000",gemStat:"armour_break_physical_damage_%_dealt_as_armour_break",gemVal:"2000",hasGemling:true},
+  {name:"Runic Reprieve",weapon:"Any / no weapon req",support:false,id:"RunicReprievePlayer",normalStat:"active_skill_stun_threshold_+%_while_performing_action",normalVal:"2000",gemStat:"rune_ward_block_%_damage_taken",gemVal:"500",hasGemling:true},
+  {name:"Sacrifice",weapon:"Any / no weapon req",support:false,id:"SacrificePlayer",normalStat:"harvester_minion_resummon_speed_+%_final",normalVal:"250",gemStat:"sacrifice_minion_life_granted_+%",gemVal:"2000",hasGemling:true},
+  {name:"Savage Fury",weapon:"Talismans",support:false,id:"SavageFuryActivePlayer",normalStat:"wild_beast_damage_+%_final",normalVal:"250",gemStat:"wild_beast_energy_per_hit",gemVal:"50",hasGemling:true},
+  {name:"Scavenged Plating",weapon:"Any / no weapon req",support:false,id:"ScavengedPlatingPlayer",normalStat:"base_skill_effect_duration",normalVal:"100000",gemStat:"scavenged_plating_armour_+%_final_per_stack",gemVal:"50",hasGemling:true},
+  {name:"Seismic Cry",weapon:"Any / no weapon req",support:false,id:"SeismicCryPlayer",normalStat:"seismic_cry_slam_skill_aftershock_damage_+%_final",normalVal:"500",gemStat:"active_skill_base_physical_damage_%_to_gain_as_fire",gemVal:"1000",hasGemling:true},
+  {name:"Shard Scavenger",weapon:"Crossbows",support:false,id:"ShardScavengerPlayer",normalStat:"base_reservation_efficiency_+%",normalVal:"500",gemStat:"active_skill_quality_duration_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Shattering Palm",weapon:"Quarterstaves",support:false,id:"ShatteringPalmPlayer",normalStat:"active_skill_critical_strike_chance_+%_final",normalVal:"1000",gemStat:"active_skill_area_of_effect_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Shield Charge",weapon:"Shields",support:false,id:"ShieldChargePlayer",normalStat:"base_additional_damage_from_distance_+%_final",normalVal:"2000",gemStat:"shield_charge_extra_distance",gemVal:"1500",hasGemling:true},
+  {name:"Shield Wall",weapon:"Shields",support:false,id:"ShieldWallPlayer",normalStat:"shield_wall_damage_+%_final_when_slammed",normalVal:"2000",gemStat:"active_skill_base_physical_damage_%_to_gain_as_fire",gemVal:"1000",hasGemling:true},
+  {name:"Shield Wave",weapon:"Shields",support:false,id:"FortifyingCryShockwavePlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"base_secondary_skill_effect_duration",gemVal:"2000",hasGemling:true},
+  {name:"Shockburst Rounds",weapon:"Crossbows",support:false,id:"ShockburstRoundsPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"1",gemStat:"active_skill_area_of_effect_+%_final",gemVal:"1500",hasGemling:true},
+  {name:"Shockchain Arrow",weapon:"Bows",support:false,id:"ShockchainArrowPlayer",normalStat:"active_skill_lightning_damage_+%_final",normalVal:"1000",gemStat:"active_skill_attack_speed_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Shockwave Totem",weapon:"Any weapon",support:false,id:"ShockwaveTotemPlayer",normalStat:"base_totem_duration",normalVal:"200000",gemStat:"base_number_of_totems_allowed",gemVal:"50",hasGemling:true},
+  {name:"Siege Ballista",weapon:"Crossbows",support:false,id:"SiegeBallistaPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"1",gemStat:"base_number_of_totems_allowed",gemVal:"50",hasGemling:true},
+  {name:"Siege Cascade",weapon:"Crossbows",support:false,id:"SiegeCascadePlayer",normalStat:"active_skill_damage_+%_final_vs_immobilised_enemies",normalVal:"2000",gemStat:"base_number_of_crossbow_bolts",gemVal:"5",hasGemling:true},
+  {name:"Siphon Elements",weapon:"Any / no weapon req",support:false,id:"SiphonElementsPlayer",normalStat:"infusion_remnants_%_chance_to_spawn_cold_infusion_on_freezing_an_enemy",normalVal:"100",gemStat:"remnant_pickup_range_+%",gemVal:"1500",hasGemling:true},
+  {name:"Siphoning Strike",weapon:"Quarterstaves",support:false,id:"SiphoningStrikePlayer",normalStat:"base_chance_to_daze_%",normalVal:"2500",gemStat:"chance_to_gain_1_more_charge_%",gemVal:"2500",hasGemling:true},
+  {name:"Skeletal Arsonist Minion",weapon:"Any / no weapon req",support:false,id:"SummonSkeletalArsonistsPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"1",gemStat:"number_of_additional_projectiles",gemVal:"100",hasGemling:true},
+  {name:"Skeletal Brute Minion",weapon:"Any / no weapon req",support:false,id:"SummonSkeletalBrutesPlayer",normalStat:"active_skill_minion_hit_damage_stun_multiplier_+%_final",normalVal:"2000",gemStat:"active_skill_minion_life_+%_final",gemVal:"1500",hasGemling:true},
+  {name:"Skeletal Cleric Minion",weapon:"Any / no weapon req",support:false,id:"SummonSkeletalClericsPlayer",normalStat:"skeletal_cleric_revived_skeletons_immune_for_X_ms",normalVal:"150000",gemStat:"minion_damage_taken_+%",gemVal:"-2000",hasGemling:true},
+  {name:"Skeletal Frost Mage Minion",weapon:"Any / no weapon req",support:false,id:"SummonSkeletalFrostMagesPlayer",normalStat:"active_skill_minion_damage_+%_final",normalVal:"1000",gemStat:"base_spirit_reservation_efficiency_+%",gemVal:"1000",hasGemling:true},
+  {name:"Skeletal Reaver Minion",weapon:"Any / no weapon req",support:false,id:"SummonSkeletalReaversPlayer",normalStat:"minion_rage_effect_+%",normalVal:"1000",gemStat:"armour_break_physical_damage_%_dealt_as_armour_break",gemVal:"1500",hasGemling:true},
+  {name:"Skeletal Storm Mage Minion",weapon:"Any / no weapon req",support:false,id:"SummonSkeletalStormMagesPlayer",normalStat:"minion_maximum_life_%_to_gain_as_maximum_energy_shield",normalVal:"1000",gemStat:"minion_cast_speed_+%",gemVal:"1500",hasGemling:true},
+  {name:"Skyfall",weapon:"Any / no weapon req",support:false,id:"SkyfallPlayer",normalStat:"base_spell_%_chance_to_echo",normalVal:"500",gemStat:"damage_+%_vs_frozen_enemies",gemVal:"1000",hasGemling:true},
+  {name:"Snap",weapon:"Any / no weapon req",support:false,id:"SnapPlayer",normalStat:"chance_%_to_spawn_another_infusion_remnant",normalVal:"500",gemStat:"base_cooldown_speed_+%",gemVal:"5000",hasGemling:true},
+  {name:"Snipe",weapon:"Bows",support:false,id:"SnipePlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"active_skill_attack_speed_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Sniper's Mark",weapon:"Any / no weapon req",support:false,id:"SnipersMarkPlayer",normalStat:"enemy_additional_critical_strike_multiplier_against_self",normalVal:"750",gemStat:"gem_quality_marked_enemy_damage_dealt_+%_final",gemVal:"-500",hasGemling:true},
+  {name:"Soul Offering",weapon:"Any / no weapon req",support:false,id:"SoulOfferingPlayer",normalStat:"base_skill_effect_duration",normalVal:"50000",gemStat:"power_offering_buff_spell_damage_+%",gemVal:"1000",hasGemling:true},
+  {name:"Spark",weapon:"Any / no weapon req",support:false,id:"SparkPlayer",normalStat:"base_projectile_speed_+%",normalVal:"1500",gemStat:"number_of_additional_projectiles",gemVal:"200",hasGemling:true},
+  {name:"Spear of Solaris",weapon:"Spears",support:false,id:"SpearOfSolarisPlayer",normalStat:"chance_to_retain_40%_of_glory_on_use_%",normalVal:"1250",gemStat:"active_skill_fire_damage_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Spearfield",weapon:"Spears",support:false,id:"SpearfieldPlayer",normalStat:"hazard_rearm_%_chance",normalVal:"500",gemStat:"active_skill_attack_speed_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Spectre",weapon:"Any / no weapon req",support:false,id:"SummonSpectrePlayer",normalStat:"active_skill_minion_damage_+%_final",normalVal:"1000",gemStat:"base_reservation_efficiency_+%",gemVal:"1000",hasGemling:true},
+  {name:"Spiral Volley",weapon:"Bows",support:false,id:"SpiralVolleyPlayer",normalStat:"base_number_of_projectiles",normalVal:"200",gemStat:"chance_%_to_double_effect_of_removing_charges",gemVal:"1500",hasGemling:true},
+  {name:"Stampede",weapon:"One Hand Maces, Two Hand Maces",support:false,id:"StampedePlayer",normalStat:"slam_aftershock_chance_%",normalVal:"1000",gemStat:"active_skill_movement_speed_+%_final",gemVal:"5000",hasGemling:true},
+  {name:"Storm Lance",weapon:"Spears",support:false,id:"StormLancePlayer",normalStat:"base_number_of_overcharged_spears_allowed",normalVal:"50",gemStat:"base_number_of_projectiles",gemVal:"100",hasGemling:true},
+  {name:"Storm Wave",weapon:"Quarterstaves",support:false,id:"StormWavePlayer",normalStat:"active_skill_base_secondary_area_of_effect_radius",normalVal:"500",gemStat:"active_skill_base_area_of_effect_radius",gemVal:"2000",hasGemling:true},
+  {name:"Stormcaller Arrow",weapon:"Bows",support:false,id:"StormcallerArrowPlayer",normalStat:"shock_duration_+%",normalVal:"1500",gemStat:"number_of_additional_projectiles",gemVal:"100",hasGemling:true},
+  {name:"Summon Companion",weapon:"Any / no weapon req",support:false,id:"SummonMercenaryCompanionPlayer",normalStat:"companion_all_attributes_+%",normalVal:"500",gemStat:"companion_maximum_life_+%",gemVal:"1000",hasGemling:true},
+  {name:"Summon Wolf",weapon:"Any / no weapon req",support:false,id:"WolfPounceSummonWolfPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"1",gemStat:"number_of_wolves_allowed",gemVal:"200",hasGemling:true},
+  {name:"Sunder",weapon:"One Hand Maces, Two Hand Maces",support:false,id:"SunderPlayer",normalStat:"accuracy_range_penalty_+%",normalVal:"-2500",gemStat:"active_skill_attack_speed_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Supercharged Slam",weapon:"Two Hand Maces",support:false,id:"SuperchargedSlamPlayer",normalStat:"channelled_slam_max_stages",normalVal:"50",gemStat:"active_skill_hit_damage_stun_multiplier_+%_final",gemVal:"15000",hasGemling:true},
+  {name:"Blasphemy (Support)",weapon:"N/A (support)",support:true,id:"SupportBlasphemyPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"1",gemStat:"curse_effect_+%",gemVal:"1000",hasGemling:true},
+  {name:"Ferocious Roar (Support)",weapon:"N/A (support)",support:true,id:"SupportFerociousRoarPlayer",normalStat:"warcry_grant_damage_+%_to_exerted_attacks",normalVal:"1500",gemStat:"base_cooldown_speed_+%",gemVal:"2000",hasGemling:true},
+  {name:"Hand of Chayula (Support)",weapon:"N/A (support)",support:true,id:"SupportHandOfChayulaPlayer",normalStat:"base_curse_duration_+%",normalVal:"1000",gemStat:"base_mana_cost_-%",gemVal:"2500",hasGemling:true},
+  {name:"Spell Totem (Support)",weapon:"N/A (support)",support:true,id:"SupportMetaTotemSpellTotemPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"0",gemStat:"totems_spells_cast_speed_+%_per_active_totem",gemVal:"500",hasGemling:true},
+  {name:"Tame Beast",weapon:"Any / no weapon req",support:false,id:"TameBeastPlayer",normalStat:"base_skill_effect_duration",normalVal:"80000",gemStat:"base_mana_cost_-%",gemVal:"2500",hasGemling:true},
+  {name:"Tempest Bell",weapon:"Quarterstaves",support:false,id:"TempestBellPlayer",normalStat:"tempest_bell_damage_+%_final_per_time_hit",normalVal:"150",gemStat:"bell_hit_limit",gemVal:"500",hasGemling:true},
+  {name:"Tempest Flurry",weapon:"Quarterstaves",support:false,id:"TempestFlurryPlayer",normalStat:"melee_range_+",normalVal:"200",gemStat:"final_strike_number_of_spirit_strikes",gemVal:"100",hasGemling:true},
+  {name:"Temporal Chains",weapon:"Any / no weapon req",support:false,id:"TemporalChainsPlayer",normalStat:"curse_effect_+%",normalVal:"500",gemStat:"curse_delay_+%",gemVal:"-2500",hasGemling:true},
+  {name:"Thrashing Vines",weapon:"Any / no weapon req",support:false,id:"ThrashingVinesPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"250",gemStat:"impale_on_hit_%_chance",gemVal:"1500",hasGemling:true},
+  {name:"Thunderous Leap",weapon:"Spears",support:false,id:"ThunderousLeapPlayer",normalStat:"thunderous_leap_%_chance_for_shocked_ground_when_detonating",normalVal:"1500",gemStat:"slam_aftershock_chance_%",gemVal:"2000",hasGemling:true},
+  {name:"Thunderstorm",weapon:"Any / no weapon req",support:false,id:"ThunderstormPlayer",normalStat:"thunderstorm_wet_debuff_shock_chance_on_+%_final",normalVal:"500",gemStat:"active_skill_area_of_effect_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Time of Need",weapon:"Any / no weapon req",support:false,id:"TimeOfNeedPlayer",normalStat:"skill_time_of_need_gain_x_life",normalVal:"2000",gemStat:"time_of_need_global_life_regeneration_rate_granted_+%",gemVal:"1000",hasGemling:true},
+  {name:"Tornado",weapon:"Any / no weapon req",support:false,id:"TornadoPlayer",normalStat:"base_skill_effect_duration",normalVal:"100000",gemStat:"number_of_tornados_allowed",gemVal:"100",hasGemling:true},
+  {name:"Tornado Shot",weapon:"Bows",support:false,id:"TornadoShotPlayer",normalStat:"tornado_shot_projectile_damage_+%_final",normalVal:"750",gemStat:"base_number_of_tornado_shots_allowed",gemVal:"100",hasGemling:true},
+  {name:"Toxic Domain",weapon:"Spears, Bows, Crossbows",support:false,id:"ToxicDomainPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"150",gemStat:"toxic_domain_buff_linger_duration_ms",gemVal:"100000",hasGemling:true},
+  {name:"Toxic Growth",weapon:"Bows",support:false,id:"ToxicGrowthPlayer",normalStat:"base_number_of_projectiles",normalVal:"50",gemStat:"base_poison_duration_+%",gemVal:"2000",hasGemling:true},
+  {name:"Transmutation Explosion",weapon:"Any / no weapon req",support:false,id:"TriggeredExplosiveTransmutationExplosionPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"100",gemStat:"base_ward_cost_efficiency_+%",gemVal:"1500",hasGemling:true},
+  {name:"Trinity",weapon:"Any / no weapon req",support:false,id:"TrinityPlayer",normalStat:"trinity_skill_speed_+%_while_all_resonance_is_at_least_250_to_grant",normalVal:"750",gemStat:"trinity_%_physical_damage_to_convert_to_random_element_granted",gemVal:"1000",hasGemling:true},
+  {name:"Triskelion Cascade",weapon:"Any / no weapon req",support:false,id:"TriskelionCascadePlayer",normalStat:"triskelion_cascade_next_skill_damage_+%_final",normalVal:"500",gemStat:"triskelion_cascade_next_skill_area_of_effect_+%_final",gemVal:"250",hasGemling:true},
+  {name:"Twister",weapon:"Spears",support:false,id:"TwisterPlayer",normalStat:"twister_%_chance_for_additional_twister",normalVal:"1000",gemStat:"active_skill_projectile_speed_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Unearth",weapon:"Any / no weapon req",support:false,id:"UnearthPlayer",normalStat:"base_skill_effect_duration",normalVal:"250000",gemStat:"active_skill_minion_attack_speed_+%_final",gemVal:"2500",hasGemling:true},
+  {name:"Vaulting Impact",weapon:"Quarterstaves",support:false,id:"VaultingImpactPlayer",normalStat:"broken_stance_hit_limit",normalVal:"100",gemStat:"active_skill_damage_+%_final_against_heavy_stunned_enemies",gemVal:"2500",hasGemling:true},
+  {name:"Vine Arrow",weapon:"Bows",support:false,id:"VineArrowPlayer",normalStat:"poison_vine_arrow_vine_stored_poison_damage_+%_final",normalVal:"500",gemStat:"active_skill_quality_duration_+%_final",gemVal:"2000",hasGemling:true},
+  {name:"Volcanic Fissure",weapon:"One Hand Maces, Two Hand Maces",support:false,id:"VolcanicFissurePlayer",normalStat:"slam_aftershock_chance_%",normalVal:"1000",gemStat:"active_skill_fire_damage_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Volcano",weapon:"Any / no weapon req",support:false,id:"VolcanoPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"100",gemStat:"active_skill_quality_duration_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Voltaic Grenade",weapon:"Crossbows",support:false,id:"ShockGrenadePlayer",normalStat:"base_cooldown_speed_+%",normalVal:"1000",gemStat:"active_skill_lightning_damage_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Voltaic Mark",weapon:"Any / no weapon req",support:false,id:"VoltaicMarkPlayer",normalStat:"thaumaturgist_mark_hit_damage_electrocute_multiplier_+%",normalVal:"1000",gemStat:"base_mana_cost_-%",gemVal:"2500",hasGemling:true},
+  {name:"voltaic_barrier_triggered_chain_lightning",weapon:"Most melee/ranged",support:false,id:"VoltaicBarrierTriggeredChainLightningPlayer",normalStat:"dummy_stat_display_nothing",normalVal:"0",gemStat:"number_of_chains",gemVal:"100",hasGemling:true},
+  {name:"Vulnerability",weapon:"Any / no weapon req",support:false,id:"VulnerabilityPlayer",normalStat:"curse_effect_+%",normalVal:"500",gemStat:"base_mana_cost_-%",gemVal:"2500",hasGemling:true},
+  {name:"Walking Calamity",weapon:"Talismans",support:false,id:"WalkingCalamityPlayer",normalStat:"walking_calamity_non_skill_base_all_damage_%_to_gain_as_fire",normalVal:"500",gemStat:"chance_to_not_consume_glory_%",gemVal:"2500",hasGemling:true},
+  {name:"War Banner",weapon:"Any / no weapon req",support:false,id:"WarBannerReservationPlayer",normalStat:"base_reservation_efficiency_+%",normalVal:"500",gemStat:"active_skill_area_of_effect_+%_final",gemVal:"1500",hasGemling:true},
+  {name:"Wardbound Minions",weapon:"Any / no weapon req",support:false,id:"WardboundMinionsPlayer",normalStat:"wardbound_minion_maximum_number_of_casts",normalVal:"100",gemStat:"base_skill_effect_duration",gemVal:"250000",hasGemling:true},
+  {name:"Wave of Frost",weapon:"Quarterstaves",support:false,id:"WaveOfFrostPlayer",normalStat:"base_reduce_enemy_cold_resistance_%",normalVal:"1000",gemStat:"frozen_monsters_take_increased_damage",gemVal:"2000",hasGemling:true},
+  {name:"Whirling Assault",weapon:"Quarterstaves",support:false,id:"WhirlingAssaultPlayer",normalStat:"attack_speed_+%",normalVal:"1000",gemStat:"active_skill_physical_damage_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Whirling Slash",weapon:"Spears",support:false,id:"WhirlingSlashPlayer",normalStat:"sandstorm_swipe_storm_damage_+%_final_per_stage",normalVal:"2000",gemStat:"active_skill_attack_speed_+%_final",gemVal:"500",hasGemling:true},
+  {name:"Whirlwind Lance",weapon:"Spears",support:false,id:"WhirlwindLancePlayer",normalStat:"sandstorm_swipe_storm_damage_+%_final_per_stage",normalVal:"2000",gemStat:"windstorm_gain_all_damage_%_as_corresponding_element_if_empowered",gemVal:"2500",hasGemling:true},
+  {name:"Wind Blast",weapon:"Quarterstaves",support:false,id:"GaleStrikePlayer",normalStat:"wind_blast_damage_+%_final_from_distance",normalVal:"1000",gemStat:"armour_break_physical_damage_%_dealt_as_armour_break",gemVal:"2000",hasGemling:true},
+  {name:"Wind Serpent's Fury",weapon:"Spears",support:false,id:"WindSerpentsFuryPlayer",normalStat:"active_skill_knockback_distance_+%_final",normalVal:"1500",gemStat:"active_skill_base_all_damage_%_to_gain_as_chaos",gemVal:"1000",hasGemling:true},
+  {name:"Wing Blast",weapon:"Talismans",support:false,id:"WingBlastPlayer",normalStat:"wing_blast_chance_to_gain_power_charge_on_stun_%",normalVal:"250",gemStat:"active_skill_physical_damage_+%_final",gemVal:"1000",hasGemling:true},
+  {name:"Withering Presence",weapon:"Any / no weapon req",support:false,id:"WitheringPresencePlayer",normalStat:"base_skill_effect_duration",normalVal:"50000",gemStat:"skill_withering_presence_frequency_ms",gemVal:"-25000",hasGemling:true},
+  {name:"Wolf Pack",weapon:"Any / no weapon req",support:false,id:"WolfPackPlayer",normalStat:"skill_wolf_pack_size",normalVal:"50",gemStat:"active_skill_minion_attack_speed_+%_final",gemVal:"1000",hasGemling:true},
+  // No Gemling
+  {name:"[DNT-UNUSED] Arcane Archery",weapon:"Any weapon",support:false,id:"MetaArcaneArcheryPlayer",normalStat:"fishing_line_strength_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"[DNT-UNUSED] Witch Hunter Mark",weapon:"Any / no weapon req",support:false,id:"WitchHunterMarkPlayer",normalStat:"remnant_effect_+%",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"[DNT] Companion",weapon:"Staves",support:false,id:"SoulCrystalPlayer",normalStat:"base_reservation_efficiency_+%",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"[DNT] Ranged Attack on Freeze",weapon:"Any weapon",support:false,id:"MetaRangedAttackOnFreezePlayer",normalStat:"fishing_line_strength_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"[DNT] Ranged Attack on Ignite",weapon:"Any weapon",support:false,id:"MetaRangedAttackOnIgnitePlayer",normalStat:"fishing_line_strength_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"[DNT] Ranged Attack on Shock",weapon:"Any weapon",support:false,id:"MetaRangedAttackOnShockPlayer",normalStat:"fishing_line_strength_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Acidic Concoction",weapon:"Any / no weapon req",support:false,id:"AcidicConcoctionPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Align Fate",weapon:"Any / no weapon req",support:false,id:"AlignFatePlayer",normalStat:"spellflux_frequency_+%_final",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Ancestral Spirits",weapon:"Any / no weapon req",support:false,id:"AncestralSpiritsPlayer",normalStat:"active_skill_minion_life_+%_final",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Apocalypse",weapon:"Any / no weapon req",support:false,id:"ApocalypsePlayer",normalStat:"unleash_the_elements_trigger_frequency_+%",normalVal:"750",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Archon of Chayula",weapon:"Any weapon",support:false,id:"ArchonOfChayulaPlayer",normalStat:"archon_of_chayula_physical_and_chaos_damage_+%_final",normalVal:"250",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"artillery_ballista_projectile",weapon:"Crossbows",support:false,id:"SiegeBallistaProjectilePlayer",normalStat:"active_skill_area_of_effect_+%_final",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Azmerian Swarms",weapon:"Any / no weapon req",support:false,id:"AzmerianSwarmPlayer",normalStat:"max_azmerian_swarms",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Azmerian Wolf",weapon:"Any / no weapon req",support:false,id:"SummonAzmerianWolfPlayer",normalStat:"active_skill_minion_life_+%_final",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Black Powder Blitz",weapon:"Any / no weapon req",support:false,id:"BlackPowderBlitzPlayer",normalStat:"base_cooldown_speed_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Blasphemy",weapon:"Any / no weapon req",support:false,id:"BlasphemyPlayer",normalStat:"base_reservation_efficiency_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Bleeding Concoction",weapon:"Any / no weapon req",support:false,id:"BleedingConcoctionPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Blood Boil",weapon:"Any / no weapon req",support:false,id:"BloodBoilPlayer",normalStat:"base_skill_effect_duration",normalVal:"75000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Bloodhound's Mark",weapon:"Any / no weapon req",support:false,id:"BloodhoundsMarkPlayer",normalStat:"hunters_mark_%_of_phys_damage_over_time_as_build_up",normalVal:"2500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Bone Blast",weapon:"Any / no weapon req",support:false,id:"BoneBlastPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Bursting Fen Toad",weapon:"Any / no weapon req",support:false,id:"ExplodingPoisonToadPlayer",normalStat:"trigger_toad_spawn_chance_%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Cackling Companions",weapon:"Any / no weapon req",support:false,id:"HyenaCacklePlayer",normalStat:"active_skill_minion_life_+%_final",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Called Shots",weapon:"Any / no weapon req",support:false,id:"MetaDeadeyeMarksPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Cast on Block",weapon:"Any / no weapon req",support:false,id:"MetaCastOnBlockPlayer",normalStat:"cast_on_block_gain_X_centienergy_on_block",normalVal:"250",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Cast on Charm Use",weapon:"Any / no weapon req",support:false,id:"MetaCastOnCharmUsePlayer",normalStat:"energy_generated_+%",normalVal:"750",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Cast on Freeze",weapon:"Any / no weapon req",support:false,id:"MetaCastOnFreezePlayer",normalStat:"energy_generated_+%",normalVal:"750",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Cast on Ignite",weapon:"Any / no weapon req",support:false,id:"MetaCastOnIgnitePlayer",normalStat:"energy_generated_+%",normalVal:"750",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Cast on Shock",weapon:"Any / no weapon req",support:false,id:"MetaCastOnShockPlayer",normalStat:"energy_generated_+%",normalVal:"750",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Chaos Bolt",weapon:"Any / no weapon req",support:false,id:"WeaponGrantedChaosboltPlayer",normalStat:"base_projectile_speed_+%",normalVal:"2000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Coiling Bolts",weapon:"Any / no weapon req",support:false,id:"CoilingBoltsPlayer",normalStat:"projectile_number_to_split",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Consecrate",weapon:"Any / no weapon req",support:false,id:"StaffConsecratePlayer",normalStat:"base_cast_speed_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Crackling Palm",weapon:"Any / no weapon req",support:false,id:"CracklingPalmPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"create_illusion",weapon:"Any / no weapon req",support:false,id:"LingeringIllusionSpawnPlayer",normalStat:"chance_%_to_create_additional_remnant",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"create_mirage_deadeye",weapon:"Spears, Bows, Crossbows",support:false,id:"MirageDeadeyeSpawnPlayer",normalStat:"base_skill_effect_duration",normalVal:"50000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"create_void_illusion",weapon:"Any / no weapon req",support:false,id:"VoidIllusionSpawnPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Crushing Fear",weapon:"Quarterstaves",support:false,id:"CrushingFearPlayer",normalStat:"active_skill_area_of_effect_+%_final",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Dark Pact",weapon:"Any / no weapon req",support:false,id:"DarkPactPlayer",normalStat:"skeletal_chains_aoe_%_health_dealt_as_chaos_damage",normalVal:"125",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Decompose",weapon:"Any / no weapon req",support:false,id:"CorpseCloudPlayer",normalStat:"base_skill_effect_duration",normalVal:"50000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Demon Form",weapon:"Any / no weapon req",support:false,id:"DemonFormPlayer",normalStat:"demon_form_grants_cast_speed_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Discipline",weapon:"Any / no weapon req",support:false,id:"DisciplinePlayer",normalStat:"base_skill_buff_energy_shield_recharge_rate_+%_to_apply",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Elemental Expression",weapon:"Any / no weapon req",support:false,id:"ElementalExpressionTriggeredPlayer",normalStat:"base_cooldown_speed_+%",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Elemental Storm",weapon:"Any / no weapon req",support:false,id:"ElementalStormPlayer",normalStat:"base_cooldown_speed_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Elemental Surge",weapon:"Any / no weapon req",support:false,id:"AmazonTriggerElementalSurgePlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"150",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Encase in Jade",weapon:"Any / no weapon req",support:false,id:"EncaseInJadePlayer",normalStat:"maximum_life_%_damage_absorbed_per_jade_consumed",normalVal:"50",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Enervating Nova",weapon:"Any / no weapon req",support:false,id:"EnervatingNovaPlayer",normalStat:"active_skill_electrocutes_as_though_dealt_damage_+%_final",normalVal:"2000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Explosive Concoction",weapon:"Any / no weapon req",support:false,id:"ExplosiveConcoctionPlayer",normalStat:"explosive_concoction_number_of_secondary_projectiles",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Explosive Demise",weapon:"Any / no weapon req",support:false,id:"DestructiveLinkSkeletonBombadierMinion",normalStat:"arsonist_destructive_link_%_of_life_as_fire_damage",normalVal:"200",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Explosive Shot",weapon:"Crossbows",support:false,id:"ExplosiveShotPlayer",normalStat:"active_skill_ignite_effect_+%_final",normalVal:"1500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Exsanguinate",weapon:"Any / no weapon req",support:false,id:"ExsanguinatePlayer",normalStat:"blood_tendrils_beam_count",normalVal:"50",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Feast of Flesh",weapon:"Any / no weapon req",support:false,id:"FeastOfFleshPlayer",normalStat:"feast_of_flesh_number_of_corpses",normalVal:"150",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Ferocious Roar",weapon:"Talismans",support:false,id:"FerociousRoarMetaPlayer",normalStat:"bear_warcry_gain_X_centirage_per_enemy_power",normalVal:"5000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Fire Spell on Melee Hit",weapon:"Any / no weapon req",support:false,id:"MetaCastFireSpellOnHitPlayer",normalStat:"energy_generated_+%",normalVal:"750",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Firebolt",weapon:"Any / no weapon req",support:false,id:"FireboltPlayer",normalStat:"active_skill_ignite_chance_+%_final",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Fragmentation Rounds",weapon:"Crossbows",support:false,id:"FragmentationRoundsPlayer",normalStat:"base_number_of_projectiles",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Freezing Shards",weapon:"Any / no weapon req",support:false,id:"FreezingShardsPlayer",normalStat:"base_number_of_projectiles",normalVal:"50",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Fulminating Concoction",weapon:"Any / no weapon req",support:false,id:"FulminatingConcoctionPlayer",normalStat:"active_skill_shock_chance_+%_final",normalVal:"2000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Fulmination",weapon:"Any / no weapon req",support:false,id:"FulminationPlayer",normalStat:"skill_wrath_aura_shared_damage_+%_to_other_shocked_enemies_in_presence",normalVal:"250",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Future-Past",weapon:"Any / no weapon req",support:false,id:"FuturePastPlayer",normalStat:"base_secondary_skill_effect_duration",normalVal:"15000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Galvanic Field",weapon:"Any / no weapon req",support:false,id:"GalvanicFieldBuffPlayer",normalStat:"number_of_chains",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Galvanic Shards",weapon:"Crossbows",support:false,id:"GalvanicShardsPlayer",normalStat:"base_number_of_projectiles",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Gemini Surge",weapon:"Any / no weapon req",support:false,id:"GeminiSurgePlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"150",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Heart of Ice",weapon:"Any / no weapon req",support:false,id:"HeartOfIcePlayer",normalStat:"active_skill_chill_effect_+%_final",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Herald of the Royal Queen",weapon:"Any / no weapon req",support:false,id:"UniqueAtziriHeraldPlayer",normalStat:"active_skill_damage_+%_final",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"His Foul Emergence",weapon:"Any / no weapon req",support:false,id:"HisFoulEmergencePlayer",normalStat:"base_skill_effect_duration",normalVal:"50000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"His Grave Command",weapon:"Any / no weapon req",support:false,id:"GraveCommandPlayer",normalStat:"base_skill_effect_duration",normalVal:"80000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"His Scattering Calamity",weapon:"Any / no weapon req",support:false,id:"ScatteringCalamityPlayer",normalStat:"ember_fusillade_damage_+%_final_per_ember_fired",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"His Vile Intrusion",weapon:"Any / no weapon req",support:false,id:"VileDisruptionPlayer",normalStat:"impale_magnitude_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"His Winnowing Flame",weapon:"Any / no weapon req",support:false,id:"HisWinnowingFlamePlayer",normalStat:"base_cast_speed_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Hollow Focus",weapon:"Most melee",support:false,id:"HollowFocusPlayer",normalStat:"active_skill_base_secondary_area_of_effect_radius",normalVal:"-200",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Hollow Form",weapon:"Most melee",support:false,id:"MetaHollowFormPlayer",normalStat:"base_power_charge_skip_consume_chance_%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Hollow Resonance",weapon:"Most melee",support:false,id:"HollowResonancePlayer",normalStat:"active_skill_hit_damage_stun_multiplier_+%_final",normalVal:"1500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Ice Fragments",weapon:"Any / no weapon req",support:false,id:"FragmentsOfThePastFragmentPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"200",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Ice-Tipped Arrows",weapon:"Spears, Bows",support:false,id:"IceTippedArrowsPlayer",normalStat:"base_cooldown_speed_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Icestorm",weapon:"Any / no weapon req",support:false,id:"IcestormPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Impurity",weapon:"Any / no weapon req",support:false,id:"ImpurityPlayer",normalStat:"base_skill_buff_chaos_damage_resistance_%_to_apply",normalVal:"300",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Inevitable Agony",weapon:"Any / no weapon req",support:false,id:"InevitableAgonyPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"250",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Into the Breach",weapon:"Any / no weapon req",support:false,id:"IntoTheBreachPlayer",normalStat:"remnant_effect_+%",normalVal:"750",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Life Remnants",weapon:"Any / no weapon req",support:false,id:"LifeRemnantsPlayer",normalStat:"life_remnants_chance_to_spawn_orb_on_killing_enemy_%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Lightning Bolt",weapon:"Any / no weapon req",support:false,id:"LightningBoltPlayer",normalStat:"active_skill_shock_chance_+%_final",normalVal:"2000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Load Glacial Bolt",weapon:"Crossbows",support:false,id:"GlacialBoltAmmoPlayer",normalStat:"base_number_of_crossbow_bolts",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Load Hailstorm Rounds",weapon:"Crossbows",support:false,id:"HailstormRoundsAmmoPlayer",normalStat:"base_number_of_crossbow_bolts",normalVal:"250",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Load Shockburst Rounds",weapon:"Crossbows",support:false,id:"ShockburstRoundsAmmoPlayer",normalStat:"base_number_of_crossbow_bolts",normalVal:"200",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Malice",weapon:"Any / no weapon req",support:false,id:"MalicePlayer",normalStat:"base_skill_effect_duration",normalVal:"50000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Mana Drain",weapon:"Any / no weapon req",support:false,id:"ManaDrainPlayer",normalStat:"mana_drain_base_mana_leech_amount",normalVal:"4500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Manifest Weapon",weapon:"Most melee",support:false,id:"ManifestWeaponPlayer",normalStat:"minion_attack_speed_+%",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Maul",weapon:"Talismans",support:false,id:"BearMaulPlayer",normalStat:"gain_x_rage_on_attack_hit",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Meditate",weapon:"Any / no weapon req",support:false,id:"MeditatePlayer",normalStat:"meditate_energy_shield_recharge_rate_+%_final",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Midnight Zenith",weapon:"Any / no weapon req",support:false,id:"MidnightStarPlayer",normalStat:"midnight_star_max_ice_crystals",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Mirror of Refraction",weapon:"Any / no weapon req",support:false,id:"MirrorOfRefractionPlayer",normalStat:"base_number_of_projectiles",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Mist Raven",weapon:"Any / no weapon req",support:false,id:"SummonMistRavenPlayer",normalStat:"chance_to_gain_1_more_frenzy_charge_%",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Molten Crash",weapon:"Talismans",support:false,id:"MoltenCrashPlayer",normalStat:"base_skill_effect_duration",normalVal:"100000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Molten Shower",weapon:"Any / no weapon req",support:false,id:"TriggeredMoltenShowerPlayer",normalStat:"base_cooldown_speed_+%",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Moment of Vulnerability",weapon:"Any / no weapon req",support:false,id:"MomentOfVulnerabilityPlayer",normalStat:"time_rip_damage_share_%",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Overwhelming Presence",weapon:"Any / no weapon req",support:false,id:"OverwhelmingPresencePlayer",normalStat:"aura_effect_+%",normalVal:"750",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Permafrost Bolts",weapon:"Crossbows",support:false,id:"PermafrostBoltsPlayer",normalStat:"base_number_of_projectiles",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Phantasmal Arrow",weapon:"Bows",support:false,id:"PhantasmalArrowPlayer",normalStat:"active_skill_ignite_chance_+%_final",normalVal:"5000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Pinnacle of Power",weapon:"Any / no weapon req",support:false,id:"PinnacleOfPowerPlayer",normalStat:"elemental_power_elemental_damage_+%_final_per_power_charge",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Power Siphon",weapon:"Any / no weapon req",support:false,id:"PowerSiphonPlayer",normalStat:"chance_to_gain_1_more_charge_%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Primal Bounty",weapon:"Any / no weapon req",support:false,id:"PrimalBountyPlayer",normalStat:"multishot_empowered_projectile_speed_+%",normalVal:"1500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Purity of Fire",weapon:"Any / no weapon req",support:false,id:"PurityOfFirePlayer",normalStat:"base_skill_buff_fire_damage_resistance_%_to_apply",normalVal:"400",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Purity of Ice",weapon:"Any / no weapon req",support:false,id:"PurityOfIcePlayer",normalStat:"base_skill_buff_cold_damage_resistance_%_to_apply",normalVal:"400",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Purity of Lightning",weapon:"Any / no weapon req",support:false,id:"PurityOfLightningPlayer",normalStat:"base_skill_buff_lightning_damage_resistance_%_to_apply",normalVal:"400",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Rain of Blades",weapon:"Any weapon",support:false,id:"RainOfBladesPlayer",normalStat:"base_cooldown_speed_+%",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Reap",weapon:"Any / no weapon req",support:false,id:"ReapPlayer",normalStat:"base_skill_effect_duration",normalVal:"100000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Rend",weapon:"Talismans",support:false,id:"WyvernRendPlayer",normalStat:"wyvern_devour_base_all_damage_%_to_gain_as_lightning",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Requiem",weapon:"Crossbows",support:false,id:"CrossbowRequiemPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Righteous Descent",weapon:"Any / no weapon req",support:false,id:"RighteousDescentPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Rite of Restoration",weapon:"Any / no weapon req",support:false,id:"SacredGroundPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"400",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Ritual Sacrifice",weapon:"Any / no weapon req",support:false,id:"RitualSacrificePlayer",normalStat:"base_skill_effect_duration",normalVal:"1000000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Sanguine Revelry",weapon:"Any / no weapon req",support:false,id:"SanguineRevelryPlayer",normalStat:"sanguine_revelry_rage_gain_per_pickup",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Shattering Concoction",weapon:"Any / no weapon req",support:false,id:"ShatteringConcoctionPlayer",normalStat:"freeze_duration_+%",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Shattering Spite",weapon:"Spears",support:false,id:"ShatteringSpitePlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Shred",weapon:"Talismans",support:false,id:"WolfShredPlayer",normalStat:"attack_speed_+%",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Sigil of Power",weapon:"Any / no weapon req",support:false,id:"SigilOfPowerPlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"400",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Skeletal Sniper Minion",weapon:"Any / no weapon req",support:false,id:"SummonSkeletalSnipersPlayer",normalStat:"active_skill_minion_damage_+%_final",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Skeletal Warrior Minion",weapon:"Any / no weapon req",support:false,id:"SummonSkeletalWarriorsPlayer",normalStat:"active_skill_minion_life_+%_final",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Soaring Midnight",weapon:"Shields, Thrown Shield",support:false,id:"NightfallSoaringMidnightPlayer",normalStat:"projectile_base_number_of_targets_to_pierce",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Solar Orb",weapon:"Any / no weapon req",support:false,id:"SolarOrbPlayer",normalStat:"active_skill_damage_+%_final_vs_burning_enemies",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Sorcery Ward",weapon:"Any / no weapon req",support:false,id:"SorceryWardPlayer",normalStat:"aegis_unique_shield_max_value_from_%_armour_evasion",normalVal:"250",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Soulrend",weapon:"Any / no weapon req",support:false,id:"SoulrendPlayer",normalStat:"base_skill_effect_duration",normalVal:"5000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Spell Totem",weapon:"Any / no weapon req",support:false,id:"SummonMetaTotemSpellTotemPlayer",normalStat:"base_totem_duration",normalVal:"200000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Spellslinger",weapon:"Any / no weapon req",support:false,id:"MetaSpellslingerPlayer",normalStat:"energy_generated_+%",normalVal:"750",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Spiraling Conspiracy",weapon:"Any / no weapon req",support:false,id:"SummonSpiralingConspiracyPlayer",normalStat:"base_skill_area_of_effect_+%",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Spirit Vessel",weapon:"Any / no weapon req",support:false,id:"SpiritVesselPlayer",normalStat:"active_skill_minion_life_+%_final",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Starborn Onslaught",weapon:"Two Hand Maces",support:false,id:"StarbornOnslaughtPlayer",normalStat:"empyrean_descent_number_of_explosions",normalVal:"200",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Stormblast Bolts",weapon:"Crossbows",support:false,id:"StormblastBoltsPlayer",normalStat:"base_reduce_enemy_lightning_resistance_%",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Summon Infernal Hound",weapon:"Any / no weapon req",support:false,id:"SummonInfernalHoundPlayer",normalStat:"active_skill_minion_life_+%_final",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Supporting Fire",weapon:"Any / no weapon req",support:false,id:"SupportingFirePlayer",normalStat:"active_skill_minion_damage_+%_final",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Temper Weapon",weapon:"Most melee",support:false,id:"TemperWeaponPlayer",normalStat:"skill_speed_+%",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Temporal Rift",weapon:"Any / no weapon req",support:false,id:"TemporalRiftPlayer",normalStat:"base_cooldown_speed_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Thundergod's Wrath",weapon:"Any / no weapon req",support:false,id:"MetaCastLightningSpellOnHitPlayer",normalStat:"energy_generated_+%",normalVal:"750",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Time Freeze",weapon:"Any / no weapon req",support:false,id:"TimeFreezePlayer",normalStat:"base_cooldown_speed_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Time Snap",weapon:"Any / no weapon req",support:false,id:"TimeSnapPlayer",normalStat:"base_cooldown_speed_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Unbound Avatar",weapon:"Any / no weapon req",support:false,id:"UnboundAvatarPlayer",normalStat:"base_skill_effect_duration",normalVal:"50000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Unleash",weapon:"Any / no weapon req",support:false,id:"UnleashPlayer",normalStat:"base_cooldown_speed_+%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Valako's Charge",weapon:"Any / no weapon req",support:false,id:"ValakosChargePlayer",normalStat:"number_of_chains",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Vile Effusion",weapon:"Any / no weapon req",support:false,id:"DarkEffigyProjectilePlayer",normalStat:"active_skill_base_secondary_area_of_effect_radius",normalVal:"100",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Virtuous Barrier",weapon:"Any / no weapon req",support:false,id:"VirtuousBarrierPlayer",normalStat:"gem_barrier_blue_grants_life_regeneration_rate_+%",normalVal:"125",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Vivid Stampede",weapon:"Any weapon",support:false,id:"VividStampedePlayer",normalStat:"active_skill_base_area_of_effect_radius",normalVal:"250",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Volatile Dead",weapon:"Any / no weapon req",support:false,id:"VolatileDeadPlayer",normalStat:"base_chance_to_not_consume_corpse_%",normalVal:"500",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Voltaic Barrier",weapon:"Most melee/ranged",support:false,id:"VoltaicBarrierPlayer",normalStat:"skill_effect_duration_+%",normalVal:"2000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Wild Protector",weapon:"Any / no weapon req",support:false,id:"WildProtectorPlayer",normalStat:"active_skill_minion_damage_+%_final",normalVal:"1000",gemStat:"",gemVal:"",hasGemling:false},
+  {name:"Wildwood's Gifts",weapon:"Any / no weapon req",support:false,id:"AncientGiftsPlayer",normalStat:"remnant_effect_+%",normalVal:"750",gemStat:"",gemVal:"",hasGemling:false},
+];
+
+let currentFilters = { gemling: 'all', support: 'all' };
+let currentView = 'grid';
+let searchQuery = '';
+let sortCol = -1;
+let sortDir = 1;
+
+function init() {
+    renderGrid();
+    renderTable();
+    applyFilters();
+    document.getElementById('countTotal').textContent = SKILLS.length;
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+        searchQuery = this.value.toLowerCase().trim();
+        document.getElementById('clearBtn').style.display = searchQuery ? 'block' : 'none';
+        applyFilters();
+    });
+}
+
+function clearSearch() {
+    document.getElementById('searchInput').value = '';
+    searchQuery = '';
+    document.getElementById('clearBtn').style.display = 'none';
+    applyFilters();
+}
+
+function setFilter(type, value, btn) {
+    currentFilters[type] = value;
+    const group = btn.parentElement;
+    group.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+}
+
+function setView(view, btn) {
+    currentView = view;
+    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('gridView').style.display = view === 'grid' ? 'block' : 'none';
+    document.getElementById('tableView').style.display = view === 'table' ? 'block' : 'none';
+}
+
+function weaponMatch(weapon) {
+    const wf = document.getElementById('weaponFilter').value;
+    if (wf === 'all') return true;
+    if (wf === 'any') return weapon.toLowerCase().includes('any');
+    if (wf === 'Maces') return weapon.toLowerCase().includes('mace');
+    if (wf === 'Swords') return weapon.toLowerCase().includes('sword');
+    if (wf === 'Axes') return weapon.toLowerCase().includes('axe');
+    return weapon.includes(wf);
+}
+
+function skillMatches(s) {
+    if (currentFilters.gemling === 'yes' && !s.hasGemling) return false;
+    if (currentFilters.gemling === 'no' && s.hasGemling) return false;
+    if (currentFilters.support === 'skill' && s.support) return false;
+    if (currentFilters.support === 'support' && !s.support) return false;
+    if (!weaponMatch(s.weapon)) return false;
+    if (searchQuery) {
+        const hay = (s.name + ' ' + s.weapon + ' ' + s.id + ' ' + s.normalStat + ' ' + s.gemStat).toLowerCase();
+        return hay.includes(searchQuery);
+    }
+    return true;
+}
+
+function highlight(text, query) {
+    if (!query) return escHtml(text);
+    const escaped = escHtml(text);
+    const escapedQ = escHtml(query).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return escaped.replace(new RegExp(`(${escapedQ})`, 'gi'), '<span class="highlight">$1</span>');
+}
+
+function escHtml(t) {
+    return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function formatVal(v) {
+    const n = parseInt(v);
+    if (isNaN(n)) return v;
+    return (n > 0 ? '+' : '') + (n/10).toFixed(1) + '%';
+}
+
+function getWeaponTags(weapon) {
+    if (weapon.toLowerCase().includes('any') || weapon === 'N/A (support)') {
+        return `<span class="weapon-tag any">${escHtml(weapon)}</span>`;
+    }
+    return weapon.split(',').map(w => `<span class="weapon-tag">${escHtml(w.trim())}</span>`).join('');
+}
+
+function renderGrid() {
+    const grid = document.getElementById('skillsGrid');
+    grid.innerHTML = SKILLS.map((s, i) => `
+        <div class="skill-card ${s.hasGemling ? '' : 'no-gemling'}" data-index="${i}">
+            <div class="card-header">
+                <div class="skill-name">${escHtml(s.name)}</div>
+                <span class="gemling-badge ${s.hasGemling ? 'yes' : 'no'}">${s.hasGemling ? '✓ Gemling' : '✗ No Gemling'}</span>
+            </div>
+            <div class="weapon-tags">${getWeaponTags(s.weapon)}</div>
+            <div class="quality-block normal">
+                <div class="quality-label normal">◆ Normal Quality</div>
+                <div class="quality-stat ns-stat">${escHtml(s.normalStat)}</div>
+                <div class="quality-value normal nv-val">${s.normalVal}</div>
+            </div>
+            ${s.hasGemling ? `
+            <div class="quality-block gemling">
+                <div class="quality-label gemling">◈ Gemling Quality</div>
+                <div class="quality-stat gs-stat">${escHtml(s.gemStat)}</div>
+                <div class="quality-value gemling gv-val">${s.gemVal}</div>
+            </div>` : ''}
+            <div class="internal-id">ID: ${escHtml(s.id)}</div>
+        </div>
+    `).join('');
+}
+
+function renderTable() {
+    const tbody = document.getElementById('skillsTableBody');
+    tbody.innerHTML = SKILLS.map((s, i) => `
+        <tr data-index="${i}">
+            <td class="td-name">${escHtml(s.name)}</td>
+            <td class="td-weapon">${escHtml(s.weapon)}</td>
+            <td class="td-stat ns-stat">${escHtml(s.normalStat)}</td>
+            <td class="td-value-normal nv-val">${s.normalVal}</td>
+            <td class="td-stat gs-stat">${s.hasGemling ? escHtml(s.gemStat) : '—'}</td>
+            <td class="td-value-gemling gv-val">${s.hasGemling ? s.gemVal : '—'}</td>
+            <td class="td-badge"><span class="gemling-badge ${s.hasGemling ? 'yes' : 'no'}">${s.hasGemling ? '✓' : '✗'}</span></td>
+        </tr>
+    `).join('');
+}
+
+function applyFilters() {
+    let shown = 0;
+    // Grid
+    document.querySelectorAll('#skillsGrid .skill-card').forEach(card => {
+        const i = parseInt(card.dataset.index);
+        const s = SKILLS[i];
+        const match = skillMatches(s);
+        card.style.display = match ? '' : 'none';
+        if (match) {
+            shown++;
+            // Highlight
+            if (searchQuery) {
+                card.querySelector('.skill-name').innerHTML = highlight(s.name, searchQuery);
+                card.querySelector('.ns-stat').innerHTML = highlight(s.normalStat, searchQuery);
+                card.querySelector('.nv-val').innerHTML = highlight(s.normalVal, searchQuery);
+                if (s.hasGemling) {
+                    card.querySelector('.gs-stat').innerHTML = highlight(s.gemStat, searchQuery);
+                    card.querySelector('.gv-val').innerHTML = highlight(s.gemVal, searchQuery);
+                }
+            } else {
+                card.querySelector('.skill-name').textContent = s.name;
+                card.querySelector('.ns-stat').textContent = s.normalStat;
+                card.querySelector('.nv-val').textContent = s.normalVal;
+                if (s.hasGemling) {
+                    card.querySelector('.gs-stat').textContent = s.gemStat;
+                    card.querySelector('.gv-val').textContent = s.gemVal;
+                }
+            }
+        }
+    });
+    // Table
+    document.querySelectorAll('#skillsTableBody tr').forEach(row => {
+        const i = parseInt(row.dataset.index);
+        const s = SKILLS[i];
+        const match = skillMatches(s);
+        row.style.display = match ? '' : 'none';
+        if (match && searchQuery) {
+            row.cells[0].innerHTML = highlight(s.name, searchQuery);
+            row.cells[2].innerHTML = highlight(s.normalStat, searchQuery);
+            row.cells[4].innerHTML = s.hasGemling ? highlight(s.gemStat, searchQuery) : '—';
+        } else if (match) {
+            row.cells[0].textContent = s.name;
+            row.cells[2].textContent = s.normalStat;
+            row.cells[4].textContent = s.hasGemling ? s.gemStat : '—';
+        }
+    });
+    document.getElementById('countShown').textContent = shown;
+    document.getElementById('noResults').style.display = shown === 0 ? 'block' : 'none';
+}
+
+function sortTable(col) {
+    const headers = document.querySelectorAll('.skills-table th');
+    if (sortCol === col) sortDir *= -1; else { sortCol = col; sortDir = 1; }
+    headers.forEach((h, i) => {
+        h.classList.toggle('sorted', i === col);
+        const arr = h.querySelector('.sort-arrow');
+        if (arr) arr.textContent = i === col ? (sortDir === 1 ? '↑' : '↓') : '↕';
+    });
+    const keys = ['name','weapon','normalStat','normalVal','gemStat','gemVal','hasGemling'];
+    const key = keys[col];
+    const tbody = document.getElementById('skillsTableBody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    rows.sort((a, b) => {
+        const ia = parseInt(a.dataset.index), ib = parseInt(b.dataset.index);
+        const va = String(SKILLS[ia][key]), vb = String(SKILLS[ib][key]);
+        return va.localeCompare(vb, undefined, {numeric: true}) * sortDir;
+    });
+    rows.forEach(r => tbody.appendChild(r));
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
