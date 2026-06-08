@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 Юна - Космическая Стримерша 👩‍🍳</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            background-color: #000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            z-index: 1000;
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            color: white;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            pointer-events: none;
+        }
+
+        .content > * {
+            pointer-events: auto;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #ff1e4a, #ffd900, #23ff4b, #2a6fff, #ff00ea);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 5s ease infinite;
+            text-shadow: 0 0 40px rgba(255, 30, 74, 0.5);
+            margin-bottom: 20px;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: #a0a0ff;
+            margin-bottom: 40px;
+            text-shadow: 0 0 20px rgba(100, 100, 255, 0.5);
+        }
+
+        .scroll-hint {
+            font-size: 2rem;
+            animation: bounce 2s ease-in-out infinite;
+            margin-top: 60px;
+            cursor: pointer;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .section {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #ffd900;
+            text-shadow: 0 0 30px rgba(255, 217, 0, 0.5);
+        }
+
+        .three-columns {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .three-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: rgba(20, 20, 40, 0.85);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 40px rgba(42, 111, 255, 0.3);
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card p {
+            line-height: 1.8;
+            color: #d0d0ff;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+        }
+
+        .quote-box {
+            font-style: italic;
+            padding: 20px 30px;
+            background: rgba(255, 0, 234, 0.1);
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #ff00ea;
+        }
+
+        .fun-fact {
+            background: linear-gradient(135deg, rgba(255, 136, 0, 0.2), rgba(255, 217, 0, 0.2));
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .fun-fact h4 {
+            color: #ffd900;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .meme-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff1e4a, #ff00ea);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 5px;
+        }
+
+        .quiz-container {
+            text-align: center;
+        }
+
+        .quiz-question {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #ffd900;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid transparent;
+            border-radius: 25px;
+            padding: 12px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .quiz-option:hover {
+            border-color: #ffd900;
+            transform: scale(1.05);
+        }
+
+        .quiz-option.correct {
+            background: rgba(35, 255, 75, 0.4);
+            border-color: #23ff4b;
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(255, 30, 74, 0.4);
+            border-color: #ff1e4a;
+        }
+
+        .result-message {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .result-message.success {
+            background: rgba(35, 255, 75, 0.2);
+            color: #23ff4b;
+        }
+
+        .result-message.fail {
+            background: rgba(255, 30, 74, 0.2);
+            color: #ff1e4a;
+        }
+
+        .timer-container {
+            text-align: center;
+        }
+
+        .timer {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #ff1e4a;
+            text-shadow: 0 0 30px rgba(255, 30, 74, 0.7);
+            margin: 20px 0;
+        }
+
+        .timer-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .timer-btn {
+            background: linear-gradient(135deg, #ff1e4a, #ff00ea);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .timer-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 0, 234, 0.5);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff1e4a, #ffd900, #23ff4b);
+            background-size: 200% 100%;
+            animation: progress-gradient 2s linear infinite;
+            transition: width 0.3s ease;
+        }
+
+        @keyframes progress-gradient {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+
+        .clicker-container {
+            text-align: center;
+        }
+
+        .clicker-btn {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff1e4a, #ff00ea, #2a6fff);
+            border: none;
+            cursor: pointer;
+            font-size: 3rem;
+            transition: all 0.1s ease;
+            box-shadow: 0 0 30px rgba(255, 0, 234, 0.5);
+        }
+
+        .clicker-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .clicker-btn:active {
+            transform: scale(0.9);
+        }
+
+        .clicker-score {
+            font-size: 3rem;
+            color: #ffd900;
+            margin: 20px 0;
+            text-shadow: 0 0 20px rgba(255, 217, 0, 0.5);
+        }
+
+        .clicker-label {
+            color: #a0a0ff;
+            font-size: 1.2rem;
+        }
+
+        /* Social Links Section */
+        .social-section {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(20, 20, 40, 0.8);
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .social-section h3 {
+            font-size: 1.5rem;
+            color: #ffd900;
+            margin-bottom: 25px;
+        }
+
+        .social-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .social-btn.twitch {
+            background: linear-gradient(135deg, #9146ff, #bf94ff);
+        }
+
+        .social-btn.youtube {
+            background: linear-gradient(135deg, #ff0000, #ff5555);
+        }
+
+        .social-btn.telegram {
+            background: linear-gradient(135deg, #0088cc, #00b4ff);
+        }
+
+        .social-btn.tiktok {
+            background: linear-gradient(135deg, #000000, #333333);
+            border: 1px solid #fff;
+        }
+
+        .social-btn.donat {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #000;
+        }
+
+        .social-icon {
+            font-size: 1.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #6060a0;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #ffd900;
+            text-decoration: none;
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(42, 111, 255, 0.8);
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(42, 111, 255, 0.8);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 1000;
+            animation: confetti-fall 3s linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(1080deg);
+                opacity: 0;
+            }
+        }
+
+        .emoji-rain {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            font-size: 2rem;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(42, 111, 255, 0.2), rgba(255, 0, 234, 0.2));
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .highlight-box h4 {
+            color: #00ffea;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffd900, transparent);
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">GENERATING UNIVERSE... ✨</div>
+    <div id="canvas-container"></div>
+
+    <div class="content">
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <h1>🌟 ЮНА 🌟</h1>
+            <p class="subtitle">Стримерша | Готовит вкусно | Играет в гонки 🚀👩‍🍳</p>
+            <p style="font-size: 1.2rem; color: #8080ff; max-width: 600px; line-height: 1.8;">
+                Добро пожаловать! Здесь собрана информация о стримерше Юне, 
+                собранная из публичных транскрипций её стримов.
+            </p>
+            <div class="scroll-hint" onclick="scrollToSection('about')">👇</div>
+        </section>
+
+        <!-- Section 1: Личность -->
+        <section class="section" id="about">
+            <h2 class="section-title">👤 Личность Юны 👤</h2>
+            <p style="text-align: center; color: #a0a0ff; margin-bottom: 30px;">
+                Основная информация о стримерше
+            </p>
+            
+            <div class="three-columns">
+                <div class="card">
+                    <h3><span class="card-icon">🏙️</span> Москва</h3>
+                    <p>
+                        Юна из Москвы и приветствует зрителей фразой 
+                        <strong>"Ночная Москва!"</strong> — это стало её визитной карточкой. 
+                        Стримы часто начинаются поздно вечером или ночью, 
+                        когда город уже засыпает, а Юна только начинает готовить!
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">🎓</span> Студентка</h3>
+                    <p>
+                        Юна учится и упоминала, что сдаёт учебники в 11 утра. 
+                        На стримах она рассказывала о своём опыте учёбы: 
+                        разбирала <strong>печки, колонки и котлы</strong>, 
+                        работала на <strong>станках и машинах</strong>. 
+                        Также говорила о школе — красили заборы, делали снежинки.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">💼</span> Путь к стримингу</h3>
+                    <p>
+                        До стриминга Юна пробовала работать. На стриме она рассказывала: 
+                        <strong>"Я настолько херовый работник, что меня уволили в два раза"</strong> — 
+                        один раз через неделю, другой через месяц. Один работодатель обещал 2500₽, 
+                        но дал всего 2000₽. Сейчас она нашла себя в стриминге!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 2: Стиль -->
+        <section class="section" id="style">
+            <h2 class="section-title">✨ Стиль и образ ✨</h2>
+            <p style="text-align: center; color: #a0a0ff; margin-bottom: 30px;">
+                Никнейм, манера общения и особенности
+            </p>
+            
+            <div class="three-columns">
+                <div class="card">
+                    <h3><span class="card-icon">🏷️</span> Никнейм "Юна"</h3>
+                    <p>
+                        На стримах её часто называют <strong>"Юночка"</strong> — это звучит 
+                        тепло и дружелюбно. Никаких сложных никнеймов — Юна остаётся собой, 
+                        и это подкупает зрителей!
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">💇‍♀️</span> Внешность</h3>
+                    <p>
+                        На стримах был забавный момент про волосы — один зритель думал, 
+                        что это <strong>"парик с проводом"</strong>, а она заявляла: 
+                        "Это парик вообще!" Позже выяснилось, что это её натуральные волосы. 
+                        Готовит в домашней обстановке.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">🗣️</span> Манера общения</h3>
+                    <p>
+                        Юна общается непринуждённо, использует слова <strong>"короче", "типа", "ну"</strong>. 
+                        Часто смеётся (ха-ха-ха!), ведёт себя естественно и не пытается 
+                        казаться кем-то другим. Это создаёт атмосферу уюта.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 3: Характер -->
+        <section class="section" id="character">
+            <h2 class="section-title">🎭 Характер 🎭</h2>
+            <p style="text-align: center; color: #a0a0ff; margin-bottom: 30px;">
+                Какая она на стримах
+            </p>
+            
+            <div class="three-columns">
+                <div class="card">
+                    <h3><span class="card-icon">😊</span> Энергичная</h3>
+                    <p>
+                        Юна — это энергия! Она радуется каждому подарку: получила руль — 
+                        <strong>"Мы будем кататься на машине!"</strong>, увидела гостя — 
+                        <strong>"Я счастлива!"</strong>. Её искренняя радость заражает весь чат 
+                        и создаёт тёплую атмосферу на стримах.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">🤡</span> Юморная</h3>
+                    <p>
+                        Юна умеет шутить и не боится самоиронии. Фраза 
+                        <strong>"Это стратегическая подзарядка для стримов"</strong> 
+                        вместо "ночной дожор" — классический пример её юмора. 
+                        Она не боится смеяться над собой.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">👩‍🍳</span> Готовит вкусно</h3>
+                    <p>
+                        Юна реально умеет готовить! Борщ, окрошка, блины — 
+                        всё это появляется на её столах. На стриме один зритель сказал: 
+                        <strong>"Вкус, техника и сочетание продуктов настолько невероятны, 
+                        что не веришь в свои глаза"</strong>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 4: Специфика -->
+        <section class="section" id="specifics">
+            <h2 class="section-title">🎮 Контент 🎮</h2>
+            <p style="text-align: center; color: #a0a0ff; margin-bottom: 30px;">
+                Что она делает на стримах
+            </p>
+            
+            <div class="three-columns">
+                <div class="card">
+                    <h3><span class="card-icon">🚛</span> Euro Truck Simulator 2</h3>
+                    <p>
+                        Юна получила <strong>игровой руль Defender</strong> с педалями для ПК 
+                        в подарок от зрителей! Это был настоящий праздник — она кричала 
+                        <strong>"Мы будем кататься на машине!"</strong> и готовилась к рейсам 
+                        в Евротраке.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">👩‍🍳</span> Кулинарные стримы</h3>
+                    <p>
+                        Готовка — главная фишка! Она готовит <strong>борщ, окрошку, блины</strong> 
+                        прямо на стриме. На вопрос "Что сегодня готовим?" отвечала: 
+                        <strong>"Блины, окрошка и блины будут"</strong>. 
+                        Иногда у неё случаются казусы, но это добавляет шарма!
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">🎃</span> Genshin и хорроры</h3>
+                    <p>
+                        Юна также играет в <strong>Genshin Impact</strong> и хорроры типа 
+                        <strong>Resident Evil 2</strong>. На одном из стримов она так боялась, 
+                        что говорила <strong>"Я сейчас обосрусь от страха!"</strong> — 
+                        это добавляет контенту веселья.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 5: Шоу -->
+        <section class="section" id="shows">
+            <h2 class="section-title">🎬 Формат стримов 🎬</h2>
+            <p style="text-align: center; color: #a0a0ff; margin-bottom: 30px;">
+                Интерактив и взаимодействие с аудиторией
+            </p>
+            
+            <div class="three-columns">
+                <div class="card">
+                    <h3><span class="card-icon">🍳</span> Готовка на стриме</h3>
+                    <p>
+                        Основная рубрика — готовка в прямом эфире. Юна варит, жарит, режет 
+                        и пробует блюда вместе с чатом. На стриме можно увидеть весь процесс 
+                        — от подготовки ингредиентов до подачи блюда!
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">🎙️</span> Голосовые сообщения</h3>
+                    <p>
+                        За <strong>200 баллов</strong> зрители могут отправить голосовое сообщение, 
+                        которое Юна озвучит на стриме. Она говорила: 
+                        <strong>"Боже, за 200 баллов можно озвучить сообщение"</strong>!
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">🎁</span> Донаты и рейды</h3>
+                    <p>
+                        Зрители поддерживают стримы <strong>донатами</strong> и <strong>рейдами</strong>. 
+                        Один из самых памятных — игровой руль Defender! 
+                        Зрители типа Stormik, Комсомбина регулярно устраивают рейд-спам 
+                        и помогают с донатами.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 6: Аудитория -->
+        <section class="section" id="audience">
+            <h2 class="section-title">👥 Аудитория 👥</h2>
+            <p style="text-align: center; color: #a0a0ff; margin-bottom: 30px;">
+                Кто смотрит стримы Юны
+            </p>
+            
+            <div class="three-columns">
+                <div class="card">
+                    <h3><span class="card-icon">👀</span> Кто смотрит</h3>
+                    <p>
+                        Аудитория Юны — это люди, которые ценят <strong>искренность и юмор</strong>. 
+                        Среди постоянных зрителей есть "коток бас", "антеннар", "шоу", "скай" — 
+                        у каждого свой никнейм. Они приходят за готовкой, 
+                        играми и просто приятной компанией.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">💬</span> Активный чат</h3>
+                    <p>
+                        Чат Юны — это отдельное шоу! Зрители общаются, заказывают музыку, 
+                        донатят и устраивают <strong>рейд-спам</strong>. Юна ценит каждого 
+                        зрителя и всегда благодарит за поддержку.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">🌟</span> Ночная Москва</h3>
+                    <p>
+                        Большинство стримов проходит <strong>ночью</strong>, поэтому аудитория 
+                        — это "ночная Москва" и не только. Зрители из разных городов 
+                        собираются вместе, чтобы провести вечер за готовкой и играми.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 7: Мемы -->
+        <section class="section" id="memes">
+            <h2 class="section-title">😂 Мемы и фразы 😂</h2>
+            <p style="text-align: center; color: #a0a0ff; margin-bottom: 30px;">
+                Запомнившиеся моменты из стримов
+            </p>
+            
+            <div class="three-columns">
+                <div class="card">
+                    <h3><span class="card-icon">💬</span> Крылатые фразы</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+                        <span class="meme-tag">"Стратегическая подзарядка"</span>
+                        <span class="meme-tag">"Мы будем кататься!"</span>
+                        <span class="meme-tag">"Я счастлива!"</span>
+                        <span class="meme-tag">"Ночная Москва!"</span>
+                        <span class="meme-tag">"Всё сломалось"</span>
+                        <span class="meme-tag">"Только чай, только чай"</span>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">🎭</span> Смешные моменты</h3>
+                    <p>
+                        <strong>"Это парик вообще!"</strong> — спор о волосах.<br>
+                        <strong>"Юки, ты мама мою"</strong> — обращение к коту.<br>
+                        <strong>"Я сейчас обосрусь от страха"</strong> — реакция на хоррор.<br>
+                        <strong>"Что это нахрен за песня?"</strong> — возмущение музыкой.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">🎵</span> Музыкальные заказы</h3>
+                    <p>
+                        Зрители заказывают музыку на стримах, и иногда включается что-то 
+                        совсем неожиданное! Юна возмущается: 
+                        <strong>"Что это за песня опять? Что это нахрен за песня?"</strong> 
+                        — это стало мемом канала!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 8: Интерактив -->
+        <section class="section" id="interact">
+            <h2 class="section-title">🎯 Интерактив 🎯</h2>
+            <p style="text-align: center; color: #a0a0ff; margin-bottom: 30px;">
+                Как проходит общение на стримах
+            </p>
+            
+            <div class="three-columns">
+                <div class="card">
+                    <h3><span class="card-icon">💬</span> Общение с чатом</h3>
+                    <p>
+                        Юна постоянно читает чат и отвечает на сообщения. Она приветствует 
+                        каждого зрителя по имени, благодарит за донаты и рейды. Иногда 
+                        шутит: <strong>"Чат, куда чат?"</strong> когда что-то идёт не так.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">🏆</span> Рейды и конкурсы</h3>
+                    <p>
+                        На стримах регулярно проходят <strong>рейды</strong>, 
+                        <strong>донаты</strong>. Зрители соревнуются в рейд-спаме, 
+                        отправляют голосовые за 200 баллов и просто наслаждаются атмосферой. 
+                        Каждый стрим — это событие!
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">🤝</span> Гости</h3>
+                    <p>
+                        На стримах появляются <strong>гости</strong>. Например, на одном 
+                        из стримов ароматчик сам пришёл в гости! Юна всегда рада гостям 
+                        и создаёт тёплую атмосферу для общения.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 9: Кот Юки -->
+        <section class="section" id="yuki">
+            <h2 class="section-title">🐱 Кот Юки 🐱</h2>
+            <p style="text-align: center; color: #a0a0ff; margin-bottom: 30px;">
+                Главный обитатель квартиры Юны
+            </p>
+            
+            <div class="three-columns">
+                <div class="card">
+                    <h3><span class="card-icon">🐱</span> Юки</h3>
+                    <p>
+                        Главный обитатель квартиры Юны — это <strong>кот Юки</strong>! 
+                        Юки иногда пытается "помочь" с готовкой, запрыгивая на стол. 
+                        Юна обращается к нему: <strong>"Моя сестра, ты красотка, 
+                        ты прекрасная хозяйка, пожалуйста, убери ножик"</strong>.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">🎮</span> Помощник</h3>
+                    <p>
+                        Юки — настоящая звезда стримов! Он иногда пугает гостей или 
+                        просто мешает готовить. Юна зовёт его: <strong>"Кит, ты мама мою"</strong> 
+                        и говорит: <strong>"Нет, передумал?"</strong> когда он не прыгает.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">❤️</span> Любимец</h3>
+                    <p>
+                        Юки явно любим всей семьёй — на стриме упоминалось, что 
+                        <strong>мама меняла ему имя</strong>. Этот кот — настоящий 
+                        член команды стрима и любимец аудитории!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 10: Цитаты -->
+        <section class="section" id="quotes">
+            <h2 class="section-title">💎 Запоминающиеся цитаты 💎</h2>
+            <p style="text-align: center; color: #a0a0ff; margin-bottom: 30px;">
+                Лучшие моменты из транскрипций стримов
+            </p>
+            
+            <div class="three-columns">
+                <div class="card">
+                    <h3><span class="card-icon">🎉</span> Про подарки</h3>
+                    <div class="quote-box">
+                        <p>"Мы будем кататься на машине, пацаны! У нас есть игра! 
+                        Всё, я счастлива!"</p>
+                    </div>
+                    <div class="quote-box">
+                        <p>"Спасибо большое, анонимы, спасибо, спасибо, анонимы!"</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">😤</span> Про готовку</h3>
+                    <div class="quote-box">
+                        <p>"Вкус, техника и сочетание продуктов настолько невероятны, 
+                        что не веришь в свои глаза"</p>
+                    </div>
+                    <div class="quote-box">
+                        <p>"Я вообще не ела сегодня, только чай, а тут окрошка, блины"</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="card-icon">😂</span> Про жизнь</h3>
+                    <div class="quote-box">
+                        <p>"Я настолько херовый работник, что меня уволили в два раза"</p>
+                    </div>
+                    <div class="quote-box">
+                        <p>"Как круто быть студентом — пошёл в зачёт, в харизму 
+                        светанул, глазками поиграл и пошёл гордо кушать"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Social Links Section -->
+        <section class="social-section" id="social">
+            <h3>🔗 Присоединяйся к Юне!</h3>
+            <div class="social-buttons">
+                <a href="https://www.twitch.tv/younochkq" target="_blank" class="social-btn twitch">
+                    <span class="social-icon">📺</span>
+                    Twitch
+                </a>
+                <a href="https://www.youtube.com/@Yunochkq" target="_blank" class="social-btn youtube">
+                    <span class="social-icon">▶️</span>
+                    YouTube
+                </a>
+                <a href="https://t.me/younochkaTW" target="_blank" class="social-btn telegram">
+                    <span class="social-icon">✈️</span>
+                    Telegram
+                </a>
+                <a href="https://www.tiktok.com/@younochkq77" target="_blank" class="social-btn tiktok">
+                    <span class="social-icon">🎵</span>
+                    TikTok
+                </a>
+                <a href="https://www.donationalerts.com/r/younochkq" target="_blank" class="social-btn donat">
+                    <span class="social-icon">💜</span>
+                    Донат
+                </a>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Quiz Section -->
+        <section class="section" id="quiz">
+            <h2 class="section-title">🎯 Викторина: Знаешь Юну? 🎯</h2>
+            
+            <div class="three-columns">
+                <div class="card quiz-container">
+                    <div id="quiz-content">
+                        <p class="quiz-question">Как зовут кота Юны?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" onclick="checkAnswer(this, true)">🐱 Юки</button>
+                            <button class="quiz-option" onclick="checkAnswer(this, false)">🐕 Барсик</button>
+                            <button class="quiz-option" onclick="checkAnswer(this, false)">🐹 Хома</button>
+                        </div>
+                        <div class="result-message hidden"></div>
+                    </div>
+                </div>
+
+                <div class="card quiz-container">
+                    <div id="quiz-content-2">
+                        <p class="quiz-question">Какой напиток использует Юна для окрошки?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" onclick="checkAnswer2(this, false)">🥛 Молоко</button>
+                            <button class="quiz-option" onclick="checkAnswer2(this, true)">🥤 Квас</button>
+                            <button class="quiz-option" onclick="checkAnswer2(this, false)">🍺 Пиво</button>
+                        </div>
+                        <div class="result-message hidden"></div>
+                    </div>
+                </div>
+
+                <div class="card quiz-container">
+                    <div id="quiz-content-3">
+                        <p class="quiz-question">Какой подарок Юна получила на донаты?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" onclick="checkAnswer3(this, false)">🎧 Наушники</button>
+                            <button class="quiz-option" onclick="checkAnswer3(this, false)">🖥️ Монитор</button>
+                            <button class="quiz-option" onclick="checkAnswer3(this, true)">🎮 Игровой руль</button>
+                        </div>
+                        <div class="result-message hidden"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Interactive Timer -->
+        <section class="section" id="timer">
+            <h2 class="section-title">⏱️ Таймер Готовки Юны ⏱️</h2>
+            
+            <div class="card timer-container">
+                <p style="color: #a0a0ff; margin-bottom: 10px;">Сколько времени готовит Юна свою фирменную окрошку?</p>
+                <div class="timer" id="timer-display">00:00</div>
+                <div class="timer-buttons">
+                    <button class="timer-btn" onclick="startTimer()">▶️ Старт</button>
+                    <button class="timer-btn" onclick="pauseTimer()">⏸️ Пауза</button>
+                    <button class="timer-btn" onclick="resetTimer()">🔄 Сброс</button>
+                    <button class="timer-btn" onclick="addTime(60)">+1 мин</button>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Clicker Game -->
+        <section class="section" id="clicker">
+            <h2 class="section-title">🎮 Кликер Юны 🎮</h2>
+            
+            <div class="card clicker-container">
+                <p style="color: #a0a0ff; margin-bottom: 20px;">Нажми на кнопку, чтобы заработать "Юна-коины"! 💰</p>
+                <button class="clicker-btn" onclick="incrementScore()">🍳</button>
+                <div class="clicker-score" id="clicker-score">0</div>
+                <div class="clicker-label">Юна-коинов заработано!</div>
+                <div style="margin-top: 20px; color: #ffd900;">
+                    🔥 Лучший рекорд: <span id="high-score">0</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Final Section -->
+        <section class="section" id="final">
+            <h2 class="section-title">🌌 Присоединяйся к Галактике! 🌌</h2>
+            
+            <div class="highlight-box">
+                <h4>📋 Юна на платформах:</h4>
+                <p style="color: #d0d0ff; line-height: 2;">
+                    📺 Twitch | ▶️ YouTube | ✈️ Telegram | 🎵 TikTok | 💜 Донаты<br>
+                    <span style="color: #8080ff; font-size: 0.9rem;">Ссылочки на все платформы смотри выше ↑</span>
+                </p>
+            </div>
+
+            <div class="fun-fact" style="text-align: center; margin-top: 30px;">
+                <h4>✨ Спасибо за внимание! ✨</h4>
+                <p>
+                    Страница создана на основе транскрипций стримов 🍳💫<br>
+                    Транскрипции любезно предоставлены <strong>Dsintezns5</strong> ✨
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="scrollToTop()" title="Наверх">⬆️</button>
+        <button class="nav-btn" onclick="createConfetti()" title="Конфетти!">🎉</button>
+        <button class="nav-btn" onclick="createEmojiRain()" title="Дождь из эмодзи">🌧️</button>
+    </div>
+
+    <footer>
+        <p>Сделано с 💜 для Юны и всех её фанатов</p>
+        <p style="margin-top: 10px;">
+            Транскрипции предоставлены <a href="#">Dsintezns5</a> ✨
+        </p>
+    </footer>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.174.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.174.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        
+        const universe = new THREE.Group();
+        scene.add(universe);
+        
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 2000);
+        camera.position.set(0, 0, 100);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+        const clock = new THREE.Clock();
+        const bgVertexShader = `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `;
+        const bgFragmentShader = `
+            uniform float uTime;
+            varying vec2 vUv;
+            float hash(vec2 p) { 
+                return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); 
+            }
+            
+            float noise(vec2 p) {
+                vec2 i = floor(p); 
+                vec2 f = fract(p);
+                f = f * f * (3.0 - 2.0 * f);
+                return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x),
+                           mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+            }
+            
+            float fbm(vec2 p) {
+                float v = 0.0; 
+                float a = 0.5;
+                for (int i = 0; i < 5; i++) {
+                    v += a * noise(p); 
+                    p *= 2.0; 
+                    a *= 0.5;
+                }
+                return v;
+            }
+            void main() {
+                vec2 uv = vUv * 2.0;
+                float t = uTime * 0.02;
+                float equator = smoothstep(0.4, 0.0, abs(vUv.y - 0.5));
+                float n1 = fbm(uv * 3.0 + vec2(t, t));
+                float n2 = fbm(uv * 5.0 - vec2(t * 1.2, t * 0.8) + n1);
+                vec3 baseSpace = vec3(0.005, 0.0, 0.015);
+                vec3 color1 = vec3(0.15, 0.02, 0.25);
+                vec3 color2 = vec3(0.02, 0.12, 0.25);
+                vec3 starBand = vec3(0.1, 0.08, 0.05);
+                vec3 finalColor = baseSpace;
+                
+                finalColor += color1 * n1 * (0.4 + 0.6 * equator);
+                finalColor += color2 * n2 * (0.4 + 0.4 * equator);
+                finalColor += starBand * equator * (n1 * n2) * 2.0;
+                gl_FragColor = vec4(finalColor, 1.0);
+            }
+        `;
+        const bgGeometry = new THREE.SphereGeometry(1000, 32, 32);
+        const bgMaterial = new THREE.ShaderMaterial({
+            vertexShader: bgVertexShader,
+            fragmentShader: bgFragmentShader,
+            uniforms: { uTime: { value: 0 } },
+            side: THREE.BackSide,
+            depthWrite: false
+        });
+        const nebulaMesh = new THREE.Mesh(bgGeometry, bgMaterial);
+        universe.add(nebulaMesh);
+        const particleCount = 65000;
+        const starGeometry = new THREE.BufferGeometry();
+        
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+        const sizes = new Float32Array(particleCount);
+        const phases = new Float32Array(particleCount);
+        const twinkleSpeeds = new Float32Array(particleCount);
+        const colorPalette = [
+            '#ff1e4a',
+            '#23ff4b',
+            '#2a6fff',
+            '#ffd900',
+            '#ff00ea',
+            '#00ffea',
+            '#ffffff',
+            '#ff8800'
+        ].map(c => new THREE.Color(c));
+        const radius = 800;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const r = radius * Math.cbrt(Math.random());
+            const theta = Math.random() * 2 * Math.PI;
+            const phi = Math.acos(2 * Math.random() - 1);
+            
+            positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+            positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+            positions[i * 3 + 2] = r * Math.cos(phi);
+            const baseColor = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+            const color = baseColor.clone().lerp(new THREE.Color(0xffffff), Math.random() * 0.2);
+            
+            colors[i * 3] = color.r;
+            colors[i * 3 + 1] = color.g;
+            colors[i * 3 + 2] = color.b;
+            sizes[i] = Math.pow(Math.random(), 7.0) * 20.0 + 1.0; 
+            
+            phases[i] = Math.random() * Math.PI * 2;
+            twinkleSpeeds[i] = Math.random() * 4.0 + 0.5;
+        }
+        starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        starGeometry.setAttribute('customColor', new THREE.BufferAttribute(colors, 3));
+        starGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+        starGeometry.setAttribute('phase', new THREE.BufferAttribute(phases, 1));
+        starGeometry.setAttribute('twinkleSpeed', new THREE.BufferAttribute(twinkleSpeeds, 1));
+        const starVertexShader = `
+            uniform float uTime;
+            uniform float uPixelRatio;
+            attribute float size;
+            attribute float phase;
+            attribute float twinkleSpeed;
+            attribute vec3 customColor;
+            varying vec3 vColor;
+            varying float vTwinkle;
+            void main() {
+                vColor = customColor;
+                float t = uTime * twinkleSpeed + phase;
+                float wave = sin(t) * 0.5 + 0.5;
+                
+                float flash = pow(wave, 10.0) * 2.5; 
+                float basePulse = 0.15 + wave * 0.3;
+                
+                vTwinkle = basePulse + flash;
+                vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                gl_Position = projectionMatrix * mvPosition;
+                float dist = length(mvPosition.xyz);
+                gl_PointSize = size * uPixelRatio * (600.0 / dist) * vTwinkle;
+            }
+        `;
+        const starFragmentShader = `
+            varying vec3 vColor;
+            varying float vTwinkle;
+            void main() {
+                vec2 uv = gl_PointCoord.xy * 2.0 - 1.0;
+                float d = length(uv);
+                float rayX = exp(-abs(uv.x) * 30.0) * exp(-abs(uv.y) * 1.0);
+                float rayY = exp(-abs(uv.y) * 30.0) * exp(-abs(uv.x) * 1.0);
+                float core = exp(-d * 15.0);
+                float halo = exp(-d * 4.0) * 0.5;
+                float alpha = (rayX + rayY) * 0.8 + core + halo;
+                alpha *= smoothstep(1.0, 0.1, d);
+                if (alpha < 0.02) discard;
+                vec3 finalColor = mix(vColor, vec3(1.0), core * 0.9);
+                gl_FragColor = vec4(finalColor, alpha * min(vTwinkle, 2.5));
+            }
+        `;
+        const starMaterial = new THREE.ShaderMaterial({
+            vertexShader: starVertexShader,
+            fragmentShader: starFragmentShader,
+            uniforms: {
+                uTime: { value: 0.0 },
+                uPixelRatio: { value: renderer.getPixelRatio() }
+            },
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false
+        });
+        const starMesh = new THREE.Points(starGeometry, starMaterial);
+        universe.add(starMesh);
+        document.getElementById('loading').style.opacity = '0';
+        let mouseX = 0;
+        let mouseY = 0;
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.enablePan = false;
+        controls.enableZoom = true;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.4;
+        window.addEventListener('resize', onWindowResize, false);
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            starMaterial.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 2);
+        }
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+            starMaterial.uniforms.uTime.value = elapsedTime;
+            bgMaterial.uniforms.uTime.value = elapsedTime;
+            universe.rotation.x += (mouseY * 0.08 - universe.rotation.x) * 0.05;
+            universe.rotation.y += (mouseX * 0.08 - universe.rotation.y) * 0.05;
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+
+    <script>
+        // Quiz functionality
+        function checkAnswer(button, isCorrect) {
+            const options = button.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.disabled = true);
+            
+            const resultMsg = button.parentElement.nextElementSibling;
+            resultMsg.classList.remove('hidden');
+            
+            if (isCorrect) {
+                button.classList.add('correct');
+                resultMsg.className = 'result-message success';
+                resultMsg.textContent = '🎉 Правильно! Юки — это котик Юны!';
+            } else {
+                button.classList.add('incorrect');
+                options[0].classList.add('correct');
+                resultMsg.className = 'result-message fail';
+                resultMsg.textContent = '❌ Неа! Кот Юны — это Юки!';
+            }
+        }
+
+        function checkAnswer2(button, isCorrect) {
+            const options = button.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.disabled = true);
+            
+            const resultMsg = button.parentElement.nextElementSibling;
+            resultMsg.classList.remove('hidden');
+            
+            if (isCorrect) {
+                button.classList.add('correct');
+                resultMsg.className = 'result-message success';
+                resultMsg.textContent = '🎉 Верно! Квас — для окрошки!';
+            } else {
+                button.classList.add('incorrect');
+                options[1].classList.add('correct');
+                resultMsg.className = 'result-message fail';
+                resultMsg.textContent = '❌ Ой! Для окрошки нужен квас!';
+            }
+        }
+
+        function checkAnswer3(button, isCorrect) {
+            const options = button.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.disabled = true);
+            
+            const resultMsg = button.parentElement.nextElementSibling;
+            resultMsg.classList.remove('hidden');
+            
+            if (isCorrect) {
+                button.classList.add('correct');
+                resultMsg.className = 'result-message success';
+                resultMsg.textContent = '🎉 Да! Игровой руль Defender!';
+            } else {
+                button.classList.add('incorrect');
+                options[2].classList.add('correct');
+                resultMsg.className = 'result-message fail';
+                resultMsg.textContent = '❌ Неа! Юна получила игровой руль!';
+            }
+        }
+
+        // Timer functionality
+        let timerInterval = null;
+        let seconds = 0;
+        let isRunning = false;
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const secs = (seconds % 60).toString().padStart(2, '0');
+            document.getElementById('timer-display').textContent = `${mins}:${secs}`;
+            
+            const progress = (seconds % 300) / 300 * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+        }
+
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                timerInterval = setInterval(() => {
+                    seconds++;
+                    updateTimerDisplay();
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            isRunning = false;
+            clearInterval(timerInterval);
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            seconds = 0;
+            updateTimerDisplay();
+        }
+
+        function addTime(mins) {
+            seconds += mins;
+            updateTimerDisplay();
+        }
+
+        // Clicker game
+        let score = 0;
+        let highScore = localStorage.getItem('yunaHighScore') || 0;
+        document.getElementById('high-score').textContent = highScore;
+
+        function incrementScore() {
+            score++;
+            document.getElementById('clicker-score').textContent = score;
+            
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('yunaHighScore', highScore);
+                document.getElementById('high-score').textContent = highScore;
+            }
+        }
+
+        // Navigation
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Confetti
+        function createConfetti() {
+            const colors = ['#ff1e4a', '#23ff4b', '#2a6fff', '#ffd900', '#ff00ea', '#00ffea'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 4000);
+            }
+        }
+
+        // Emoji rain
+        function createEmojiRain() {
+            const emojis = ['🍳', '🐱', '🌟', '🚀', '💫', '🎮', '🍖', '🥞', '🚛', '💜'];
+            for (let i = 0; i < 30; i++) {
+                const emoji = document.createElement('div');
+                emoji.className = 'emoji-rain';
+                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.left = Math.random() * 100 + 'vw';
+                emoji.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(emoji);
+                
+                setTimeout(() => emoji.remove(), 5000);
+            }
+        }
+
+        // Initialize timer display
+        updateTimerDisplay();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a08916dfee8ed800',t:'MTc4MDkzNDIxNQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
