@@ -1,1800 +1,1532 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Path of Exile 3.29 — Проклятие Всепламени | Curse of the Allflame</title>
-    <meta name="description" content="Всё о новой лиге Path of Exile 3.29 Curse of the Allflame: дата выхода, тизер, теории сообщества, мнения стримеров, лучшие билды для старта.">
-    <meta property="og:title" content="PoE 3.29 — Проклятие Всепламени">
-    <meta property="og:description" content="Новая лига Path of Exile: Curse of the Allflame — полный обзор для русскоязычного сообщества">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        /* ========== CSS VARIABLES ========== */
-        :root {
-            --bg-dark: #0a0c14;
-            --bg-card: #111525;
-            --bg-card-hover: #161b32;
-            --accent-green: #00e68a;
-            --accent-green-dim: #00b36b;
-            --accent-teal: #0ff0fc;
-            --accent-orange: #ff8c42;
-            --accent-red: #ff4d6a;
-            --accent-purple: #a855f7;
-            --accent-gold: #ffd700;
-            --text-primary: #e8eaf6;
-            --text-secondary: #8892b0;
-            --text-muted: #5a6585;
-            --border: #1e2745;
-            --glass: rgba(17, 21, 37, 0.85);
-            --glass-border: rgba(0, 230, 138, 0.12);
-            --radius: 16px;
-            --radius-sm: 10px;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-        }
-
-        /* ========== RESET & BASE ========== */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.7;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-
-        /* ========== ANIMATED BACKGROUND ========== */
-        .bg-effects {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .bg-effects::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(ellipse at 20% 50%, rgba(0, 230, 138, 0.04) 0%, transparent 50%),
-                        radial-gradient(ellipse at 80% 20%, rgba(15, 240, 252, 0.03) 0%, transparent 50%),
-                        radial-gradient(ellipse at 50% 80%, rgba(168, 85, 247, 0.03) 0%, transparent 50%);
-            animation: bgDrift 25s ease-in-out infinite;
-        }
-
-        .bg-effects .particles {
-            position: absolute;
-            width: 100%; height: 100%;
-        }
-
-        .bg-effects .particle {
-            position: absolute;
-            width: 2px; height: 2px;
-            background: var(--accent-green);
-            border-radius: 50%;
-            opacity: 0;
-            animation: particleFloat 8s ease-in-out infinite;
-        }
-
-        .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
-        .particle:nth-child(2) { left: 25%; top: 60%; animation-delay: 1.5s; }
-        .particle:nth-child(3) { left: 45%; top: 30%; animation-delay: 3s; }
-        .particle:nth-child(4) { left: 65%; top: 70%; animation-delay: 4.5s; }
-        .particle:nth-child(5) { left: 85%; top: 40%; animation-delay: 6s; }
-        .particle:nth-child(6) { left: 15%; top: 80%; animation-delay: 2s; }
-        .particle:nth-child(7) { left: 75%; top: 15%; animation-delay: 5s; }
-        .particle:nth-child(8) { left: 55%; top: 55%; animation-delay: 7s; }
-
-        @keyframes bgDrift {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(-2%, 1%) rotate(1deg); }
-            66% { transform: translate(1%, -1%) rotate(-0.5deg); }
-        }
-
-        @keyframes particleFloat {
-            0%, 100% { opacity: 0; transform: translateY(0) scale(1); }
-            25% { opacity: 0.6; }
-            50% { opacity: 0.3; transform: translateY(-80px) scale(1.5); }
-            75% { opacity: 0.5; }
-        }
-
-        /* ========== LAYOUT ========== */
-        .page-wrapper {
-            position: relative;
-            z-index: 1;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* ========== HERO ========== */
-        .hero {
-            position: relative;
-            padding: 60px 0 80px;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 50%;
-            transform: translateX(-50%);
-            width: 600px; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 18px;
-            background: rgba(0, 230, 138, 0.1);
-            border: 1px solid rgba(0, 230, 138, 0.25);
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--accent-green);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 24px;
-            animation: badgePulse 3s ease-in-out infinite;
-        }
-
-        .hero-badge .dot {
-            width: 6px; height: 6px;
-            background: var(--accent-green);
-            border-radius: 50%;
-            animation: dotBlink 1.5s ease-in-out infinite;
-        }
-
-        @keyframes badgePulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 230, 138, 0.15); }
-            50% { box-shadow: 0 0 20px 4px rgba(0, 230, 138, 0.1); }
-        }
-
-        @keyframes dotBlink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .hero h1 {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 900;
-            line-height: 1.15;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, var(--accent-green), var(--accent-teal), var(--accent-green));
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradShift 6s ease-in-out infinite;
-        }
-
-        .hero .subtitle-en {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(1rem, 2.5vw, 1.4rem);
-            color: var(--text-secondary);
-            font-weight: 400;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-        }
-
-        @keyframes gradShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .hero-desc {
-            max-width: 700px;
-            margin: 0 auto 32px;
-            color: var(--text-secondary);
-            font-size: 1.05rem;
-        }
-
-        .hero-version {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 32px;
-        }
-
-        /* ========== COUNTDOWN ========== */
-        .countdown-section {
-            margin-bottom: 60px;
-        }
-
-        .countdown-wrapper {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            padding: 40px 32px;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-
-        .countdown-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.1rem;
-            color: var(--accent-green);
-            margin-bottom: 24px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .countdown-grid {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin-bottom: 24px;
-        }
-
-        .countdown-item {
-            background: rgba(0, 230, 138, 0.06);
-            border: 1px solid rgba(0, 230, 138, 0.15);
-            border-radius: var(--radius-sm);
-            padding: 16px 24px;
-            min-width: 90px;
-        }
-
-        .countdown-number {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--accent-green);
-            line-height: 1;
-        }
-
-        .countdown-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-            margin-top: 6px;
-        }
-
-        .countdown-dates {
-            display: flex;
-            justify-content: center;
-            gap: 32px;
-            flex-wrap: wrap;
-        }
-
-        .date-chip {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .date-chip .icon {
-            font-size: 1rem;
-        }
-
-        .date-chip strong {
-            color: var(--text-primary);
-        }
-
-        /* ========== SECTION STYLING ========== */
-        section {
-            margin-bottom: 60px;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 28px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .section-icon {
-            width: 42px; height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 230, 138, 0.1);
-            border-radius: 12px;
-            font-size: 1.3rem;
-            flex-shrink: 0;
-        }
-
-        .section-header h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .section-header .section-sub {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-
-        /* ========== CARDS ========== */
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 28px;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            border-color: var(--glass-border);
-            background: var(--bg-card-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(0, 230, 138, 0.06);
-        }
-
-        .card h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.15rem;
-            color: var(--accent-green);
-            margin-bottom: 12px;
-        }
-
-        .card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 12px;
-        }
-
-        .card p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* ========== TEASER SECTION ========== */
-        .teaser-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .teaser-card-full {
-            grid-column: 1 / -1;
-        }
-
-        /* ========== LORE TIMELINE ========== */
-        .timeline {
-            position: relative;
-            padding-left: 32px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 8px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--accent-green), var(--accent-teal), var(--accent-purple));
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 28px;
-            padding-left: 20px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -28px;
-            top: 8px;
-            width: 12px;
-            height: 12px;
-            background: var(--accent-green);
-            border-radius: 50%;
-            border: 3px solid var(--bg-dark);
-            box-shadow: 0 0 12px rgba(0, 230, 138, 0.4);
-        }
-
-        .timeline-item h4 {
-            font-family: 'Cinzel', serif;
-            font-size: 1rem;
-            color: var(--accent-teal);
-            margin-bottom: 6px;
-        }
-
-        .timeline-item p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        /* ========== COMMUNITY OPINIONS ========== */
-        .opinion-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
-        }
-
-        .opinion-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .opinion-card:hover {
-            border-color: rgba(168, 85, 247, 0.3);
-            background: var(--bg-card-hover);
-        }
-
-        .opinion-card .platform {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            padding: 4px 10px;
-            border-radius: 6px;
-            margin-bottom: 12px;
-        }
-
-        .platform.reddit {
-            background: rgba(255, 77, 106, 0.1);
-            color: var(--accent-red);
-            border: 1px solid rgba(255, 77, 106, 0.2);
-        }
-
-        .platform.forum {
-            background: rgba(168, 85, 247, 0.1);
-            color: var(--accent-purple);
-            border: 1px solid rgba(168, 85, 247, 0.2);
-        }
-
-        .platform.stream {
-            background: rgba(168, 85, 247, 0.1);
-            color: #9146FF;
-            border: 1px solid rgba(145, 70, 255, 0.2);
-        }
-
-        .opinion-card blockquote {
-            font-style: italic;
-            color: var(--text-secondary);
-            border-left: 3px solid var(--accent-purple);
-            padding-left: 16px;
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-        }
-
-        .opinion-card .author {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .opinion-card .upvotes {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.8rem;
-            color: var(--accent-orange);
-            margin-left: 10px;
-        }
-
-        /* ========== STREAMER SECTION ========== */
-        .streamer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
-        }
-
-        .streamer-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px;
-            transition: all 0.3s ease;
-        }
-
-        .streamer-card:hover {
-            border-color: rgba(15, 240, 252, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .streamer-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 14px;
-        }
-
-        .streamer-avatar {
-            width: 48px; height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            background: linear-gradient(135deg, rgba(0, 230, 138, 0.15), rgba(15, 240, 252, 0.15));
-            border: 2px solid rgba(0, 230, 138, 0.3);
-            flex-shrink: 0;
-        }
-
-        .streamer-name {
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            font-size: 1rem;
-            color: var(--accent-teal);
-        }
-
-        .streamer-role {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .streamer-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        /* ========== BUILD TIER LIST ========== */
-        .tier-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            border-radius: var(--radius);
-            overflow: hidden;
-        }
-
-        .tier-table thead th {
-            background: rgba(0, 230, 138, 0.1);
-            padding: 14px 18px;
-            text-align: left;
-            font-family: 'Cinzel', serif;
-            font-size: 0.85rem;
-            color: var(--accent-green);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .tier-table tbody td {
-            padding: 14px 18px;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            background: var(--bg-card);
-        }
-
-        .tier-table tbody tr:hover td {
-            background: var(--bg-card-hover);
-        }
-
-        .tier-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px; height: 32px;
-            border-radius: 8px;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            font-size: 0.85rem;
-        }
-
-        .tier-s { background: rgba(255, 215, 0, 0.15); color: var(--accent-gold); border: 1px solid rgba(255, 215, 0, 0.3); }
-        .tier-a { background: rgba(0, 230, 138, 0.1); color: var(--accent-green); border: 1px solid rgba(0, 230, 138, 0.25); }
-        .tier-b { background: rgba(15, 240, 252, 0.1); color: var(--accent-teal); border: 1px solid rgba(15, 240, 252, 0.25); }
-
-        /* ========== KEY DATES ========== */
-        .dates-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
-        }
-
-        .date-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-            transition: all 0.3s ease;
-        }
-
-        .date-card:hover {
-            border-color: var(--glass-border);
-        }
-
-        .date-card .date-icon {
-            width: 44px; height: 44px;
-            background: rgba(0, 230, 138, 0.08);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            flex-shrink: 0;
-        }
-
-        .date-card h4 {
-            font-size: 0.9rem;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-        }
-
-        .date-card .date-val {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--accent-green);
-        }
-
-        .date-card .date-info {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        /* ========== SPECULATION TAGS ========== */
-        .tag-cloud {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 12px;
-        }
-
-        .tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .tag-hot {
-            background: rgba(255, 77, 106, 0.1);
-            color: var(--accent-red);
-            border: 1px solid rgba(255, 77, 106, 0.2);
-        }
-
-        .tag-lore {
-            background: rgba(168, 85, 247, 0.1);
-            color: var(--accent-purple);
-            border: 1px solid rgba(168, 85, 247, 0.2);
-        }
-
-        .tag-mech {
-            background: rgba(0, 230, 138, 0.1);
-            color: var(--accent-green);
-            border: 1px solid rgba(0, 230, 138, 0.2);
-        }
-
-        .tag-fun {
-            background: rgba(255, 140, 66, 0.1);
-            color: var(--accent-orange);
-            border: 1px solid rgba(255, 140, 66, 0.2);
-        }
-
-        /* ========== INFO BOX ========== */
-        .info-box {
-            background: rgba(0, 230, 138, 0.04);
-            border: 1px solid rgba(0, 230, 138, 0.15);
-            border-radius: var(--radius);
-            padding: 24px 28px;
-            margin-bottom: 20px;
-        }
-
-        .info-box.warning {
-            background: rgba(255, 140, 66, 0.04);
-            border-color: rgba(255, 140, 66, 0.15);
-        }
-
-        .info-box h4 {
-            font-family: 'Cinzel', serif;
-            color: var(--accent-green);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .info-box.warning h4 {
-            color: var(--accent-orange);
-        }
-
-        .info-box p, .info-box ul {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .info-box ul {
-            margin-left: 20px;
-            margin-top: 8px;
-        }
-
-        .info-box ul li {
-            margin-bottom: 6px;
-        }
-
-        /* ========== EXPECTATIONS SUMMARY ========== */
-        .expectations-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 16px;
-        }
-
-        .expect-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px;
-            transition: all 0.3s ease;
-        }
-
-        .expect-card:hover {
-            border-color: var(--glass-border);
-            transform: translateY(-2px);
-        }
-
-        .expect-card .expect-icon {
-            font-size: 2rem;
-            margin-bottom: 12px;
-        }
-
-        .expect-card h4 {
-            font-family: 'Cinzel', serif;
-            font-size: 1rem;
-            color: var(--accent-teal);
-            margin-bottom: 8px;
-        }
-
-        .expect-card p {
-            color: var(--text-secondary);
-            font-size: 0.88rem;
-        }
-
-        /* ========== POLL / MOOD SECTION ========== */
-        .mood-bar {
-            display: flex;
-            border-radius: 8px;
-            overflow: hidden;
-            height: 32px;
-            margin: 16px 0;
-        }
-
-        .mood-segment {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #fff;
-            transition: flex-basis 0.5s ease;
-        }
-
-        .mood-hype { background: var(--accent-green); flex-basis: 55%; }
-        .mood-cautious { background: var(--accent-orange); flex-basis: 30%; }
-        .mood-skeptic { background: var(--accent-red); flex-basis: 15%; }
-
-        .mood-legend {
-            display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
-
-        .mood-legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .mood-legend-dot {
-            width: 10px; height: 10px;
-            border-radius: 50%;
-        }
-
-        /* ========== FOOTER ========== */
-        footer {
-            text-align: center;
-            padding: 40px 24px 30px;
-            border-top: 1px solid var(--border);
-            margin-top: 40px;
-        }
-
-        footer p {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
-
-        footer a {
-            color: var(--accent-green);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* ========== NAV ========== */
-        .toc {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px 28px;
-            margin-bottom: 48px;
-        }
-
-        .toc h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 1rem;
-            color: var(--accent-green);
-            margin-bottom: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .toc-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 8px;
-        }
-
-        .toc a {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.88rem;
-            padding: 6px 10px;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .toc a:hover {
-            color: var(--accent-green);
-            background: rgba(0, 230, 138, 0.06);
-        }
-
-        .toc a .toc-num {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 768px) {
-            .teaser-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .streamer-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .countdown-grid {
-                gap: 10px;
-            }
-
-            .countdown-item {
-                padding: 12px 16px;
-                min-width: 70px;
-            }
-
-            .countdown-number {
-                font-size: 1.6rem;
-            }
-
-            .expectations-grid,
-            .dates-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .toc-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* ========== SEPARATOR ========== */
-        .separator {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--border), transparent);
-            margin: 48px 0;
-        }
-
-        /* ========== GLOW ACCENT ========== */
-        .glow-text {
-            text-shadow: 0 0 20px rgba(0, 230, 138, 0.3);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PoE 3.29 — Curse of the Allflame | Tech Briefing</title>
+  <meta name="description" content="Новая отдельная страница по Path of Exile 3.29 Curse of the Allflame: официальные изменения, сравнения систем, графики настроения сообщества и roadmap перед стартом.">
+  <meta name="theme-color" content="#07131b">
+  <meta property="og:title" content="PoE 3.29 — Tech Briefing по Curse of the Allflame">
+  <meta property="og:description" content="Красивый технологичный русскоязычный хаб по новой лиге: графики, сравнения, сигналы рынка, ожидания Reddit и стримеров.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #041018;
+      --bg2: #071722;
+      --bg3: #0a1f2e;
+      --panel: rgba(7, 20, 31, 0.74);
+      --panel-strong: rgba(10, 26, 40, 0.9);
+      --line: rgba(124, 193, 226, 0.14);
+      --line-strong: rgba(124, 193, 226, 0.25);
+      --text: #ecf8ff;
+      --muted: #9ab4c3;
+      --soft: #7092a6;
+      --cyan: #5fe9ff;
+      --teal: #66ffd8;
+      --lime: #a7ff95;
+      --gold: #ffd27a;
+      --orange: #ff9f6f;
+      --rose: #ff7ba5;
+      --violet: #baa6ff;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+      --radius: 26px;
+      --radius-sm: 18px;
+      --shell: 1240px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(95, 233, 255, 0.16), transparent 26%),
+        radial-gradient(circle at 84% 18%, rgba(102, 255, 216, 0.12), transparent 24%),
+        radial-gradient(circle at 50% 64%, rgba(186, 166, 255, 0.08), transparent 30%),
+        linear-gradient(180deg, #031019 0%, #061521 34%, #031018 100%);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      opacity: 0.13;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(circle at center, black 38%, transparent 100%);
+    }
+
+    body::after {
+      background:
+        radial-gradient(circle at center, transparent 62%, rgba(0,0,0,0.34) 100%);
+    }
+
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover { color: var(--teal); }
+
+    .shell {
+      width: min(var(--shell), calc(100% - 32px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(18px);
+      background: rgba(4, 14, 22, 0.7);
+      border-bottom: 1px solid rgba(120, 186, 219, 0.12);
+    }
+
+    .topbar-inner {
+      width: min(var(--shell), calc(100% - 32px));
+      margin: 0 auto;
+      min-height: 74px;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .brand {
+      display: grid;
+      gap: 4px;
+    }
+
+    .brand strong {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.05em;
+      font-size: 1rem;
+    }
+
+    .brand span {
+      color: var(--soft);
+      font-size: 0.77rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .nav a {
+      color: var(--muted);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 0.9rem;
+      transition: .22s ease;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+      border-color: var(--line);
+      background: rgba(95, 233, 255, 0.06);
+    }
+
+    .hero {
+      padding: 74px 0 36px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .hero-main,
+    .hero-side,
+    .section-card,
+    .kpi-card,
+    .chart-card,
+    .flow-card,
+    .quote-card,
+    .creator-card,
+    .plan-card,
+    .source-card,
+    .matrix-card,
+    .note-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-main {
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(145deg, rgba(8, 27, 42, 0.95), rgba(6, 16, 26, 0.88));
+    }
+
+    .hero-main::before {
+      content: "";
+      position: absolute;
+      inset: auto -50px -60px auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(95, 233, 255, 0.34), transparent 72%);
+      filter: blur(16px);
+      opacity: 0.72;
+      pointer-events: none;
+    }
+
+    .hero-main::after {
+      content: "";
+      position: absolute;
+      left: -80px;
+      top: -90px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(102,255,216,0.18), transparent 70%);
+      pointer-events: none;
+      filter: blur(14px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(102,255,216,0.2);
+      background: rgba(102,255,216,0.07);
+      color: var(--teal);
+      font-size: .82rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 16px rgba(102,255,216,.8);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.7rem, 5vw, 5rem);
+      line-height: 1.04;
+      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, #f7fcff 0%, var(--cyan) 52%, var(--teal) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      margin: 14px 0 18px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--soft);
+      font-size: .95rem;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .chip-row,
+    .micro-row,
+    .signal-row,
+    .legend-row,
+    .creator-tags,
+    .source-links,
+    .source-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip,
+    .micro,
+    .badge,
+    .tag,
+    .source-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 38px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-size: 0.88rem;
+    }
+
+    .chip small,
+    .micro small,
+    .badge small {
+      color: var(--soft);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .75rem;
+      font-weight: 700;
+    }
+
+    .hero-side {
+      padding: 18px;
+      display: grid;
+      gap: 18px;
+      background: linear-gradient(180deg, rgba(9,24,36,0.92), rgba(8,17,28,0.88));
+    }
+
+    .stack-card {
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .stack-card h3 {
+      margin: 0 0 14px;
+      font-size: 1.02rem;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 10px 0 16px;
+    }
+
+    .tick {
+      text-align: center;
+      padding: 14px 10px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .tick strong {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.65rem;
+      line-height: 1;
+      color: var(--teal);
+      margin-bottom: 6px;
+    }
+
+    .tick span {
+      color: var(--soft);
+      text-transform: uppercase;
+      font-size: .72rem;
+      letter-spacing: .1em;
+    }
+
+    .signal-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .signal-list li {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 12px;
+      align-items: baseline;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .signal-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+
+    .signal-list span {
+      color: var(--soft);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .signal-list strong {
+      color: var(--text);
+      font-size: .95rem;
+      font-weight: 700;
+    }
+
+    .section {
+      padding: 28px 0 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-end;
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.55rem, 3vw, 2.2rem);
+      line-height: 1.15;
+    }
+
+    .section-head p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      max-width: 820px;
+    }
+
+    .label {
+      color: var(--cyan);
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .kpi-card,
+    .chart-card,
+    .flow-card,
+    .quote-card,
+    .creator-card,
+    .plan-card,
+    .source-card,
+    .matrix-card,
+    .note-card {
+      padding: 22px;
+      background: linear-gradient(180deg, rgba(10,24,36,0.92), rgba(8,18,29,0.88));
+    }
+
+    .kpi-card {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .ring {
+      --size: 96px;
+      --track: rgba(255,255,255,0.07);
+      width: var(--size);
+      height: var(--size);
+      border-radius: 50%;
+      background: conic-gradient(var(--accent) calc(var(--value) * 1%), var(--track) 0);
+      padding: 10px;
+      position: relative;
+      box-shadow: inset 0 0 16px rgba(255,255,255,0.03);
+    }
+
+    .ring::before {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, rgba(7,20,31,0.96), rgba(6,15,24,0.96));
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .ring .inner {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      z-index: 2;
+    }
+
+    .kpi-title {
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    .kpi-copy {
+      color: var(--muted);
+      font-size: .92rem;
+      margin: 0;
+    }
+
+    .dashboard-grid,
+    .flow-grid,
+    .quotes-grid,
+    .creator-grid,
+    .plans-grid,
+    .sources-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .dashboard-grid {
+      grid-template-columns: 1.2fr .8fr;
+      margin-top: 16px;
+    }
+
+    .flow-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .quotes-grid,
+    .creator-grid,
+    .plans-grid,
+    .sources-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chart-card h3,
+    .flow-card h3,
+    .quote-card h3,
+    .creator-card h3,
+    .plan-card h3,
+    .source-card h3,
+    .matrix-card h3,
+    .note-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.06rem;
+    }
+
+    .chart-card p,
+    .flow-card p,
+    .quote-card p,
+    .creator-card p,
+    .plan-card p,
+    .source-card p,
+    .matrix-card p,
+    .note-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .bar-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .bar-item {
+      display: grid;
+      gap: 8px;
+    }
+
+    .bar-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: .92rem;
+      color: var(--text);
+    }
+
+    .bar-track {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.05);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--cyan), var(--teal));
+      box-shadow: 0 0 20px rgba(95,233,255,.18);
+    }
+
+    .bar-note {
+      color: var(--soft);
+      font-size: .82rem;
+    }
+
+    .radar-wrap {
+      display: grid;
+      place-items: center;
+      min-height: 340px;
+      margin-top: 8px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.05);
+      background:
+        radial-gradient(circle at center, rgba(95,233,255,.08), transparent 58%),
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      overflow: hidden;
+    }
+
+    .radar-caption {
+      margin-top: 14px;
+      color: var(--soft);
+      font-size: .82rem;
+    }
+
+    .legend-row { margin-top: 14px; }
+
+    .badge {
+      font-size: .78rem;
+      color: var(--soft);
+      min-height: auto;
+      padding: 8px 12px;
+    }
+
+    .badge.cyan { color: var(--cyan); }
+    .badge.teal { color: var(--teal); }
+    .badge.gold { color: var(--gold); }
+    .badge.orange { color: var(--orange); }
+    .badge.rose { color: var(--rose); }
+    .badge.violet { color: var(--violet); }
+
+    .encounter-list,
+    .plan-list,
+    .source-list {
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .encounter-list li,
+    .plan-list li,
+    .source-list li {
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .encounter-list strong,
+    .plan-list strong,
+    .source-list strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 4px;
+      font-size: .93rem;
+    }
+
+    .matrix-scroll { overflow-x: auto; margin-top: 14px; }
+
+    table.matrix {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 920px;
+      overflow: hidden;
+    }
+
+    .matrix th,
+    .matrix td {
+      padding: 14px 16px;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      text-align: left;
+    }
+
+    .matrix th {
+      font-size: .79rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--soft);
+      background: rgba(255,255,255,0.03);
+      position: sticky;
+      top: 0;
+    }
+
+    .matrix td {
+      font-size: .92rem;
+      color: var(--muted);
+      background: rgba(255,255,255,0.015);
+    }
+
+    .matrix td strong { color: var(--text); }
+
+    .pulse {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .pulse-bar {
+      height: 18px;
+      border-radius: 999px;
+      overflow: hidden;
+      display: flex;
+      border: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 14px;
+    }
+
+    .pulse-seg {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      font-size: .74rem;
+      font-weight: 800;
+      color: #031019;
+      white-space: nowrap;
+    }
+
+    .pulse-hype { width: 58%; background: linear-gradient(90deg, var(--teal), var(--cyan)); }
+    .pulse-caution { width: 27%; background: linear-gradient(90deg, var(--gold), var(--orange)); }
+    .pulse-concern { width: 15%; background: linear-gradient(90deg, #ff9bb5, var(--rose)); }
+
+    .quote-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-card::before {
+      content: "“";
+      position: absolute;
+      right: 18px;
+      top: 8px;
+      font-family: 'Cinzel', serif;
+      font-size: 4.8rem;
+      line-height: 1;
+      color: var(--cyan);
+      opacity: .08;
+    }
+
+    blockquote {
+      margin: 0 0 12px;
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    .quote-meta,
+    .creator-tags,
+    .source-tags {
+      margin-top: 14px;
+    }
+
+    .tag {
+      min-height: auto;
+      padding: 8px 12px;
+      font-size: .78rem;
+      color: var(--soft);
+      background: rgba(255,255,255,.03);
+    }
+
+    .creator-card .source-link,
+    .source-card .source-link,
+    .quote-card .source-link {
+      margin-top: 14px;
+      font-size: .8rem;
+      color: var(--soft);
+      min-height: auto;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .source-links { margin-top: 14px; }
+
+    .note-card {
+      margin-top: 16px;
+      background: linear-gradient(180deg, rgba(255,210,122,.08), rgba(255,210,122,.04));
+      border-color: rgba(255,210,122,.18);
+    }
+
+    .footer {
+      padding: 36px 0 54px;
+      color: var(--soft);
+      font-size: .9rem;
+    }
+
+    .footer .section-card {
+      padding: 22px;
+      background: rgba(5,16,24,.82);
+    }
+
+    .return-link {
+      display: inline-flex;
+      margin-top: 18px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .return-link:hover {
+      color: var(--text);
+      background: rgba(95,233,255,.06);
+    }
+
+    @media (max-width: 1160px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-grid,
+      .dashboard-grid,
+      .flow-grid,
+      .quotes-grid,
+      .creator-grid,
+      .plans-grid,
+      .sources-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 860px) {
+      .topbar-inner,
+      .section-head { flex-direction: column; align-items: flex-start; }
+      .nav { justify-content: flex-start; }
+      .hero-grid,
+      .dashboard-grid,
+      .flow-grid,
+      .quotes-grid,
+      .creator-grid,
+      .plans-grid,
+      .sources-grid,
+      .kpi-grid { grid-template-columns: 1fr; }
+      .hero-main,
+      .hero-side { padding: 22px; }
+      .countdown { grid-template-columns: repeat(2, 1fr); }
+      .signal-list li { grid-template-columns: 1fr; gap: 6px; }
+      .radar-wrap { min-height: 290px; }
+    }
+  </style>
 </head>
 <body>
-
-<div class="bg-effects">
-    <div class="particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <strong>PoE 3.29 — Tech Briefing</strong>
+        <span>Отдельная новая страница • Curse of the Allflame • обновлено 18 июля 2026</span>
+      </div>
+      <nav class="nav" aria-label="Навигация по странице">
+        <a href="#dashboard">Dashboard</a>
+        <a href="#flow">League Flow</a>
+        <a href="#compare">Compare</a>
+        <a href="#community">Community</a>
+        <a href="#creators">Creators</a>
+        <a href="#launch">Launch Plan</a>
+        <a href="#sources">Sources</a>
+      </nav>
     </div>
-</div>
+  </header>
 
-<div class="page-wrapper">
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-grid">
+        <article class="hero-main">
+          <div class="eyebrow">новая отдельная страница, не замена старой</div>
+          <h1>Curse of<br>the Allflame</h1>
+          <p class="hero-sub">Path of Exile 3.29 • launch briefing • underwater league + core systems rework</p>
+          <p class="hero-copy">
+            Это новый самостоятельный лендинг в более <strong>технологичном и аналитическом стиле</strong>.
+            Я собрал официальную информацию после reveal, патч-нотов и Q&amp;A, а затем упаковал её в формат,
+            где удобно не просто читать текст, а <strong>сравнивать системы, видеть сигналы сообщества и быстро
+            понимать, что реально меняет 3.29</strong> для новичка, фармера и билд-мейкера.
+          </p>
+          <div class="chip-row">
+            <div class="chip"><small>фокус</small> лига + Abyss + Legion + Sockets</div>
+            <div class="chip"><small>режим</small> официальная фактура + community synthesis</div>
+            <div class="chip"><small>стиль</small> dashboard / graph / compare</div>
+          </div>
+          <div class="micro-row" style="margin-top: 14px;">
+            <div class="micro"><small>дата старта</small> 24 июля • 23:00 МСК</div>
+            <div class="micro"><small>Mirage off</small> 20 июля • 01:00 МСК</div>
+            <div class="micro"><small>status</small> reveal уже состоялся</div>
+          </div>
+          <a class="return-link" href="index.html">← Вернуться к исходной странице сайта</a>
+        </article>
 
-    <!-- ===================== HERO ===================== -->
-    <header class="hero">
-        <div class="container">
-            <div class="hero-badge"><span class="dot"></span> Скоро запуск новой лиги</div>
-            <h1 class="glow-text">Проклятие Всепламени</h1>
-            <p class="subtitle-en">Curse of the Allflame</p>
-            <p class="hero-version">Path of Exile • Патч 3.29 • Июль 2026</p>
-            <p class="hero-desc">
-                Полный обзор предстоящей лиги для русскоязычного сообщества: анализ тизера,
-                теории, мнения Reddit и форумов, ожидания топовых стримеров, рекомендации по билдам
-                и все важные даты.
-            </p>
+        <aside class="hero-side">
+          <section class="stack-card">
+            <h3>⏳ Countdown to Launch</h3>
+            <div class="countdown">
+              <div class="tick"><strong id="dd">--</strong><span>дней</span></div>
+              <div class="tick"><strong id="hh">--</strong><span>часов</span></div>
+              <div class="tick"><strong id="mm">--</strong><span>минут</span></div>
+              <div class="tick"><strong id="ss">--</strong><span>секунд</span></div>
+            </div>
+            <ul class="signal-list">
+              <li><span>launch</span><strong>24 July • 13:00 PDT / 23:00 МСК</strong></li>
+              <li><span>gap</span><strong>между концом Mirage и стартом есть короткое окно</strong></li>
+              <li><span>priority</span><strong>готовь 2 стартовых плана, а не один хайповый билд</strong></li>
+            </ul>
+          </section>
+
+          <section class="stack-card">
+            <h3>📡 Signal Board</h3>
+            <ul class="signal-list">
+              <li><span>league loop</span><strong>Charts → sea floor → Voyage board → Allflame crafting</strong></li>
+              <li><span>core patch</span><strong>Mercenaries, Luminary, Abyss, Legion, Atlas Anomalies, sockets</strong></li>
+              <li><span>hot topic</span><strong>самый громкий сдвиг — сокеты больше не блокируют гемы</strong></li>
+              <li><span>risk</span><strong>рынок и meta week 1 будут менее «сладкими», чем в Mirage</strong></li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="dashboard">
+      <div class="section-head">
+        <div>
+          <div class="label">Executive dashboard</div>
+          <h2>Технологическая сводка: где 3.29 реально меняет игру</h2>
+          <p>
+            Ниже — не сухой список новинок, а удобная приборная панель. Значения 0–100 — это <strong>редакционная шкала влияния</strong>
+            на основе официальных анонсов, патч-нотов, Q&amp;A и доминирующих тем Reddit/creator coverage.
+          </p>
         </div>
-    </header>
+      </div>
 
-    <main class="container">
+      <div class="kpi-grid">
+        <article class="kpi-card">
+          <div class="ring" style="--value: 92; --accent: var(--teal);">
+            <div class="inner">92</div>
+          </div>
+          <div class="kpi-title">Onboarding Impact</div>
+          <p class="kpi-copy">Сокеты больше не ломают смену шмота, есть popup-подсказки, верстак с акта 2 — это один из самых дружелюбных стартов PoE 1 за долгое время.</p>
+        </article>
 
-        <!-- ===================== TOC ===================== -->
-        <nav class="toc">
-            <h3>📋 Содержание</h3>
-            <div class="toc-grid">
-                <a href="#countdown"><span class="toc-num">01</span> Обратный отсчёт</a>
-                <a href="#dates"><span class="toc-num">02</span> Ключевые даты</a>
-                <a href="#teaser"><span class="toc-num">03</span> Разбор тизера</a>
-                <a href="#lore"><span class="toc-num">04</span> Лор Всепламени</a>
-                <a href="#theories"><span class="toc-num">05</span> Теории сообщества</a>
-                <a href="#changes"><span class="toc-num">06</span> Известные изменения</a>
-                <a href="#reddit"><span class="toc-num">07</span> Мнение Reddit</a>
-                <a href="#streamers"><span class="toc-num">08</span> Стримеры и контент-мейкеры</a>
-                <a href="#expectations"><span class="toc-num">09</span> Чего ждут игроки</a>
-                <a href="#builds"><span class="toc-num">10</span> Билды для лиг-старта</a>
-                <a href="#mood"><span class="toc-num">11</span> Настрой сообщества</a>
-                <a href="#prepare"><span class="toc-num">12</span> Как подготовиться</a>
+        <article class="kpi-card">
+          <div class="ring" style="--value: 88; --accent: var(--cyan);">
+            <div class="inner">88</div>
+          </div>
+          <div class="kpi-title">Buildcraft Potential</div>
+          <p class="kpi-copy">Luminary, permanent Mercenary gear, Pacts, Vestigial uniques и обновлённые caster-пути создают очень высокий потолок для экспериментов.</p>
+        </article>
+
+        <article class="kpi-card">
+          <div class="ring" style="--value: 74; --accent: var(--gold);">
+            <div class="inner">74</div>
+          </div>
+          <div class="kpi-title">Economy Shock</div>
+          <p class="kpi-copy">Mirage не идёт в core, зато вырастают новые центры спроса: Chromatics, Abyss, Legion, Mercenary tech и вероятно отдельные voyage-routing стратегии.</p>
+        </article>
+
+        <article class="kpi-card">
+          <div class="ring" style="--value: 86; --accent: var(--violet);">
+            <div class="inner">86</div>
+          </div>
+          <div class="kpi-title">League Depth</div>
+          <p class="kpi-copy">Подводная экспедиция — не просто атмосфера. Там сочетаются роутинг, вынос лута капсулами, специальные charts, tradable fuel и новый слой крафта.</p>
+        </article>
+      </div>
+
+      <div class="dashboard-grid">
+        <article class="chart-card">
+          <div class="label">System pressure bars</div>
+          <h3>Что сильнее всего ощущается в реальном геймплее</h3>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-top"><span>Socket Rework</span><strong>96 / 100</strong></div>
+              <div class="bar-track"><div class="bar-fill" style="width:96%"></div></div>
+              <div class="bar-note">Меняет каждый апгрейд экипировки, leveling loop и ранний доступ к 6L.</div>
             </div>
-        </nav>
-
-        <!-- ===================== COUNTDOWN ===================== -->
-        <section id="countdown" class="countdown-section">
-            <div class="countdown-wrapper">
-                <h2 class="countdown-title">⏳ До запуска лиги</h2>
-                <div class="countdown-grid" id="countdownGrid">
-                    <div class="countdown-item">
-                        <div class="countdown-number" id="cd-days">--</div>
-                        <div class="countdown-label">дней</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-number" id="cd-hours">--</div>
-                        <div class="countdown-label">часов</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-number" id="cd-mins">--</div>
-                        <div class="countdown-label">минут</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-number" id="cd-secs">--</div>
-                        <div class="countdown-label">секунд</div>
-                    </div>
-                </div>
-                <div class="countdown-dates">
-                    <div class="date-chip">
-                        <span class="icon">🎮</span>
-                        Старт лиги: <strong>&nbsp;24 июля, 23:00 МСК</strong>
-                    </div>
-                    <div class="date-chip">
-                        <span class="icon">📺</span>
-                        GGG Live: <strong>&nbsp;16 июля, 23:00 МСК</strong>
-                    </div>
-                </div>
+            <div class="bar-item">
+              <div class="bar-top"><span>League Crafting</span><strong>91 / 100</strong></div>
+              <div class="bar-track"><div class="bar-fill" style="width:91%"></div></div>
+              <div class="bar-note">Механика выбора лучшего ghost outcome потенциально очень важна и для SSF, и для дорогого craft path.</div>
             </div>
-        </section>
-
-        <!-- ===================== KEY DATES ===================== -->
-        <section id="dates">
-            <div class="section-header">
-                <div class="section-icon">📅</div>
-                <div>
-                    <h2>Ключевые даты</h2>
-                    <span class="section-sub">Расписание событий перед новой лигой</span>
-                </div>
+            <div class="bar-item">
+              <div class="bar-top"><span>Legion Revamp</span><strong>84 / 100</strong></div>
+              <div class="bar-track"><div class="bar-fill" style="width:84%"></div></div>
+              <div class="bar-note">Incubators уходят, Vestigial uniques становятся chase-слоем с большим азартом.</div>
             </div>
-
-            <div class="dates-grid">
-                <div class="date-card">
-                    <div class="date-icon">🏛️</div>
-                    <div>
-                        <h4>Конец «Возвращение Предков»</h4>
-                        <div class="date-val">15 июля 2026</div>
-                        <div class="date-info">Ивент Trial of the Ancestors + Legacy of Phrecia</div>
-                    </div>
-                </div>
-                <div class="date-card">
-                    <div class="date-icon">📺</div>
-                    <div>
-                        <h4>GGG Live — полный показ 3.29</h4>
-                        <div class="date-val">16 июля, 23:00 МСК</div>
-                        <div class="date-info">Mark (директор) + Octavian + Q&A с ZiggyD</div>
-                    </div>
-                </div>
-                <div class="date-card">
-                    <div class="date-icon">🔚</div>
-                    <div>
-                        <h4>Конец лиги Мираж (3.28)</h4>
-                        <div class="date-val">20 июля 2026</div>
-                        <div class="date-info">Не забудьте завершить челленджи!</div>
-                    </div>
-                </div>
-                <div class="date-card">
-                    <div class="date-icon">🚀</div>
-                    <div>
-                        <h4>Старт «Curse of the Allflame»</h4>
-                        <div class="date-val">24 июля, 23:00 МСК</div>
-                        <div class="date-info">PC и консоли одновременно</div>
-                    </div>
-                </div>
-                <div class="date-card">
-                    <div class="date-icon">🎪</div>
-                    <div>
-                        <h4>ExileCon 2026</h4>
-                        <div class="date-val">7–8 ноября, Окленд (НЗ)</div>
-                        <div class="date-info">Возможный анонс PoE 2 версии 1.0</div>
-                    </div>
-                </div>
+            <div class="bar-item">
+              <div class="bar-top"><span>Mercenary + Luminary</span><strong>81 / 100</strong></div>
+              <div class="bar-track"><div class="bar-fill" style="width:81%"></div></div>
+              <div class="bar-note">Часть игроков пойдёт в «надёжный старт», а теорикрафтеры почти точно начнут ковырять Scion very early.</div>
             </div>
-        </section>
-
-        <!-- ===================== TEASER BREAKDOWN ===================== -->
-        <section id="teaser">
-            <div class="section-header">
-                <div class="section-icon">🎬</div>
-                <div>
-                    <h2>Разбор тизера</h2>
-                    <span class="section-sub">Что можно извлечь из 30-секундного ролика</span>
-                </div>
+            <div class="bar-item">
+              <div class="bar-top"><span>Abyss Revamp</span><strong>79 / 100</strong></div>
+              <div class="bar-track"><div class="bar-fill" style="width:79%"></div></div>
+              <div class="bar-note">Меньше раздражающей беготни за трещиной, больше читаемого боя, новый pinnacle boss и более ясный reward identity.</div>
             </div>
-
-            <div class="teaser-grid">
-                <div class="card teaser-card-full">
-                    <h3>🌊 «Boat League» — Лига на лодке</h3>
-                    <p>
-                        В тизере путник плывёт на маленькой лодке по чёрным водам. Единственный
-                        источник света — зелёный фонарь, визуально идентичный <strong>Всепламени (Allflame)</strong>
-                        из игры. Путник ощущает нечто огромное под водой, но когда камера погружается —
-                        ничего не видно. Внезапно с обратной стороны лодки появляется гигантская
-                        <strong>рыба-удильщик</strong>, готовая поглотить и лодку, и моряка.
-                    </p>
-                    <p>
-                        Сообщество моментально окрестило это <strong>«BOAT LEAGUE»</strong> — «Лига-лодка»
-                        (или «Best Of All Time»). Мемы заполонили Reddit и YouTube комментарии.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <h3>🐟 Гигантский рыба-босс</h3>
-                    <p>
-                        Монстр из тизера напоминает глубоководного удильщика. Это может быть
-                        <strong>новый пиннакл-босс</strong>, по аналогии с Мервейл из PoE 1 и Great White One
-                        из PoE 2. Или, как шутят игроки, «рыба, которую мы должны поймать».
-                    </p>
-                </div>
-
-                <div class="card">
-                    <h3>🔥 Всепламя зовёт</h3>
-                    <p>
-                        Путник говорит о <strong>проклятии</strong>, которое зовёт его. Это подтверждает,
-                        что Всепламя — не просто артефакт, а <strong>сущность, способная влиять на людей</strong>,
-                        заставляя их совершать действия. Точно как с Капитаном Фэйргрейвсом в Акте 1.
-                    </p>
-                </div>
+            <div class="bar-item">
+              <div class="bar-top"><span>Self-Cast Pass</span><strong>73 / 100</strong></div>
+              <div class="bar-track"><div class="bar-fill" style="width:73%"></div></div>
+              <div class="bar-note">Потенциал высокий, но Reddit и стримеры пока осторожны: баффы видны, но доверие нужно заслужить стартовой практикой.</div>
             </div>
-        </section>
+          </div>
+        </article>
 
-        <!-- ===================== LORE ===================== -->
-        <section id="lore">
-            <div class="section-header">
-                <div class="section-icon">📜</div>
-                <div>
-                    <h2>Лор Всепламени</h2>
-                    <span class="section-sub">Что мы уже знаем из игры</span>
-                </div>
-            </div>
+        <article class="chart-card">
+          <div class="label">Impact radar</div>
+          <h3>Профиль патча 3.29</h3>
+          <div class="radar-wrap">
+            <svg id="radarChart" viewBox="0 0 320 320" width="100%" height="100%" aria-label="Radar chart по влиянию патча"></svg>
+          </div>
+          <div class="legend-row">
+            <span class="badge cyan">новички</span>
+            <span class="badge teal">QoL</span>
+            <span class="badge gold">экономика</span>
+            <span class="badge violet">теорикрафт</span>
+          </div>
+          <p class="radar-caption">Самый необычный профиль у этого патча: он одновременно облегчает вход в PoE 1 и поднимает потолок сложности для late-game планирования.</p>
+        </article>
+      </div>
+    </section>
 
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h4>Акт 1 — Капитан Фэйргрейвс</h4>
-                    <p>
-                        Наше первое знакомство со Всепламенем происходит через Капитана Фэйргрейвса
-                        на Кладбище Кораблей. Он рассказывает, что артефакт был украден у него
-                        рабыней-девушкой. Фэйргрейвс говорит: <em>«Чтобы Всепламя дала жизнь,
-                        её сначала нужно разжечь жизнью»</em> — намёк на связь с нежитью и проклятиями.
-                    </p>
-                </div>
-                <div class="timeline-item">
-                    <h4>Акт 3 — Смерть Фэйргрейвса</h4>
-                    <p>
-                        После квеста «A Swig of Hope» Фэйргрейвс пьёт из Декантера и произносит
-                        загадочные последние слова: <em>«Что ты такое? Нет... не может быть... Я...
-                        не...»</em> — он явно обращался не к игроку. Возможно, старый пират жив
-                        и заточён где-то.
-                    </p>
-                </div>
-                <div class="timeline-item">
-                    <h4>Эндгейм — Allflame Embers</h4>
-                    <p>
-                        Угольки Всепламени — фрагменты карт, выпадающие из лидеров убежищ
-                        Бессмертного Синдиката. Они позволяют модифицировать паки монстров на картах.
-                        Катарина может дропнуть и Allflame Ember, и Cane of Kulemak — это не совпадение.
-                    </p>
-                </div>
-                <div class="timeline-item">
-                    <h4>Связь с PoE 2</h4>
-                    <p>
-                        Зелёное пламя из тизера подозрительно похоже на огонь из <strong>Колодца Душ</strong>
-                        в Path of Exile 2, который является частью Бездны. Это может намекать на
-                        глубокую связь между двумя играми через общий лор.
-                    </p>
-                </div>
-            </div>
-        </section>
+    <section class="section" id="flow">
+      <div class="section-head">
+        <div>
+          <div class="label">League flow & reward logic</div>
+          <h2>Как устроен реальный цикл лиги, если смотреть глубже reveal-трейлера</h2>
+          <p>
+            После Q&amp;A стало понятнее, что сама лига не сводится к «нырнул и полутал». У неё есть map-side входные точки,
+            несколько осей наград и специальная логика навигации через lantern placement.
+          </p>
+        </div>
+      </div>
 
-        <!-- ===================== COMMUNITY THEORIES ===================== -->
-        <section id="theories">
-            <div class="section-header">
-                <div class="section-icon">🔮</div>
-                <div>
-                    <h2>Теории сообщества</h2>
-                    <span class="section-sub">Самые популярные спекуляции перед GGG Live</span>
-                </div>
-            </div>
+      <div class="flow-grid">
+        <article class="flow-card">
+          <div class="label">Map encounter #1</div>
+          <h3>Accursed Treasure Chest</h3>
+          <p>Один из способов добывать charts прямо в мапах. После прохождения chest-встречи игрок получает <strong>случайного tormented spirit buff</strong> на остаток инстанса — то есть это полезно не только ради самого chart.</p>
+          <ul class="encounter-list">
+            <li><strong>Что даёт</strong> Chart + spirit possession effect</li>
+            <li><strong>Почему важно</strong> map blaster не чувствует, что «его заставили идти в лигу»</li>
+          </ul>
+        </article>
 
-            <div class="card">
-                <h3>1. Реворк Духов Мучения (Torment Spirits)</h3>
-                <p>
-                    Самая популярная теория. Духи Мучения не получали серьёзных обновлений
-                    годами (только скейлинг). Учитывая тему проклятий и зелёного пламени,
-                    реворк Torment — логичный шаг. Возможно, Всепламя станет инструментом
-                    для взаимодействия с духами.
-                </p>
-            </div>
+        <article class="flow-card">
+          <div class="label">Map encounter #2</div>
+          <h3>Brine-Rot Pirates</h3>
+          <p>Q&amp;A отдельно подчеркнуло, что этот encounter даёт шанс на <strong>дублирование gold drops</strong> до конца инстанса. То есть chart-энтри уже на стадии карты начинает подталкивать в конкретные farming loops.</p>
+          <ul class="encounter-list">
+            <li><strong>Что даёт</strong> Chart + gold duplication chance</li>
+            <li><strong>Почему важно</strong> золото снова чувствуется как системный ресурс, а не просто вторичный счётчик</li>
+          </ul>
+        </article>
 
-            <div class="card">
-                <h3>2. Реворк Бездны (Abyss)</h3>
-                <p>
-                    Зелёное пламя визуально похоже на эффекты Бездны. Связь через Катарину
-                    и Синдикат подкрепляет теорию. Abyss тоже не обновлялся очень давно.
-                </p>
-            </div>
+        <article class="flow-card">
+          <div class="label">Map encounter #3</div>
+          <h3>Crab Nest</h3>
+          <p>После зачистки nest-а при убийстве rare и unique врагов начинают спавниться крабы. Разработчики прямо отметили, что это особенно вкусно смотрится в плотных сценариях, например рядом с Beyond-паттернами.</p>
+          <ul class="encounter-list">
+            <li><strong>Что даёт</strong> Chart + extra monster chain</li>
+            <li><strong>Почему важно</strong> часть наград лиги встроена в pacing карты, а не отложена только в подводный run</li>
+          </ul>
+        </article>
 
-            <div class="card">
-                <h3>3. «Boat League» + Рыбалка</h3>
-                <p>
-                    Шутливая, но популярная теория: лодка из тизера напоминает механику
-                    Settlers of Kalguur (лига 3.25 с портом и морской торговлей), а гигантская
-                    рыба намекает на легендарную «рыбалку» — вечный мем PoE. Некоторые игроки
-                    всерьёз надеются на полноценную рыболовную механику.
-                </p>
-            </div>
+        <article class="flow-card">
+          <div class="label">Underwater reward axis</div>
+          <h3>Dead Man Sulfur</h3>
+          <p>Это не просто fuel ради атмосферы — в Q&amp;A подчёркнуто, что ресурс <strong>полностью торгуемый</strong>. Значит, у лиги есть шанс быстро обзавестись отдельным ценовым слоем и decision-making между «использовать самому» и «продать».</p>
+        </article>
 
-            <div class="card">
-                <h3>4. Возвращение Капитана Фэйргрейвса</h3>
-                <p>
-                    Моряк из тизера, Всепламя из квеста «Marooned Mariner» — всё указывает
-                    на расширение истории Фэйргрейвса. Возможно, он вернётся как ключевой
-                    NPC или даже босс новой лиги.
-                </p>
-            </div>
+        <article class="flow-card">
+          <div class="label">Special charts</div>
+          <h3>Отдельные reward rooms</h3>
+          <p>Подтверждены charts на крупные сундуки с валютой, новые mercenary outcomes, boss-route и дополнительные специальные зоны морского дна. Это усиливает идею не одной механики, а <strong>сетапа маршрутов</strong>.</p>
+        </article>
 
-            <div class="tag-cloud">
-                <span class="tag tag-hot">🔥 Torment реворк</span>
-                <span class="tag tag-lore">📖 Фэйргрейвс</span>
-                <span class="tag tag-mech">⚙️ Abyss реворк</span>
-                <span class="tag tag-fun">🎣 Рыбалка</span>
-                <span class="tag tag-hot">👹 Новый пиннакл-босс</span>
-                <span class="tag tag-mech">⚙️ Синдикат</span>
-                <span class="tag tag-lore">🔗 Связь с PoE 2</span>
-                <span class="tag tag-fun">🚢 Boat League</span>
-            </div>
-        </section>
+        <article class="flow-card">
+          <div class="label">Scattered objects</div>
+          <h3>Навигация не вслепую</h3>
+          <p>Лампы не просто расширяют безопасную зону. В Q&amp;A сказано, что они указывают направление к ближайшему reward object. Это важный дизайн-сдвиг: ощущение исследования сохраняется, но механика не уходит в RNG-хаос.</p>
+        </article>
+      </div>
 
-        <!-- ===================== KNOWN CHANGES ===================== -->
-        <section id="changes">
-            <div class="section-header">
-                <div class="section-icon">⚡</div>
-                <div>
-                    <h2>Уже известные изменения</h2>
-                    <span class="section-sub">Из ежедневных тизеров GGG</span>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>🔨 Tidebreaker — реворк уника + Brine Charges</h3>
-                <p>
-                    Новый тип зарядов — <strong>Brine Charges</strong> (Солёные заряды).
-                    Каждый заряд даёт <strong>4% физ. урона как доп. холод</strong> и <strong>4% как доп.
-                    молния</strong>. Tidebreaker теперь генерирует эти заряды с 50% шансом при ударе.
-                    Сообщество обсуждает Battlemage-синергии для заклинаний.
-                </p>
-            </div>
-
-            <div class="card">
-                <h3>👻 Animate Guardian — Наконец-то UI!</h3>
-                <p>
-                    <strong>Самое обсуждаемое изменение</strong> — у Animate Guardian теперь есть
-                    полноценное окно экипировки! Можно видеть, что надето, и управлять предметами.
-                    Reddit буквально взорвался: <em>«AG UI CONFIRMED!»</em> — один из самых
-                    заплюсованных комментариев. Игроки больше не потеряют 140 дивайнов из-за
-                    случайного двойного вооружения AG.
-                </p>
-            </div>
-
-            <div class="card">
-                <h3>⚔️ Новые трансфигурированные скиллы</h3>
-                <p>
-                    Уже показаны два новых варианта:
-                </p>
-                <ul style="color: var(--text-secondary); margin-left: 20px; font-size: 0.9rem;">
-                    <li><strong>Holy Hammers of Spirals</strong> — slam-атака, тратит Power Charges,
-                    вызывает каскад молниевых молотов по спирали</li>
-                    <li><strong>Reap of Butchering</strong> — физическое заклинание, генерирует
-                    Blood Charges с увеличивающимся DoT-уроном</li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3>🎯 Улучшение тултипов</h3>
-                <p>
-                    Новая система подсказок для предметов — больше информации, меньше путаницы.
-                    Это часть общего тренда GGG на QoL-улучшения в каждом патче.
-                </p>
-            </div>
-        </section>
-
-        <!-- ===================== REDDIT OPINIONS ===================== -->
-        <section id="reddit">
-            <div class="section-header">
-                <div class="section-icon">💬</div>
-                <div>
-                    <h2>Мнение сообщества Reddit</h2>
-                    <span class="section-sub">Самые популярные реакции с r/pathofexile</span>
-                </div>
-            </div>
-
-            <div class="opinion-grid">
-                <div class="opinion-card">
-                    <div class="platform reddit">🔴 Reddit</div>
-                    <blockquote>«BOAT LEAGUE?!?!?!?!? Best Of All Time!»</blockquote>
-                    <span class="author">— TheWrathOf, Void, Beverice и др.</span>
-                    <span class="upvotes">🔺 Топ-комментарии</span>
-                    <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">
-                        Мем «Boat League» стал главным после тизера. Комментарии на YouTube и Reddit
-                        заполнены криками «BOAT BOAT BOAT».
-                    </p>
-                </div>
-
-                <div class="opinion-card">
-                    <div class="platform reddit">🔴 Reddit</div>
-                    <blockquote>«Ни одного комментария о самом Tidebreaker. Все обсуждают только AG UI!»</blockquote>
-                    <span class="author">— YourmomgoestocolIege</span>
-                    <span class="upvotes">🔺 581 upvotes</span>
-                    <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">
-                        Самый заплюсованный комментарий в треде о Tidebreaker. GGG спрятала показ AG UI
-                        внутри поста об унике — типичный ход разработчиков, который обожает сообщество.
-                    </p>
-                </div>
-
-                <div class="opinion-card">
-                    <div class="platform reddit">🔴 Reddit</div>
-                    <blockquote>«AG UI CONFIRMED — теперь добавьте обратно Наёмников, и моё сердце ваше навсегда!»</blockquote>
-                    <span class="author">— Reneil_Askiras, swordsfish</span>
-                    <span class="upvotes">🔺 14+ upvotes</span>
-                    <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">
-                        Массовый запрос на возвращение механики Наёмников (Mercenaries) из лиги 3.26.
-                        Многие предлагают заменить AG наёмниками или добавить их через Ascendancy.
-                    </p>
-                </div>
-
-                <div class="opinion-card">
-                    <div class="platform reddit">🔴 Reddit</div>
-                    <blockquote>«Если brine charges будут на других вещах — я точно делаю Brine Jugg билд!»</blockquote>
-                    <span class="author">— effreti</span>
-                    <span class="upvotes">🔺 3 upvotes</span>
-                    <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">
-                        Новый тип зарядов вызвал интерес у теоретиков билдов. Игроки обсуждают
-                        синергии с Juggernaut, Battlemage, и Arn's Anguish.
-                    </p>
-                </div>
-
-                <div class="opinion-card">
-                    <div class="platform reddit">🔴 Reddit</div>
-                    <blockquote>«Единственное, чего я хочу — играть self-cast заклинаниями и не чувствовать себя обделённым, как старый добрый Enki's Arc.»</blockquote>
-                    <span class="author">— Аноним, r/pathofexile</span>
-                    <span class="upvotes">🔺 Популярный пост</span>
-                    <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">
-                        Вечная просьба сообщества: усилить self-cast архетип. Лига 3.28 Mirage считается
-                        одной из лучших, но self-cast по-прежнему отстаёт.
-                    </p>
-                </div>
-
-                <div class="opinion-card">
-                    <div class="platform forum">🟣 Официальный форум</div>
-                    <blockquote>«Надеюсь, будет жирно и сочно по наградам с первой же зоны. Побольше хаоса и лута!»</blockquote>
-                    <span class="author">— TOP_Commander</span>
-                    <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">
-                        Типичная просьба хардкор-фармеров: щедрые награды с самого старта лиги.
-                        После успеха Mirage планка ожиданий высока.
-                    </p>
-                </div>
-
-                <div class="opinion-card">
-                    <div class="platform forum">🟣 Официальный форум</div>
-                    <blockquote>«Поднимите максимальный ранг в TOTA, если она станет core, и улучшите награды!»</blockquote>
-                    <span class="author">— DesmoSaze</span>
-                    <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">
-                        Запрос на улучшение Trial of the Ancestors как core-механики с лучшими наградами.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===================== STREAMERS ===================== -->
-        <section id="streamers">
-            <div class="section-header">
-                <div class="section-icon">🎥</div>
-                <div>
-                    <h2>Стримеры и контент-мейкеры</h2>
-                    <span class="section-sub">Что ждут популярные PoE-авторы</span>
-                </div>
-            </div>
-
-            <div class="info-box">
-                <h4>📌 Примечание</h4>
-                <p>
-                    Полный показ механики лиги состоится <strong>16 июля на GGG Live</strong>.
-                    Большинство стримеров пока строят теории на основе 30-секундного тизера.
-                    Q&A-сессию на стриме проведёт <strong>ZiggyD</strong> совместно с директором
-                    игры Mark и дизайнером Octavian.
-                </p>
-            </div>
-
-            <div class="streamer-grid">
-                <div class="streamer-card">
-                    <div class="streamer-header">
-                        <div class="streamer-avatar">🎯</div>
-                        <div>
-                            <div class="streamer-name">ZiggyD</div>
-                            <div class="streamer-role">Ведущий Q&A на GGG Live</div>
-                        </div>
-                    </div>
-                    <p>
-                        ZiggyD проведёт официальное Q&A с разработчиками на стриме 16 июля.
-                        Традиционно задаёт самые важные вопросы сообщества и делает подробные
-                        breakdown-видео после показа. Ожидается детальный разбор новой механики.
-                    </p>
-                </div>
-
-                <div class="streamer-card">
-                    <div class="streamer-header">
-                        <div class="streamer-avatar">⚔️</div>
-                        <div>
-                            <div class="streamer-name">Zizaran</div>
-                            <div class="streamer-role">HC-стример, организатор ивентов</div>
-                        </div>
-                    </div>
-                    <p>
-                        Известен HC-билдами с упором на выживаемость. Его билд-гайды — одни из самых
-                        надёжных для лиг-старта. Сообщество отмечает: билды Ziz'а отлично подходят
-                        для HC, но в SC trade-лиге могут быть слишком «танковыми» и медленными.
-                        Ожидается его tier-list сразу после GGG Live.
-                    </p>
-                </div>
-
-                <div class="streamer-card">
-                    <div class="streamer-header">
-                        <div class="streamer-avatar">🔬</div>
-                        <div>
-                            <div class="streamer-name">Mathil</div>
-                            <div class="streamer-role">Билд-экспериментатор</div>
-                        </div>
-                    </div>
-                    <p>
-                        Mathil славится тем, что делает рабочими самые необычные билды. С появлением
-                        Brine Charges и новых трансфигурированных скиллов наверняка создаст
-                        уникальные сборки на лиг-старт. Его билды отлично показывают потенциал
-                        новых механик.
-                    </p>
-                </div>
-
-                <div class="streamer-card">
-                    <div class="streamer-header">
-                        <div class="streamer-avatar">💀</div>
-                        <div>
-                            <div class="streamer-name">Havoc616</div>
-                            <div class="streamer-role">Гонщик, SSF-энтузиаст</div>
-                        </div>
-                    </div>
-                    <p>
-                        Один из главных рейсеров. Свежая лига — это свежая экономика и лестница,
-                        и Havoc всегда среди первых. Его стратегии оптимальны для быстрого прогресса
-                        в первую неделю. Ожидает, что новая механика даст дополнительные источники
-                        дохода на раннем стадии.
-                    </p>
-                </div>
-
-                <div class="streamer-card">
-                    <div class="streamer-header">
-                        <div class="streamer-avatar">🛡️</div>
-                        <div>
-                            <div class="streamer-name">Velyna</div>
-                            <div class="streamer-role">Гайд-мейкер, дружелюбна к новичкам</div>
-                        </div>
-                    </div>
-                    <p>
-                        Создаёт одни из лучших гайдов для новых игроков. Её билды с пошаговым
-                        прохождением — идеальный выбор для тех, кто впервые участвует в лиг-старте.
-                        Обновит свои гайды после патч-ноутов 16 июля.
-                    </p>
-                </div>
-
-                <div class="streamer-card">
-                    <div class="streamer-header">
-                        <div class="streamer-avatar">📊</div>
-                        <div>
-                            <div class="streamer-name">TyTyKiller, CrouchingTuna</div>
-                            <div class="streamer-role">Рейсеры и оптимизаторы</div>
-                        </div>
-                    </div>
-                    <p>
-                        Топ-рейсеры, которые разрабатывают стратегии на основе тизеров ещё до
-                        полного показа. Между стримом и запуском лиги — всего 8 дней, что означает
-                        сжатое окно для планирования tier-листов и билдов.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===================== EXPECTATIONS ===================== -->
-        <section id="expectations">
-            <div class="section-header">
-                <div class="section-icon">🌟</div>
-                <div>
-                    <h2>Чего ждут игроки</h2>
-                    <span class="section-sub">Обобщённые ожидания сообщества</span>
-                </div>
-            </div>
-
-            <div class="expectations-grid">
-                <div class="expect-card">
-                    <div class="expect-icon">⚔️</div>
-                    <h4>Реворк Ascendancy</h4>
-                    <p>
-                        Игроки надеются на обновление классовых специализаций — особенно тех,
-                        что давно не получали изменений. Разнообразие билдов — один из главных
-                        запросов.
-                    </p>
-                </div>
-
-                <div class="expect-card">
-                    <div class="expect-icon">🌳</div>
-                    <h4>Изменения Atlas Passive Tree</h4>
-                    <p>
-                        Корректировки дерева Атласа для более гибкого контроля контента.
-                        Игроки хотят больше вариативности в выборе механик для фарма.
-                    </p>
-                </div>
-
-                <div class="expect-card">
-                    <div class="expect-icon">💰</div>
-                    <h4>Улучшение наград</h4>
-                    <p>
-                        После успеха Mirage (одна из лучших лиг за всё время) сообщество ждёт
-                        столь же щедрый лут и скалируемые награды.
-                    </p>
-                </div>
-
-                <div class="expect-card">
-                    <div class="expect-icon">🎯</div>
-                    <h4>Разнообразие билдов</h4>
-                    <p>
-                        Меньше зависимости от нескольких мета-билдов. Усиление self-cast,
-                        мили-архетипов и экспериментальных сборок. Brine Charges — шаг в
-                        правильном направлении.
-                    </p>
-                </div>
-
-                <div class="expect-card">
-                    <div class="expect-icon">🔄</div>
-                    <h4>Возвращение Наёмников</h4>
-                    <p>
-                        Механика Mercenaries из лиги 3.26 была очень популярна. Сообщество
-                        активно просит вернуть наёмников, возможно в переработанном виде.
-                    </p>
-                </div>
-
-                <div class="expect-card">
-                    <div class="expect-icon">✨</div>
-                    <h4>QoL-улучшения</h4>
-                    <p>
-                        AG UI — отличное начало. Игроки также просят WASD-управление,
-                        улучшенные тултипы (уже подтверждены) и оптимизацию интерфейса торговли.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===================== BUILDS ===================== -->
-        <section id="builds">
-            <div class="section-header">
-                <div class="section-icon">📋</div>
-                <div>
-                    <h2>Билды для лиг-старта</h2>
-                    <span class="section-sub">Предварительный тир-лист (до патч-ноутов 16 июля)</span>
-                </div>
-            </div>
-
-            <div class="info-box warning">
-                <h4>⚠️ Важно</h4>
-                <p>
-                    Это <strong>предварительный</strong> тир-лист на основе лиги Mirage 3.28 и утечек.
-                    <strong>Финальные патч-ноуты выйдут 16 июля</strong> — после GGG Live.
-                    GGG исторически нерфит самые популярные билды, поэтому мета может сильно измениться.
-                </p>
-            </div>
-
-            <div style="overflow-x: auto;">
-                <table class="tier-table">
-                    <thead>
-                        <tr>
-                            <th>Тир</th>
-                            <th>Билд</th>
-                            <th>Плюсы</th>
-                            <th>Минусы</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><span class="tier-badge tier-s">S</span></td>
-                            <td><strong>RF Chieftain</strong></td>
-                            <td>Танковый, простой в сборке, комфортный маппинг</td>
-                            <td>Потолок DPS ниже среднего</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tier-badge tier-s">S</span></td>
-                            <td><strong>SRS Guardian</strong></td>
-                            <td>Отличная прогрессия, безопасный геймплей</td>
-                            <td>Урон упирается в потолок позже</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tier-badge tier-s">S</span></td>
-                            <td><strong>Poison Concoction Pathfinder</strong></td>
-                            <td>Не зависит от оружия, сильное скейлинг</td>
-                            <td>Нужно управлять флаконами</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tier-badge tier-a">A</span></td>
-                            <td><strong>Lightning Arrow Deadeye</strong></td>
-                            <td>Невероятная скорость клира</td>
-                            <td>Нужны апгрейды оружия</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tier-badge tier-a">A</span></td>
-                            <td><strong>Spark Inquisitor</strong></td>
-                            <td>Отличное скейлинг и клир</td>
-                            <td>Чувствителен к позиционированию</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tier-badge tier-a">A</span></td>
-                            <td><strong>Boneshatter Bleed Gladiator</strong></td>
-                            <td>Танковый, взрывы, надёжный мили-стартер</td>
-                            <td>Мили = риски в плотных паках</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tier-badge tier-a">A</span></td>
-                            <td><strong>Explosive Arrow Ballista</strong></td>
-                            <td>Надёжный, безопасный, проверенный временем</td>
-                            <td>Может быть нерфнут</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tier-badge tier-b">B</span></td>
-                            <td><strong>Shield Crush Slayer</strong></td>
-                            <td>Работает на 4-линке, бюджетный</td>
-                            <td>Ограничен в эндгейме</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tier-badge tier-b">B</span></td>
-                            <td><strong>Cyclone Shockwave</strong></td>
-                            <td>Приятный мили-геймплей</td>
-                            <td>Нужен хороший крафт оружия</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- ===================== MOOD ===================== -->
-        <section id="mood">
-            <div class="section-header">
-                <div class="section-icon">📊</div>
-                <div>
-                    <h2>Настрой сообщества</h2>
-                    <span class="section-sub">Общая атмосфера перед лигой (на основе анализа Reddit/форумов)</span>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>Индикатор хайпа</h3>
-                <div class="mood-bar">
-                    <div class="mood-segment mood-hype">55% Хайп</div>
-                    <div class="mood-segment mood-cautious">30% Осторожность</div>
-                    <div class="mood-segment mood-skeptic">15% Скепсис</div>
-                </div>
-                <div class="mood-legend">
-                    <div class="mood-legend-item">
-                        <div class="mood-legend-dot" style="background: var(--accent-green)"></div>
-                        <span><strong>Хайп:</strong> AG UI, Brine Charges, новые скиллы, «BOAT LEAGUE!»</span>
-                    </div>
-                    <div class="mood-legend-item">
-                        <div class="mood-legend-dot" style="background: var(--accent-orange)"></div>
-                        <span><strong>Осторожность:</strong> ждут патч-ноуты, не хотят привязываться к мета-билдам</span>
-                    </div>
-                    <div class="mood-legend-item">
-                        <div class="mood-legend-dot" style="background: var(--accent-red)"></div>
-                        <span><strong>Скепсис:</strong> тизер слишком короткий, возможен нерф лучших билдов</span>
-                    </div>
-                </div>
-                <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">
-                    * Оценка основана на анализе комментариев Reddit, форумов PoE и реакций
-                    в YouTube/Twitch на момент 12 июля 2026.
-                </p>
-            </div>
-        </section>
-
-        <!-- ===================== HOW TO PREPARE ===================== -->
-        <section id="prepare">
-            <div class="section-header">
-                <div class="section-icon">🎯</div>
-                <div>
-                    <h2>Как подготовиться</h2>
-                    <span class="section-sub">Чек-лист перед стартом лиги</span>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>📝 Чек-лист подготовки</h3>
-                <ul style="color: var(--text-secondary); margin-left: 20px; font-size: 0.95rem;">
-                    <li>✅ <strong>До 15 июля</strong> — Поиграйте в ивент «Возвращение Предков» (он закончится раньше)</li>
-                    <li>✅ <strong>16 июля, 23:00 МСК</strong> — Посмотрите GGG Live стрим на twitch.tv/pathofexile</li>
-                    <li>✅ <strong>После стрима</strong> — Изучите патч-ноуты, выберите 2–3 билда-кандидата</li>
-                    <li>✅ <strong>До 20 июля</strong> — Завершите оставшиеся челленджи в Mirage</li>
-                    <li>✅ <strong>20–24 июля</strong> — Финализируйте билд на основе патч-ноутов</li>
-                    <li>✅ <strong>24 июля</strong> — Отдохните перед стартом, подготовьте напитки и закуски!</li>
-                </ul>
-            </div>
-
-            <div class="info-box">
-                <h4>💡 Совет для первой недели</h4>
-                <p>
-                    Первая неделя — лучшее время для быстрого заработка. Экономика ещё не устоялась,
-                    редкие предметы стоят дорого, а знание новой механики даёт огромное преимущество.
-                    Выбирайте <strong>надёжный стартовый билд</strong>, а не рискованный мета-пик,
-                    который может быть нерфнут. Подготовьте 2–3 запасных варианта.
-                </p>
-            </div>
-
-            <div class="info-box">
-                <h4>📺 Полезные стримы для подготовки</h4>
-                <ul>
-                    <li><strong>ZiggyD</strong> — Q&A с разработчиками + подробные разборы</li>
-                    <li><strong>Zizaran</strong> — HC tier-list и стартовые билды</li>
-                    <li><strong>Velyna</strong> — Пошаговые гайды для новичков</li>
-                    <li><strong>Mathil</strong> — Креативные билды на новых механиках</li>
-                    <li><strong>Sirgog</strong> — Экономические стратегии и крафт-гайды</li>
-                    <li><strong>Lighty / Palsteron</strong> — Подробные league start guides</li>
-                </ul>
-            </div>
-        </section>
-
-        <div class="separator"></div>
-
-        <!-- ===================== POE2 CONTEXT ===================== -->
-        <section>
-            <div class="section-header">
-                <div class="section-icon">🌐</div>
-                <div>
-                    <h2>Контекст: PoE 1 vs PoE 2</h2>
-                    <span class="section-sub">Две игры — параллельная поддержка</span>
-                </div>
-            </div>
-
-            <div class="card">
-                <p>
-                    GGG продолжает поддерживать <strong>обе игры параллельно</strong> — это уникальная
-                    ситуация в жанре ARPG. Path of Exile 2 сейчас на последней лиге Early Access
-                    (0.5.0 «Return of the Ancients»), а полный релиз 1.0 ожидается после
-                    ExileCon в ноябре-декабре 2026.
-                </p>
-                <p>
-                    Запуск PoE 3.29 24 июля <strong>намеренно сдвинут</strong> на 2 недели от обычного
-                    графика, чтобы не конкурировать с PoE 2 и Diablo 4 Season 14. Это даёт игрокам
-                    время насладиться всеми тремя играми.
-                </p>
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
+      <article class="note-card">
+        <h3>Редакторский вывод по дизайну лиги</h3>
         <p>
-            Информация собрана из открытых источников: <a href="https://www.pathofexile.com" target="_blank">pathofexile.com</a>,
-            <a href="https://www.reddit.com/r/pathofexile/" target="_blank">r/pathofexile</a>,
-            новостных сайтов и стримов. Обновлено: 12 июля 2026.
+          По ощущениям это смесь <strong>exploration-tech</strong>, <strong>route planning</strong> и <strong>reward engineering</strong>.
+          Именно поэтому для страницы я выбрал не fantasy-оформление, а более технологичный язык интерфейса: эта лига выглядит не как «сюжетный ивент»,
+          а как система из сигналов, слоёв наград и оптимизации решений.
         </p>
-        <p style="margin-top: 8px;">
-            <a href="index.html">← Вернуться на главную</a>
-        </p>
+      </article>
+    </section>
+
+    <section class="section" id="compare">
+      <div class="section-head">
+        <div>
+          <div class="label">Before / after / risk / benefit</div>
+          <h2>Сравнение систем: что было до 3.29 и что стало теперь</h2>
+          <p>
+            Это центральная сравнительная таблица страницы. Она нужна, чтобы читатель мог за 30 секунд понять,
+            какие изменения — косметика, а какие действительно меняют выбор механики, билдов и way-to-play.
+          </p>
+        </div>
+      </div>
+
+      <article class="matrix-card">
+        <div class="matrix-scroll">
+          <table class="matrix">
+            <thead>
+              <tr>
+                <th>Система</th>
+                <th>До 3.29</th>
+                <th>После 3.29</th>
+                <th>Кому это выгодно</th>
+                <th>Главный риск / цена</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Socket Colours</strong></td>
+                <td>Цвет сокета ограничивал установку гемов и тормозил апгрейд шмота на leveling и ранних картах.</td>
+                <td>Любой гем в любой сокет; совпадение цвета = бонус к quality; Chromatics становятся ценнее и реже.</td>
+                <td>Новички, возвращающиеся игроки, все стартеры.</td>
+                <td>Часть старой item friction уходит; некоторым ветеранам это может казаться чрезмерным упрощением.</td>
+              </tr>
+              <tr>
+                <td><strong>Mercenaries</strong></td>
+                <td>Были league-specific, ощущались как borrowed power и частично как «слишком обязательная» система.</td>
+                <td>Возвращаются в core, появляются Warrants, а Luminary делает их постоянным build layer.</td>
+                <td>Scion theorycrafters, гибридные билды, economy players.</td>
+                <td>Есть шанс, что рынок быстро найдёт 1–2 слишком доминирующих mercenary-tech паттерна.</td>
+              </tr>
+              <tr>
+                <td><strong>Abyss</strong></td>
+                <td>Механика с устаревшим потоком боя и слабым jackpot-ощущением.</td>
+                <td>Больше не надо бегать за трещиной, добавлен новый boss, чётче reward identity, Abyss снова основной источник своих наград.</td>
+                <td>Atlas-фармеры, любители плотных карт, jewel hunters.</td>
+                <td>Нужно проверить, достаточно ли щедрым окажется реальный reward rate week 1.</td>
+              </tr>
+              <tr>
+                <td><strong>Legion</strong></td>
+                <td>Сильная, но местами утомительная механика с incubators и старой логикой наград.</td>
+                <td>Incubators уходят, появляются Enshrouding Crystals и Vestigial Uniques, auto-breakout на 90% упрощает бой.</td>
+                <td>Гэмблеры, crafters, hunters за chase outcomes.</td>
+                <td>Высокая волатильность цены на хорошие vestigial-трансформации.</td>
+              </tr>
+              <tr>
+                <td><strong>Mirage</strong></td>
+                <td>Был любимой лигой многих и усиливал почти любую фарм-стратегию.</td>
+                <td>Не идёт в core в 3.29, часть atlas-систем остаётся, но сам multiplier исчезает.</td>
+                <td>Плюс для общей балансовой гигиены игры.</td>
+                <td>Экономика и удовольствие от первых дней могут казаться менее взрывными, чем в 3.28.</td>
+              </tr>
+              <tr>
+                <td><strong>Self-Cast / Casters</strong></td>
+                <td>Сообщество постоянно жаловалось, что self-cast требует больше любви и поздно «включается».</td>
+                <td>Большой проход по spells, новые Pacts, mana tools, изменения Assassin / Occultist / Inquisitor, бусты staff-архетипов.</td>
+                <td>Кастеры, mana-игроки, build authors.</td>
+                <td>Часть комьюнити всё ещё не уверена, что этого хватит для массового комфортного старта.</td>
+              </tr>
+              <tr>
+                <td><strong>Atlas Anomalies</strong></td>
+                <td>Редкие странные награды часто были слишком контекстны или привязаны к старым механикам.</td>
+                <td>Voidstone-affected maps могут порождать отдельные anomaly-зоны без map item на вход.</td>
+                <td>Игроки, любящие side-content и точечные rewards.</td>
+                <td>Нужно понять реальные spawn rates и ценность quadrant routing на практике.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <section class="section" id="community">
+      <div class="section-head">
+        <div>
+          <div class="label">Community pulse</div>
+          <h2>Reddit и форумы: настроение перед стартом</h2>
+          <p>
+            Здесь важно не только «что людям понравилось», но и <strong>какой тип энтузиазма</strong> они выражают:
+            мемный, практический, экономический или осторожный. Это влияет на то, как будет вести себя рынок и медиа-контент в первую неделю.
+          </p>
+        </div>
+      </div>
+
+      <article class="chart-card">
+        <h3>Редакционная оценка тона обсуждений</h3>
+        <div class="pulse">
+          <div class="pulse-bar">
+            <div class="pulse-seg pulse-hype">58% Hype</div>
+            <div class="pulse-seg pulse-caution">27% Caution</div>
+            <div class="pulse-seg pulse-concern">15% Concern</div>
+          </div>
+          <p>Хайп питается темой лодочной лиги, новым крафтом, socket rework и большим объёмом системных изменений. Осторожность идёт от ухода Mirage и желания сначала увидеть реальные week-1 economics. Опасения концентрируются вокруг self-cast и того, насколько прибыльны окажутся маршруты лиги вне reveal-магии.</p>
+        </div>
+      </article>
+
+      <div class="quotes-grid" style="margin-top: 16px;">
+        <article class="quote-card">
+          <h3>🚤 Meme fulfilled</h3>
+          <blockquote>“AND EVERY BODY SAY IT WITH MEEEEE!!!!! BOAAAAT LEEEEEEEAGUEEEEEEE!!!!!”</blockquote>
+          <p>Это не просто шутка: запуск «настоящей boat league» добавляет редкий эмоциональный капитал. Люди ждут не только цифры, но и ощущение, что многолетний community meme наконец материализовался.</p>
+          <div class="source-links">
+            <a class="source-link" href="https://www.reddit.com/r/pathofexile/comments/1uoclui/path_of_exile_curse_of_the_allflame_releases_on/" target="_blank" rel="noopener">Reddit release thread</a>
+          </div>
+        </article>
+
+        <article class="quote-card">
+          <h3>🧟 QoL steals the spotlight</h3>
+          <blockquote>“AG GOT AN INVENTORY BEFORE GTA 6”</blockquote>
+          <p>Сообщество моментально показало приоритеты: долгожданный интерфейс для Animate Guardian оказался эмоционально сильнее, чем чистые цифры нового Tidebreaker. Это отличный маркер ценности QoL для PoE-аудитории.</p>
+          <div class="source-links">
+            <a class="source-link" href="https://www.reddit.com/r/pathofexile/comments/1ur79ap/tidebreaker_unique_changes_in_path_of_exile_curse/" target="_blank" rel="noopener">Reddit Tidebreaker / AG</a>
+          </div>
+        </article>
+
+        <article class="quote-card">
+          <h3>🧰 Small fixes, big approval</h3>
+          <blockquote>“There is now a Crafting Bench available in every Town from Act 2 onwards. praise”</blockquote>
+          <p>В том же треде восторженно встретили и более мелкие улучшения — от Pit of the Chimera до корректного копирования advanced item text. То есть GGG сейчас выигрывает не только размахом, но и уборкой старой боли.</p>
+          <div class="source-links">
+            <a class="source-link" href="https://www.reddit.com/r/pathofexile/comments/1uyiako/content_update_3290_path_of_exile_curse_of_the/" target="_blank" rel="noopener">Reddit patch notes thread</a>
+          </div>
+        </article>
+
+        <article class="quote-card">
+          <h3>🌫️ Mirage withdrawal</h3>
+          <blockquote>“Because it'd be mandatory in every single farming strat. The other league mechanics need to be buffed...”</blockquote>
+          <p>Здесь видно сложное отношение: игроки действительно любили Mirage, но понимают, почему GGG не хочет оставлять постоянный мультипликатор на всё. Для старта это значит более нервную и менее очевидную экономику.</p>
+          <div class="source-links">
+            <a class="source-link" href="https://www.reddit.com/r/pathofexile/comments/1uvsooa/the_mirage_system_will_not_be_going_core_in_329/" target="_blank" rel="noopener">Reddit Mirage thread</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="creators">
+      <div class="section-head">
+        <div>
+          <div class="label">Creator monitor</div>
+          <h2>Что считают важным стримеры и билд-мейкеры</h2>
+          <p>
+            Я разделил creator coverage не по «известности», а по <strong>типу аналитики</strong>, которую каждый автор вносит в информационное поле.
+          </p>
+        </div>
+      </div>
+
+      <div class="creator-grid">
+        <article class="creator-card">
+          <h3>ZiggyD — структура вопросов сообщества</h3>
+          <p>Q&amp;A после GGG Live сфокусирован на friction reduction, дизайне лиги, крафте, Mirage, Abyss/Legion, Mercenaries и кастерских изменениях. По сути, это лучший «скелет» для любого русскоязычного объяснения 3.29.</p>
+          <div class="creator-tags">
+            <span class="tag">socket rework</span>
+            <span class="tag">league design</span>
+            <span class="tag">Mirage core question</span>
+            <span class="tag">balance context</span>
+          </div>
+          <div class="source-links">
+            <a class="source-link" href="https://www.youtube.com/watch?v=9-xhpd3HdyE" target="_blank" rel="noopener">ZiggyD Developer Q&amp;A</a>
+          </div>
+        </article>
+
+        <article class="creator-card">
+          <h3>Zizaran — league start realism</h3>
+          <p>Ziz сразу зафиксировал две вещи: контента больше, чем ожидалось, и механики снова получают более чёткую reward identity. Но при этом он не продаёт слепой восторг — для него важнее, как всё это переживёт первый уикенд и стартовые билды.</p>
+          <div class="creator-tags">
+            <span class="tag">starter caution</span>
+            <span class="tag">economy awareness</span>
+            <span class="tag">mechanic identity</span>
+          </div>
+          <div class="source-links">
+            <a class="source-link" href="https://www.youtube.com/watch?v=1f3r0VRrN7Y" target="_blank" rel="noopener">Reveal reaction</a>
+            <a class="source-link" href="https://www.youtube.com/watch?v=rugOaj5h9sg" target="_blank" rel="noopener">10-minute summary</a>
+          </div>
+        </article>
+
+        <article class="creator-card">
+          <h3>sirgog — экономика старых механик</h3>
+          <p>Ещё до полного reveal он чётко читал тизер как сигнал к Abyss-реворку и постоянно возвращался к одной мысли: старым механикам нужны jackpot moments. Вышедший патч почти буквально подтверждает эту логику через new boss и Legion chase layer.</p>
+          <div class="creator-tags">
+            <span class="tag">Abyss value</span>
+            <span class="tag">jackpot logic</span>
+            <span class="tag">Mirage caution</span>
+          </div>
+          <div class="source-links">
+            <a class="source-link" href="https://www.youtube.com/watch?v=X2Q0mb7WA1E" target="_blank" rel="noopener">Abyss teaser analysis</a>
+          </div>
+        </article>
+
+        <article class="creator-card">
+          <h3>Palsteron / Ventrua — полевая проверка стартов</h3>
+          <p>Самый полезный тип coverage накануне релиза: не просто мнение, а реальный прогон стартовых сценариев и готовность быстро сменить план после patch notes. Это ключевая модель мышления для первой недели 3.29.</p>
+          <div class="creator-tags">
+            <span class="tag">patch notes later</span>
+            <span class="tag">fallback build</span>
+            <span class="tag">practical testing</span>
+          </div>
+          <div class="source-links">
+            <a class="source-link" href="https://www.twitch.tv/palsteron" target="_blank" rel="noopener">Palsteron Twitch</a>
+            <a class="source-link" href="https://pobarchives.com/build/Mdid3cDN" target="_blank" rel="noopener">Ventrua starter test</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="launch">
+      <div class="section-head">
+        <div>
+          <div class="label">Launch scenarios</div>
+          <h2>Что делать разным типам игроков в первую неделю</h2>
+          <p>
+            Вместо бессмысленного «вот мой топ билдов» я даю три внятных сценария поведения.
+            Это практичнее, потому что первая неделя 3.29 почти наверняка будет корректировать рынок и приоритеты по ходу дела.
+          </p>
+        </div>
+      </div>
+
+      <div class="plans-grid">
+        <article class="plan-card">
+          <h3>Для возвращающегося игрока</h3>
+          <p>Используй сезон как мягкий вход обратно в PoE 1: новый socket flow и подсказки реально помогают вернуться без боли.</p>
+          <ul class="plan-list">
+            <li><strong>Выбери safe starter</strong> Без сложной зависимости от дорогих уникалок и новых hidden tech.</li>
+            <li><strong>Не форсируй Luminary day 1</strong> Сначала пойми базовый economy loop сезона.</li>
+            <li><strong>Следи за русскими пояснениями Voyage</strong> Потому что именно там будет самая непривычная логика.</li>
+          </ul>
+        </article>
+
+        <article class="plan-card">
+          <h3>Для фармера и трейдера</h3>
+          <p>Твоя задача — быстрее других понять, где именно 3.29 печатает value: через Voyages, Abyss, Legion или Warrant/Mercenary tech.</p>
+          <ul class="plan-list">
+            <li><strong>Проверяй реальные voyage routes</strong> reveal-выглядит-сильно ≠ рынок-платит-сильно.</li>
+            <li><strong>Следи за Chromatics</strong> Их роль и цена могут ощущаться иначе, чем раньше.</li>
+            <li><strong>Смотри на Legion jackpots</strong> Сильные vestigial outcomes очень быстро станут маркерами high-end рынка.</li>
+          </ul>
+        </article>
+
+        <article class="plan-card">
+          <h3>Для билд-мейкера</h3>
+          <p>У тебя в руках один из самых вкусных патчей для эксперимента за последнее время — но играй дисциплинированно, не влюбляйся в theorycraft слишком рано.</p>
+          <ul class="plan-list">
+            <li><strong>Держи 2–3 линии теста</strong> self-cast, Luminary, и один boring reliable fallback.</li>
+            <li><strong>Сравни Pacts не на бумаге, а в темпе карты</strong> Удобство и mana cadence важнее красивых скринов.</li>
+            <li><strong>Не игнорируй Mercenary gear tech</strong> Он может дать неожиданные defensive/offensive breakpoints.</li>
+          </ul>
+        </article>
+
+        <article class="plan-card">
+          <h3>Timeline до старта</h3>
+          <ul class="plan-list">
+            <li><strong>Сейчас</strong> Зафиксировать 2 стартовых archetype-плана.</li>
+            <li><strong>До 20 июля</strong> Закрыть всё важное в Mirage и освободить голову под 3.29.</li>
+            <li><strong>20–24 июля</strong> Следить за creators, PoB, discover-темами по Voyage и Atlas.</li>
+            <li><strong>Стартовый уикенд</strong> Не принимать ранний hype за доказанную мету.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="sources">
+      <div class="section-head">
+        <div>
+          <div class="label">Research base</div>
+          <h2>На каких источниках основана страница</h2>
+          <p>
+            Я специально сделал этот блок явным: чтобы следующая итерация обновлений могла развиваться как полноценный редакционный хаб,
+            а не как декоративный лендинг без проверяемого основания.
+          </p>
+        </div>
+      </div>
+
+      <div class="sources-grid">
+        <article class="source-card">
+          <h3>Official GGG Layer</h3>
+          <ul class="source-list">
+            <li><strong>Curse of the Allflame</strong><a href="https://www.pathofexile.com/allflame" target="_blank" rel="noopener"> pathofexile.com/allflame</a></li>
+            <li><strong>Announcement thread</strong><a href="https://www.pathofexile.com/forum/view-thread/3985297" target="_blank" rel="noopener"> forum announcement</a></li>
+            <li><strong>Patch notes 3.29.0</strong><a href="https://www.pathofexile.com/forum/view-thread/3985332" target="_blank" rel="noopener"> full patch notes</a></li>
+            <li><strong>Mirage ending / not core</strong><a href="https://www.pathofexile.com/forum/view-thread/3984581" target="_blank" rel="noopener"> official transition post</a></li>
+          </ul>
+        </article>
+
+        <article class="source-card">
+          <h3>Community Signal Layer</h3>
+          <ul class="source-list">
+            <li><strong>Release reactions / boat league</strong><a href="https://www.reddit.com/r/pathofexile/comments/1uoclui/path_of_exile_curse_of_the_allflame_releases_on/" target="_blank" rel="noopener"> Reddit</a></li>
+            <li><strong>AG inventory / Tidebreaker</strong><a href="https://www.reddit.com/r/pathofexile/comments/1ur79ap/tidebreaker_unique_changes_in_path_of_exile_curse/" target="_blank" rel="noopener"> Reddit</a></li>
+            <li><strong>Patch notes thread</strong><a href="https://www.reddit.com/r/pathofexile/comments/1uyiako/content_update_3290_path_of_exile_curse_of_the/" target="_blank" rel="noopener"> Reddit</a></li>
+            <li><strong>Mirage not going core</strong><a href="https://www.reddit.com/r/pathofexile/comments/1uvsooa/the_mirage_system_will_not_be_going_core_in_329/" target="_blank" rel="noopener"> Reddit</a></li>
+            <li><strong>Self-cast skepticism</strong><a href="https://www.reddit.com/r/pathofexile/comments/1upak6x/new_transfigured_skills_in_path_of_exile_curse_of/" target="_blank" rel="noopener"> Reddit</a></li>
+          </ul>
+        </article>
+
+        <article class="source-card">
+          <h3>Creator / Q&amp;A Layer</h3>
+          <ul class="source-list">
+            <li><strong>ZiggyD Developer Q&amp;A</strong><a href="https://www.youtube.com/watch?v=9-xhpd3HdyE" target="_blank" rel="noopener"> YouTube</a></li>
+            <li><strong>Zizaran reveal reaction</strong><a href="https://www.youtube.com/watch?v=1f3r0VRrN7Y" target="_blank" rel="noopener"> YouTube</a></li>
+            <li><strong>Zizaran 10-minute summary</strong><a href="https://www.youtube.com/watch?v=rugOaj5h9sg" target="_blank" rel="noopener"> YouTube</a></li>
+            <li><strong>sirgog teaser/Abyss analysis</strong><a href="https://www.youtube.com/watch?v=X2Q0mb7WA1E" target="_blank" rel="noopener"> YouTube</a></li>
+            <li><strong>Ventrua practical starter test</strong><a href="https://pobarchives.com/build/Mdid3cDN" target="_blank" rel="noopener"> PoB Archives</a></li>
+          </ul>
+        </article>
+
+        <article class="source-card">
+          <h3>Что можно делать дальше</h3>
+          <p>
+            Эта страница уже работает как самостоятельный аналитический лендинг. Следующий уровень — превратить её в <strong>живой релизный dashboard</strong>:
+            добавить блоки по лучшим стартовым билдам, реальной доходности Voyage, ключевым hotfixes и ранним русскоязычным гайдам.
+          </p>
+          <div class="source-tags">
+            <span class="tag">next step: league starters</span>
+            <span class="tag">next step: economy board</span>
+            <span class="tag">next step: hotfix tracker</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <article class="section-card">
+        <p><strong>Примечание по графикам:</strong> визуальные шкалы и impact scores на этой странице — редакционный синтез, а не математический парсинг всех комментариев. Они нужны для удобного чтения и сравнения при планировании старта.</p>
+        <p>Path of Exile принадлежит Grinding Gear Games. Эта страница — фанатский русскоязычный tech-style briefing по 3.29.</p>
+      </article>
     </footer>
+  </main>
 
-</div>
-
-<script>
-    // Countdown to July 24, 2026 20:00 UTC (23:00 MSK)
+  <script>
     const targetDate = new Date('2026-07-24T20:00:00Z');
 
     function updateCountdown() {
-        const now = new Date();
-        const diff = targetDate - now;
+      const now = new Date();
+      const diff = targetDate - now;
+      const ids = ['dd','hh','mm','ss'];
 
-        if (diff <= 0) {
-            document.getElementById('cd-days').textContent = '00';
-            document.getElementById('cd-hours').textContent = '00';
-            document.getElementById('cd-mins').textContent = '00';
-            document.getElementById('cd-secs').textContent = '00';
-            return;
-        }
+      if (diff <= 0) {
+        ids.forEach(id => document.getElementById(id).textContent = '00');
+        return;
+      }
 
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const secs = Math.floor((diff % (1000 * 60)) / 1000);
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const mins = Math.floor((diff / (1000 * 60)) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
 
-        document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
-        document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
-        document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
-        document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+      document.getElementById('dd').textContent = String(days).padStart(2, '0');
+      document.getElementById('hh').textContent = String(hours).padStart(2, '0');
+      document.getElementById('mm').textContent = String(mins).padStart(2, '0');
+      document.getElementById('ss').textContent = String(secs).padStart(2, '0');
+    }
+
+    function renderRadar() {
+      const svg = document.getElementById('radarChart');
+      const NS = 'http://www.w3.org/2000/svg';
+      const cx = 160;
+      const cy = 160;
+      const radius = 106;
+      const labels = [
+        ['Onboarding', 92],
+        ['QoL', 90],
+        ['Economy', 74],
+        ['Theorycraft', 88],
+        ['Complexity', 78],
+        ['Farm Value', 81]
+      ];
+
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+      for (let ring = 1; ring <= 5; ring++) {
+        const poly = document.createElementNS(NS, 'polygon');
+        const r = radius * (ring / 5);
+        const points = labels.map((_, i) => {
+          const angle = (-90 + i * (360 / labels.length)) * Math.PI / 180;
+          return `${cx + Math.cos(angle) * r},${cy + Math.sin(angle) * r}`;
+        }).join(' ');
+        poly.setAttribute('points', points);
+        poly.setAttribute('fill', 'none');
+        poly.setAttribute('stroke', ring === 5 ? 'rgba(124,193,226,0.22)' : 'rgba(124,193,226,0.08)');
+        poly.setAttribute('stroke-width', ring === 5 ? '1.4' : '1');
+        svg.appendChild(poly);
+      }
+
+      labels.forEach((item, i) => {
+        const angle = (-90 + i * (360 / labels.length)) * Math.PI / 180;
+        const x = cx + Math.cos(angle) * radius;
+        const y = cy + Math.sin(angle) * radius;
+
+        const axis = document.createElementNS(NS, 'line');
+        axis.setAttribute('x1', cx);
+        axis.setAttribute('y1', cy);
+        axis.setAttribute('x2', x);
+        axis.setAttribute('y2', y);
+        axis.setAttribute('stroke', 'rgba(124,193,226,0.12)');
+        axis.setAttribute('stroke-width', '1');
+        svg.appendChild(axis);
+
+        const lx = cx + Math.cos(angle) * (radius + 24);
+        const ly = cy + Math.sin(angle) * (radius + 24);
+
+        const text = document.createElementNS(NS, 'text');
+        text.setAttribute('x', lx);
+        text.setAttribute('y', ly);
+        text.setAttribute('fill', '#9ab4c3');
+        text.setAttribute('font-size', '11');
+        text.setAttribute('font-family', 'JetBrains Mono, monospace');
+        text.setAttribute('text-anchor', lx < cx - 8 ? 'end' : lx > cx + 8 ? 'start' : 'middle');
+        text.setAttribute('dominant-baseline', ly < cy - 20 ? 'auto' : ly > cy + 20 ? 'hanging' : 'middle');
+        text.textContent = item[0];
+        svg.appendChild(text);
+      });
+
+      const points = labels.map(([, value], i) => {
+        const angle = (-90 + i * (360 / labels.length)) * Math.PI / 180;
+        const r = radius * (value / 100);
+        return {
+          x: cx + Math.cos(angle) * r,
+          y: cy + Math.sin(angle) * r
+        };
+      });
+
+      const fillPoly = document.createElementNS(NS, 'polygon');
+      fillPoly.setAttribute('points', points.map(p => `${p.x},${p.y}`).join(' '));
+      fillPoly.setAttribute('fill', 'rgba(95,233,255,0.18)');
+      fillPoly.setAttribute('stroke', '#5fe9ff');
+      fillPoly.setAttribute('stroke-width', '2');
+      svg.appendChild(fillPoly);
+
+      points.forEach((p, i) => {
+        const dot = document.createElementNS(NS, 'circle');
+        dot.setAttribute('cx', p.x);
+        dot.setAttribute('cy', p.y);
+        dot.setAttribute('r', '4.5');
+        dot.setAttribute('fill', '#66ffd8');
+        svg.appendChild(dot);
+
+        const val = document.createElementNS(NS, 'text');
+        val.setAttribute('x', p.x);
+        val.setAttribute('y', p.y - 10);
+        val.setAttribute('fill', '#ecf8ff');
+        val.setAttribute('font-size', '10');
+        val.setAttribute('font-family', 'JetBrains Mono, monospace');
+        val.setAttribute('text-anchor', 'middle');
+        val.textContent = labels[i][1];
+        svg.appendChild(val);
+      });
     }
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
-</script>
-
+    renderRadar();
+    window.addEventListener('resize', renderRadar);
+  </script>
 </body>
 </html>
