@@ -556,14 +556,15 @@
     .radar-wrap {
       display: grid;
       place-items: center;
-      min-height: 340px;
+      min-height: 380px;
       margin-top: 8px;
+      padding: 16px;
       border-radius: 20px;
       border: 1px solid rgba(255,255,255,0.05);
       background:
         radial-gradient(circle at center, rgba(95,233,255,.08), transparent 58%),
         linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
-      overflow: hidden;
+      overflow: visible;
     }
 
     .radar-caption {
@@ -795,7 +796,7 @@
       .hero-side { padding: 22px; }
       .countdown { grid-template-columns: repeat(2, 1fr); }
       .signal-list li { grid-template-columns: 1fr; gap: 6px; }
-      .radar-wrap { min-height: 290px; }
+      .radar-wrap { min-height: 320px; padding: 10px; }
     }
   </style>
 </head>
@@ -961,7 +962,7 @@
           <div class="label">Impact radar</div>
           <h3>Профиль патча 3.29</h3>
           <div class="radar-wrap">
-            <svg id="radarChart" viewBox="0 0 320 320" width="100%" height="100%" aria-label="Radar chart по влиянию патча"></svg>
+            <svg id="radarChart" viewBox="0 0 440 360" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" aria-label="Radar chart по влиянию патча"></svg>
           </div>
           <div class="legend-row">
             <span class="badge cyan">новички</span>
@@ -1408,9 +1409,10 @@
     function renderRadar() {
       const svg = document.getElementById('radarChart');
       const NS = 'http://www.w3.org/2000/svg';
-      const cx = 160;
-      const cy = 160;
-      const radius = 106;
+      const cx = 220;
+      const cy = 180;
+      const radius = 96;
+      const labelOffset = 44;
       const labels = [
         ['Onboarding', 92],
         ['QoL', 90],
@@ -1450,8 +1452,8 @@
         axis.setAttribute('stroke-width', '1');
         svg.appendChild(axis);
 
-        const lx = cx + Math.cos(angle) * (radius + 24);
-        const ly = cy + Math.sin(angle) * (radius + 24);
+        const lx = cx + Math.cos(angle) * (radius + labelOffset);
+        const ly = cy + Math.sin(angle) * (radius + labelOffset);
 
         const text = document.createElementNS(NS, 'text');
         text.setAttribute('x', lx);
@@ -1459,8 +1461,8 @@
         text.setAttribute('fill', '#9ab4c3');
         text.setAttribute('font-size', '11');
         text.setAttribute('font-family', 'JetBrains Mono, monospace');
-        text.setAttribute('text-anchor', lx < cx - 8 ? 'end' : lx > cx + 8 ? 'start' : 'middle');
-        text.setAttribute('dominant-baseline', ly < cy - 20 ? 'auto' : ly > cy + 20 ? 'hanging' : 'middle');
+        text.setAttribute('text-anchor', lx < cx - 10 ? 'end' : lx > cx + 10 ? 'start' : 'middle');
+        text.setAttribute('dominant-baseline', ly < cy - 24 ? 'auto' : ly > cy + 24 ? 'hanging' : 'middle');
         text.textContent = item[0];
         svg.appendChild(text);
       });
