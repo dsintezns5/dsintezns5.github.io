@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PoE 3.29 — Curse of the Allflame | Tech Briefing</title>
-  <meta name="description" content="Новая отдельная страница по Path of Exile 3.29 Curse of the Allflame: официальные изменения, сравнения систем, графики настроения сообщества и roadmap перед стартом.">
+  <meta name="description" content="Русскоязычный tech-briefing по Path of Exile 3.29 Curse of the Allflame: официальные изменения, сравнения систем, графики настроения сообщества и roadmap перед стартом.">
   <meta name="theme-color" content="#07131b">
   <meta property="og:title" content="PoE 3.29 — Tech Briefing по Curse of the Allflame">
   <meta property="og:description" content="Красивый технологичный русскоязычный хаб по новой лиге: графики, сравнения, сигналы рынка, ожидания Reddit и стримеров.">
@@ -30,7 +30,7 @@
       --orange: #ff9f6f;
       --rose: #ff7ba5;
       --violet: #baa6ff;
-      --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+      --shadow: 0 12px 32px rgba(0, 0, 0, 0.24);
       --radius: 26px;
       --radius-sm: 18px;
       --shell: 1240px;
@@ -54,25 +54,7 @@
 
     body::before,
     body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    body::before {
-      opacity: 0.13;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-      background-size: 40px 40px;
-      mask-image: radial-gradient(circle at center, black 38%, transparent 100%);
-    }
-
-    body::after {
-      background:
-        radial-gradient(circle at center, transparent 62%, rgba(0,0,0,0.34) 100%);
+      content: none;
     }
 
     a { color: var(--cyan); text-decoration: none; }
@@ -89,8 +71,7 @@
       position: sticky;
       top: 0;
       z-index: 30;
-      backdrop-filter: blur(18px);
-      background: rgba(4, 14, 22, 0.7);
+      background: rgba(4, 14, 22, 0.94);
       border-bottom: 1px solid rgba(120, 186, 219, 0.12);
     }
 
@@ -171,7 +152,6 @@
       border-radius: var(--radius);
       background: var(--panel);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
     }
 
     .hero-main {
@@ -189,8 +169,7 @@
       width: 260px;
       height: 260px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(95, 233, 255, 0.34), transparent 72%);
-      filter: blur(16px);
+      background: radial-gradient(circle, rgba(95, 233, 255, 0.18), transparent 72%);
       opacity: 0.72;
       pointer-events: none;
     }
@@ -203,9 +182,8 @@
       width: 220px;
       height: 220px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(102,255,216,0.18), transparent 70%);
+      background: radial-gradient(circle, rgba(102,255,216,0.12), transparent 70%);
       pointer-events: none;
-      filter: blur(14px);
     }
 
     .eyebrow {
@@ -826,7 +804,7 @@
     <div class="topbar-inner">
       <div class="brand">
         <strong>PoE 3.29 — Tech Briefing</strong>
-        <span> • Curse of the Allflame • обновлено 18 июля 2026</span>
+        <span>Curse of the Allflame • обновлено 18 июля 2026</span>
       </div>
       <nav class="nav" aria-label="Навигация по странице">
         <a href="#dashboard">Dashboard</a>
@@ -844,7 +822,7 @@
     <section class="hero">
       <div class="hero-grid">
         <article class="hero-main">
-          <div class="eyebrow">новая Инфа</div>
+          <div class="eyebrow">актуальный briefing по лиге 3.29</div>
           <h1>Curse of<br>the Allflame</h1>
           <p class="hero-sub">Path of Exile 3.29 • launch briefing • underwater league + core systems rework</p>
           <p class="hero-copy">
@@ -863,7 +841,7 @@
             <div class="micro"><small>Mirage off</small> 20 июля • 01:00 МСК</div>
             <div class="micro"><small>status</small> reveal уже состоялся</div>
           </div>
-          <a class="return-link" href="index.html">← Вернуться к исходной странице сайта</a>
+          <a class="return-link" href="index.html">← Вернуться на главную страницу</a>
         </article>
 
         <aside class="hero-side">
