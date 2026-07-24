@@ -24,7 +24,6 @@
   --border-color: #2a2a3a;
   --shadow: 0 4px 24px rgba(0,0,0,0.5);
   --gradient-fire: linear-gradient(135deg, #ff6b35, #ff9a56);
-  --gradient-dark: linear-gradient(180deg, #0a0a0f 0%, #12121a 100%);
   --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --sidebar-width: 280px;
 }
@@ -39,7 +38,6 @@
   --text-muted: #8a8a9a;
   --border-color: #d0cdc8;
   --shadow: 0 4px 24px rgba(0,0,0,0.1);
-  --gradient-dark: linear-gradient(180deg, #f5f3ef 0%, #ffffff 100%);
 }
 
 [data-theme="high-contrast"] {
@@ -57,7 +55,6 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
@@ -65,361 +62,153 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.7;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb { background: var(--accent-fire); border-radius: 4px; }
 
-/* Header */
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
-  padding: 0 24px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  padding: 0 24px; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
   box-shadow: var(--shadow);
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
+.header-left { display: flex; align-items: center; gap: 16px; }
 
 .menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  color: var(--text-primary);
-  font-size: 24px;
-  cursor: pointer;
-  padding: 8px;
+  display: none; background: none; border: none;
+  color: var(--text-primary); font-size: 24px; cursor: pointer; padding: 8px;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--accent-gold);
-}
+.logo { display: flex; align-items: center; gap: 12px; font-size: 20px; font-weight: 700; color: var(--accent-gold); }
 
 .logo-icon {
-  width: 36px;
-  height: 36px;
-  background: var(--gradient-fire);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
+  width: 36px; height: 36px; background: var(--gradient-fire);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px;
 }
 
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+.header-right { display: flex; align-items: center; gap: 12px; }
 
-.search-box {
-  position: relative;
-}
+.search-box { position: relative; }
 
 .search-box input {
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: 8px 16px 8px 36px;
-  border-radius: 8px;
-  font-size: 14px;
-  width: 240px;
-  outline: none;
-  transition: all 0.3s;
-  font-family: var(--font-main);
+  background: var(--bg-tertiary); border: 1px solid var(--border-color);
+  color: var(--text-primary); padding: 8px 16px 8px 36px;
+  border-radius: 8px; font-size: 14px; width: 240px; outline: none;
+  transition: all 0.3s; font-family: var(--font-main);
 }
 
-.search-box input:focus {
-  border-color: var(--accent-fire);
-  width: 300px;
-}
+.search-box input:focus { border-color: var(--accent-fire); width: 300px; }
 
 .search-box::before {
-  content: '🔍';
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 14px;
+  content: '🔍'; position: absolute; left: 10px; top: 50%;
+  transform: translateY(-50%); font-size: 14px;
 }
 
 .theme-switcher {
-  display: flex;
-  background: var(--bg-tertiary);
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid var(--border-color);
+  display: flex; background: var(--bg-tertiary);
+  border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);
 }
 
 .theme-btn {
-  padding: 6px 12px;
-  border: none;
-  background: none;
-  color: var(--text-secondary);
-  cursor: pointer;
-  font-size: 13px;
-  font-family: var(--font-main);
-  transition: all 0.3s;
+  padding: 6px 12px; border: none; background: none;
+  color: var(--text-secondary); cursor: pointer; font-size: 13px;
+  font-family: var(--font-main); transition: all 0.3s;
 }
 
-.theme-btn.active {
-  background: var(--accent-fire);
-  color: white;
-}
+.theme-btn.active { background: var(--accent-fire); color: white; }
 
-.progress-indicator {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: var(--text-secondary);
-}
+.progress-indicator { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-secondary); }
 
-.progress-bar-mini {
-  width: 80px;
-  height: 6px;
-  background: var(--bg-tertiary);
-  border-radius: 3px;
-  overflow: hidden;
-}
+.progress-bar-mini { width: 80px; height: 6px; background: var(--bg-tertiary); border-radius: 3px; overflow: hidden; }
 
-.progress-bar-mini-fill {
-  height: 100%;
-  background: var(--gradient-fire);
-  border-radius: 3px;
-  transition: width 0.5s ease;
-}
+.progress-bar-mini-fill { height: 100%; background: var(--gradient-fire); border-radius: 3px; transition: width 0.5s ease; }
 
-/* Sidebar */
 .sidebar {
-  position: fixed;
-  top: 64px;
-  left: 0;
-  width: var(--sidebar-width);
-  height: calc(100vh - 64px);
-  background: var(--bg-secondary);
+  position: fixed; top: 64px; left: 0; width: var(--sidebar-width);
+  height: calc(100vh - 64px); background: var(--bg-secondary);
   border-right: 1px solid var(--border-color);
-  overflow-y: auto;
-  padding: 20px 0;
-  z-index: 900;
-  transition: transform 0.3s ease;
+  overflow-y: auto; padding: 20px 0; z-index: 900; transition: transform 0.3s ease;
 }
 
-.sidebar-section {
-  margin-bottom: 8px;
-}
+.sidebar-section { margin-bottom: 8px; }
 
 .sidebar-title {
-  padding: 8px 20px;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--text-muted);
-  font-weight: 600;
+  padding: 8px 20px; font-size: 11px; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--text-muted); font-weight: 600;
 }
 
 .sidebar-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 20px;
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 14px;
-  transition: all 0.2s;
-  border-left: 3px solid transparent;
+  display: flex; align-items: center; gap: 10px; padding: 10px 20px;
+  color: var(--text-secondary); text-decoration: none; font-size: 14px;
+  transition: all 0.2s; border-left: 3px solid transparent;
 }
 
-.sidebar-link:hover {
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
-  border-left-color: var(--accent-fire);
-}
+.sidebar-link:hover { background: var(--bg-tertiary); color: var(--text-primary); border-left-color: var(--accent-fire); }
 
-.sidebar-link.active {
-  background: var(--bg-tertiary);
-  color: var(--accent-gold);
-  border-left-color: var(--accent-gold);
-  font-weight: 600;
-}
+.sidebar-link.active { background: var(--bg-tertiary); color: var(--accent-gold); border-left-color: var(--accent-gold); font-weight: 600; }
 
-.sidebar-link .icon {
-  font-size: 16px;
-  width: 20px;
-  text-align: center;
-}
+.sidebar-link .icon { font-size: 16px; width: 20px; text-align: center; }
 
-.sidebar-link .check {
-  margin-left: auto;
-  font-size: 12px;
-  color: var(--accent-green);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
+.sidebar-link .check { margin-left: auto; font-size: 12px; color: var(--accent-green); opacity: 0; transition: opacity 0.3s; }
 
-.sidebar-link.completed .check {
-  opacity: 1;
-}
+.sidebar-link.completed .check { opacity: 1; }
 
-/* Main Content */
-.main {
-  margin-left: var(--sidebar-width);
-  margin-top: 64px;
-  min-height: calc(100vh - 64px);
-}
+.main { margin-left: var(--sidebar-width); margin-top: 64px; min-height: calc(100vh - 64px); }
 
-.content {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 40px 48px;
-}
+.content { max-width: 1100px; margin: 0 auto; padding: 40px 48px; }
 
-/* Hero Banner */
-.hero-banner {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  margin-bottom: 40px;
-  box-shadow: var(--shadow);
-}
+.hero-banner { position: relative; border-radius: 16px; overflow: hidden; margin-bottom: 40px; box-shadow: var(--shadow); }
 
-.hero-banner img {
-  width: 100%;
-  height: 320px;
-  object-fit: cover;
-  display: block;
-}
+.hero-banner img { width: 100%; height: 320px; object-fit: cover; display: block; }
 
 .hero-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 40px 32px 24px;
-  background: linear-gradient(transparent, rgba(0,0,0,0.9));
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 40px 32px 24px; background: linear-gradient(transparent, rgba(0,0,0,0.9));
 }
 
-.hero-overlay h1 {
-  font-size: 32px;
-  font-weight: 800;
-  color: white;
-  margin-bottom: 8px;
-}
-
-.hero-overlay .subtitle {
-  color: rgba(255,255,255,0.8);
-  font-size: 16px;
-}
+.hero-overlay h1 { font-size: 32px; font-weight: 800; color: white; margin-bottom: 8px; }
+.hero-overlay .subtitle { color: rgba(255,255,255,0.8); font-size: 16px; }
 
 .hero-overlay .badge {
-  display: inline-block;
-  background: var(--gradient-fire);
-  color: white;
-  padding: 4px 12px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-top: 12px;
+  display: inline-block; background: var(--gradient-fire); color: white;
+  padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-top: 12px;
 }
 
-/* Section */
-.section {
-  margin-bottom: 48px;
-  scroll-margin-top: 80px;
-}
+.section { margin-bottom: 48px; scroll-margin-top: 80px; }
 
 .section-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 2px solid var(--border-color);
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-color);
 }
 
 .section-number {
-  width: 48px;
-  height: 48px;
-  background: var(--gradient-fire);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: 800;
-  color: white;
-  flex-shrink: 0;
+  width: 48px; height: 48px; background: var(--gradient-fire);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 800; color: white; flex-shrink: 0;
 }
 
-.section-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
+.section-title { font-size: 24px; font-weight: 700; color: var(--text-primary); }
+.section-subtitle { font-size: 14px; color: var(--text-muted); margin-top: 2px; }
 
-.section-subtitle {
-  font-size: 14px;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-/* Cards */
 .card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow);
-  transition: all 0.3s;
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: 12px; padding: 24px; margin-bottom: 20px;
+  box-shadow: var(--shadow); transition: all 0.3s;
 }
 
-.card:hover {
-  border-color: var(--accent-fire);
-  transform: translateY(-2px);
-}
+.card:hover { border-color: var(--accent-fire); transform: translateY(-2px); }
 
-.card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.card-title { font-size: 18px; font-weight: 700; color: var(--accent-gold); }
 
-.card-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--accent-gold);
-}
-
-.card-badge {
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-}
+.card-badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
 
 .badge-fire { background: rgba(255,107,53,0.15); color: var(--accent-fire); }
 .badge-blue { background: rgba(74,158,255,0.15); color: var(--accent-blue); }
@@ -427,415 +216,130 @@ body {
 .badge-purple { background: rgba(155,89,182,0.15); color: var(--accent-purple); }
 .badge-gold { background: rgba(212,168,83,0.15); color: var(--accent-gold); }
 
-/* Text */
 p { margin-bottom: 16px; color: var(--text-secondary); }
-
-h3 {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin: 24px 0 12px;
-}
-
-h4 {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 20px 0 10px;
-}
-
-ul, ol {
-  margin: 12px 0 16px 24px;
-  color: var(--text-secondary);
-}
-
+h3 { font-size: 18px; font-weight: 700; color: var(--text-primary); margin: 24px 0 12px; }
+h4 { font-size: 16px; font-weight: 600; color: var(--text-primary); margin: 20px 0 10px; }
+ul, ol { margin: 12px 0 16px 24px; color: var(--text-secondary); }
 li { margin-bottom: 8px; }
-
 strong { color: var(--text-primary); font-weight: 600; }
 
+.en-name { color: var(--text-muted); font-size: 0.9em; font-style: italic; }
+
 .highlight {
-  background: rgba(255,107,53,0.1);
-  border-left: 3px solid var(--accent-fire);
-  padding: 12px 16px;
-  border-radius: 0 8px 8px 0;
-  margin: 16px 0;
-  color: var(--text-primary);
+  background: rgba(255,107,53,0.1); border-left: 3px solid var(--accent-fire);
+  padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0; color: var(--text-primary);
 }
 
-.info-box {
-  background: rgba(74,158,255,0.08);
-  border: 1px solid rgba(74,158,255,0.2);
-  border-radius: 8px;
-  padding: 16px;
-  margin: 16px 0;
-}
+.info-box { background: rgba(74,158,255,0.08); border: 1px solid rgba(74,158,255,0.2); border-radius: 8px; padding: 16px; margin: 16px 0; }
+.warning-box { background: rgba(255,107,53,0.08); border: 1px solid rgba(255,107,53,0.2); border-radius: 8px; padding: 16px; margin: 16px 0; }
 
-.warning-box {
-  background: rgba(255,107,53,0.08);
-  border: 1px solid rgba(255,107,53,0.2);
-  border-radius: 8px;
-  padding: 16px;
-  margin: 16px 0;
-}
-
-/* Tables */
-.table-wrapper {
-  overflow-x: auto;
-  margin: 20px 0;
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-thead {
-  background: var(--bg-tertiary);
-}
+.table-wrapper { overflow-x: auto; margin: 20px 0; border-radius: 12px; border: 1px solid var(--border-color); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+thead { background: var(--bg-tertiary); }
 
 th {
-  padding: 14px 16px;
-  text-align: left;
-  font-weight: 600;
-  color: var(--accent-gold);
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-bottom: 2px solid var(--border-color);
-  white-space: nowrap;
+  padding: 14px 16px; text-align: left; font-weight: 600; color: var(--accent-gold);
+  font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--border-color); white-space: nowrap;
 }
 
-td {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border-color);
-  color: var(--text-secondary);
-  vertical-align: top;
-}
-
+td { padding: 12px 16px; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); vertical-align: top; }
 tr:last-child td { border-bottom: none; }
-
 tr:hover td { background: var(--bg-tertiary); }
-
 td strong { color: var(--text-primary); }
 
-/* Checkboxes for tracking */
 .task-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  margin-bottom: 8px;
-  transition: all 0.3s;
-  cursor: pointer;
+  display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px;
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: 8px; margin-bottom: 8px; transition: all 0.3s; cursor: pointer;
 }
 
-.task-item:hover {
-  border-color: var(--accent-fire);
-}
-
-.task-item.completed {
-  opacity: 0.6;
-  border-color: var(--accent-green);
-}
-
-.task-item.completed .task-text {
-  text-decoration: line-through;
-  color: var(--text-muted);
-}
+.task-item:hover { border-color: var(--accent-fire); }
+.task-item.completed { opacity: 0.6; border-color: var(--accent-green); }
+.task-item.completed .task-text { text-decoration: line-through; color: var(--text-muted); }
 
 .task-checkbox {
-  width: 22px;
-  height: 22px;
-  border: 2px solid var(--border-color);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-top: 2px;
-  transition: all 0.3s;
-  cursor: pointer;
+  width: 22px; height: 22px; border: 2px solid var(--border-color);
+  border-radius: 6px; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px; transition: all 0.3s; cursor: pointer;
 }
 
-.task-item.completed .task-checkbox {
-  background: var(--accent-green);
-  border-color: var(--accent-green);
-  color: white;
-}
+.task-item.completed .task-checkbox { background: var(--accent-green); border-color: var(--accent-green); color: white; }
+.task-text { flex: 1; color: var(--text-secondary); font-size: 14px; }
 
-.task-text {
-  flex: 1;
-  color: var(--text-secondary);
-  font-size: 14px;
-}
-
-.task-priority {
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
+.task-priority { padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; flex-shrink: 0; }
 .priority-high { background: rgba(231,76,60,0.15); color: var(--accent-red); }
 .priority-medium { background: rgba(255,107,53,0.15); color: var(--accent-fire); }
 .priority-low { background: rgba(46,204,113,0.15); color: var(--accent-green); }
 
-/* Charts */
-.chart-container {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 24px;
-  margin: 20px 0;
-}
+.chart-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin: 20px 0; }
 
-.chart-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+.chart-title { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
 
-.chart-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
+.chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 768px) { .chart-grid { grid-template-columns: 1fr; } }
 
-@media (max-width: 768px) {
-  .chart-grid { grid-template-columns: 1fr; }
-}
+.section-image { width: 100%; border-radius: 12px; margin: 20px 0; box-shadow: var(--shadow); border: 1px solid var(--border-color); }
 
-/* Images */
-.section-image {
-  width: 100%;
-  border-radius: 12px;
-  margin: 20px 0;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border-color);
-}
-
-.image-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  margin: 20px 0;
-}
-
-.image-card {
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow);
-}
-
-.image-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  display: block;
-}
-
-.image-card .caption {
-  padding: 12px 16px;
-  background: var(--bg-card);
-  font-size: 13px;
-  color: var(--text-secondary);
-  font-weight: 600;
-}
-
-/* POB Link */
 .pob-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--gradient-fire);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-  transition: all 0.3s;
-  margin: 16px 0;
+  display: inline-flex; align-items: center; gap: 8px; background: var(--gradient-fire);
+  color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none;
+  font-weight: 600; font-size: 14px; transition: all 0.3s; margin: 16px 0;
 }
 
-.pob-link:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255,107,53,0.3);
-}
+.pob-link:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,53,0.3); }
 
-/* Tabs */
-.tabs {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 20px;
-  border-bottom: 2px solid var(--border-color);
-  overflow-x: auto;
-}
+.tabs { display: flex; gap: 4px; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); overflow-x: auto; }
 
 .tab-btn {
-  padding: 10px 20px;
-  border: none;
-  background: none;
-  color: var(--text-secondary);
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: var(--font-main);
-  border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
-  transition: all 0.3s;
-  white-space: nowrap;
+  padding: 10px 20px; border: none; background: none; color: var(--text-secondary);
+  cursor: pointer; font-size: 14px; font-weight: 500; font-family: var(--font-main);
+  border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.3s; white-space: nowrap;
 }
 
-.tab-btn.active {
-  color: var(--accent-fire);
-  border-bottom-color: var(--accent-fire);
-}
-
+.tab-btn.active { color: var(--accent-fire); border-bottom-color: var(--accent-fire); }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* Stats Grid */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin: 20px 0;
-}
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
 
-.stat-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-}
+.stat-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; text-align: center; }
+.stat-value { font-size: 28px; font-weight: 800; color: var(--accent-fire); margin-bottom: 4px; }
+.stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
 
-.stat-value {
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--accent-fire);
-  margin-bottom: 4px;
-}
+.comparison-table { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 20px 0; }
 
-.stat-label {
-  font-size: 12px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* Comparison Table */
-.comparison-table {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  margin: 20px 0;
-}
-
-.comparison-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 24px;
-  transition: all 0.3s;
-}
-
-.comparison-card:hover {
-  border-color: var(--accent-gold);
-  transform: translateY(-4px);
-}
-
-.comparison-card h4 {
-  color: var(--accent-gold);
-  margin-bottom: 12px;
-  font-size: 16px;
-}
-
+.comparison-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; transition: all 0.3s; }
+.comparison-card:hover { border-color: var(--accent-gold); transform: translateY(-4px); }
+.comparison-card h4 { color: var(--accent-gold); margin-bottom: 12px; font-size: 16px; }
 .comparison-card .pros { color: var(--accent-green); }
 .comparison-card .cons { color: var(--accent-red); }
-
-.comparison-card ul {
-  list-style: none;
-  margin-left: 0;
-}
-
-.comparison-card li::before {
-  margin-right: 8px;
-}
-
+.comparison-card ul { list-style: none; margin-left: 0; }
+.comparison-card li::before { margin-right: 8px; }
 .comparison-card .pros li::before { content: '✓'; }
 .comparison-card .cons li::before { content: '✗'; }
 
-/* Progress Tracker */
 .tracker-panel {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 16px 20px;
-  box-shadow: var(--shadow);
-  z-index: 800;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  font-size: 14px;
+  position: fixed; bottom: 24px; right: 24px; background: var(--bg-card);
+  border: 1px solid var(--border-color); border-radius: 12px; padding: 16px 20px;
+  box-shadow: var(--shadow); z-index: 800; display: flex; align-items: center; gap: 16px; font-size: 14px;
 }
 
-.tracker-panel .progress-ring {
-  width: 40px;
-  height: 40px;
-}
+.tracker-panel .progress-ring { width: 40px; height: 40px; }
+.tracker-panel .progress-text { font-weight: 600; color: var(--text-primary); }
+.tracker-panel .progress-sub { font-size: 12px; color: var(--text-muted); }
 
-.tracker-panel .progress-text {
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.tracker-panel .progress-sub {
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-/* Back to top */
 .back-to-top {
-  position: fixed;
-  bottom: 24px;
-  left: calc(var(--sidebar-width) + 24px);
-  background: var(--accent-fire);
-  color: white;
-  border: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 18px;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 800;
-  box-shadow: var(--shadow);
-  transition: all 0.3s;
+  position: fixed; bottom: 24px; left: calc(var(--sidebar-width) + 24px);
+  background: var(--accent-fire); color: white; border: none;
+  width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 18px;
+  display: none; align-items: center; justify-content: center; z-index: 800;
+  box-shadow: var(--shadow); transition: all 0.3s;
 }
 
 .back-to-top.visible { display: flex; }
 .back-to-top:hover { transform: translateY(-4px); }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .sidebar { transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
@@ -855,15 +359,9 @@ td strong { color: var(--text-primary); }
   .search-box { display: none; }
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .section { animation: fadeIn 0.6s ease forwards; }
 
-/* Print styles */
 @media print {
   .sidebar, .header, .back-to-top, .tracker-panel { display: none !important; }
   .main { margin-left: 0 !important; margin-top: 0 !important; }
@@ -871,66 +369,7 @@ td strong { color: var(--text-primary); }
   body { background: white; color: black; }
 }
 
-/* Tooltip */
-.tooltip {
-  position: relative;
-  cursor: help;
-  border-bottom: 1px dashed var(--accent-gold);
-}
-
-.tooltip:hover::after {
-  content: attr(data-tip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 12px;
-  white-space: nowrap;
-  z-index: 100;
-  border: 1px solid var(--border-color);
-}
-
-/* Collapsible */
-.collapsible {
-  cursor: pointer;
-  user-select: none;
-}
-
-.collapsible::before {
-  content: '▶ ';
-  display: inline-block;
-  transition: transform 0.3s;
-  font-size: 12px;
-}
-
-.collapsible.open::before {
-  transform: rotate(90deg);
-}
-
-.collapsible-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-
-.collapsible-content.open {
-  max-height: 2000px;
-}
-
-/* Tag */
-.tag {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-weight: 600;
-  margin: 2px;
-}
-
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin: 2px; }
 .tag-fire { background: rgba(255,107,53,0.15); color: var(--accent-fire); }
 .tag-cold { background: rgba(74,158,255,0.15); color: var(--accent-blue); }
 .tag-phys { background: rgba(200,200,200,0.15); color: #ccc; }
@@ -938,7 +377,6 @@ td strong { color: var(--text-primary); }
 </head>
 <body data-theme="dark">
 
-<!-- Header -->
 <header class="header">
   <div class="header-left">
     <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
@@ -965,103 +403,57 @@ td strong { color: var(--text-primary); }
   </div>
 </header>
 
-<!-- Sidebar -->
 <nav class="sidebar" id="sidebar">
   <div class="sidebar-section">
     <div class="sidebar-title">Навигация</div>
-    <a href="#hero" class="sidebar-link active" data-section="hero">
-      <span class="icon">🏠</span> Главная
-      <span class="check">✓</span>
-    </a>
+    <a href="#hero" class="sidebar-link active" data-section="hero"><span class="icon">🏠</span> Главная <span class="check">✓</span></a>
   </div>
   <div class="sidebar-section">
     <div class="sidebar-title">Основное</div>
-    <a href="#theory" class="sidebar-link" data-section="theory">
-      <span class="icon">📖</span> 0. Теория билда
-      <span class="check">✓</span>
-    </a>
-    <a href="#leveling" class="sidebar-link" data-section="leveling">
-      <span class="icon">⬆️</span> 1. Прокачка
-      <span class="check">✓</span>
-    </a>
-    <a href="#mercenary" class="sidebar-link" data-section="mercenary">
-      <span class="icon">⚔️</span> 2. Выбор наемника
-      <span class="check">✓</span>
-    </a>
+    <a href="#theory" class="sidebar-link" data-section="theory"><span class="icon">📖</span> 0. Теория билда <span class="check">✓</span></a>
+    <a href="#leveling" class="sidebar-link" data-section="leveling"><span class="icon">⬆️</span> 1. Прокачка <span class="check">✓</span></a>
+    <a href="#mercenary" class="sidebar-link" data-section="mercenary"><span class="icon">⚔️</span> 2. Выбор наемника <span class="check">✓</span></a>
   </div>
   <div class="sidebar-section">
     <div class="sidebar-title">Экипировка</div>
-    <a href="#gear" class="sidebar-link" data-section="gear">
-      <span class="icon">️</span> 3. Экипировка
-      <span class="check">✓</span>
-    </a>
-    <a href="#uniques" class="sidebar-link" data-section="uniques">
-      <span class="icon"></span> 4. Уникальные предметы
-      <span class="check">✓</span>
-    </a>
+    <a href="#gear" class="sidebar-link" data-section="gear"><span class="icon">🛡️</span> 3. Экипировка <span class="check">✓</span></a>
+    <a href="#uniques" class="sidebar-link" data-section="uniques"><span class="icon">💎</span> 4. Уникальные предметы <span class="check">✓</span></a>
   </div>
   <div class="sidebar-section">
     <div class="sidebar-title">Инструменты</div>
-    <a href="#filterblade" class="sidebar-link" data-section="filterblade">
-      <span class="icon">🔍</span> 5. Filterblade
-      <span class="check">✓</span>
-    </a>
-    <a href="#crafting" class="sidebar-link" data-section="crafting">
-      <span class="icon">🔨</span> 6. Крафт
-      <span class="check">✓</span>
-    </a>
+    <a href="#filterblade" class="sidebar-link" data-section="filterblade"><span class="icon">🔍</span> 5. Filterblade <span class="check">✓</span></a>
+    <a href="#crafting" class="sidebar-link" data-section="crafting"><span class="icon">🔨</span> 6. Крафт <span class="check">✓</span></a>
   </div>
   <div class="sidebar-section">
     <div class="sidebar-title">Отслеживание</div>
-    <a href="#tracker" class="sidebar-link" data-section="tracker">
-      <span class="icon">✅</span> Прогресс
-      <span class="check">✓</span>
-    </a>
+    <a href="#tracker" class="sidebar-link" data-section="tracker"><span class="icon">✅</span> Прогресс <span class="check">✓</span></a>
   </div>
 </nav>
 
-<!-- Main Content -->
 <main class="main">
   <div class="content">
 
-    <!-- Hero -->
     <div id="hero" class="section">
       <div class="hero-banner">
         <img src="https://image.qwenlm.ai/public_source/7ce1e409-9276-42bc-870e-0cb0f4b8f86b/151a0b279-a875-4c2b-8bcb-31f0e0c8d642.png" alt="Path of Exile Build Guide">
         <div class="hero-overlay">
           <h1>PathOfChores — Гайд по билду 3.29</h1>
-          <div class="subtitle">SSF Люминари — Стек здоровья и радиуса света</div>
+          <div class="subtitle">SSF Люминари (Luminari) — Стек здоровья и радиуса света</div>
           <div class="badge">Лига Мираж 3.29</div>
         </div>
       </div>
 
       <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-value">8-10K</div>
-          <div class="stat-label">Здоровье</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">100-200%</div>
-          <div class="stat-label">Эффект связи</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">SSF</div>
-          <div class="stat-label">Режим игры</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">Искатель</div>
-          <div class="stat-label">Класс</div>
-        </div>
+        <div class="stat-card"><div class="stat-value">8-10K</div><div class="stat-label">Здоровье (Life)</div></div>
+        <div class="stat-card"><div class="stat-value">100-200%</div><div class="stat-label">Эффект связи (Link Effect)</div></div>
+        <div class="stat-card"><div class="stat-value">SSF</div><div class="stat-label">Режим игры</div></div>
+        <div class="stat-card"><div class="stat-value">Искатель (Scion)</div><div class="stat-label">Класс</div></div>
       </div>
 
-      <a href="https://pobb.in/Wp9ZkzoEhKSm" target="_blank" class="pob-link">
-        🔗 ВСЁ В ОДНОМ POB — Открыть
-      </a>
+      <a href="https://pobb.in/Wp9ZkzoEhKSm" target="_blank" class="pob-link">🔗 ВСЁ В ОДНОМ POB — Открыть</a>
 
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">📚 Источники и вдохновение</div>
-        </div>
+        <div class="card-header"><div class="card-title">📚 Источники и вдохновение</div></div>
         <ol>
           <li><strong>Jungroan</strong> — Ретроспектива Паладина с Gauntlet (НАИБОЛЕЕ ПОВЛИЯЛ)</li>
           <li><strong>Ruetoo</strong> — Аура-бот с Наемником. Обзор и демонстрация билда</li>
@@ -1070,51 +462,43 @@ td strong { color: var(--text-primary); }
       </div>
 
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">📑 Содержание</div>
-        </div>
+        <div class="card-header"><div class="card-title">📑 Содержание</div></div>
         <div class="table-wrapper">
           <table>
-            <thead>
-              <tr><th>Раздел</th><th>Описание</th></tr>
-            </thead>
+            <thead><tr><th>Раздел</th><th>Описание</th></tr></thead>
             <tbody>
-              <tr><td>0. Теория билда</td><td>Основы механики Люминари</td></tr>
+              <tr><td>0. Теория билда</td><td>Основы механики Люминари (Luminari)</td></tr>
               <tr><td>1. Прокачка</td><td>Акт 1-3, Лабиринт, Аура-бот</td></tr>
               <tr><td>2. Выбор наемника</td><td>Кинетик, Извергатель, Тлеющий удар</td></tr>
               <tr><td>3. Экипировка</td><td>BIS оружие, ранняя и поздняя экипировка</td></tr>
               <tr><td>4. Уникальные предметы</td><td>Сферы шанса, дроп, Атлас</td></tr>
               <tr><td>5. Filterblade</td><td>Настройка фильтра</td></tr>
-              <tr><td>6. Крафт</td><td>Всепламя, подробные гайды</td></tr>
+              <tr><td>6. Крафт</td><td>Всепламя (Omniflame), подробные гайды</td></tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- Section 0: Theory -->
     <div id="theory" class="section">
       <div class="section-header">
         <div class="section-number">0</div>
-        <div>
-          <div class="section-title">Теория билда</div>
-          <div class="section-subtitle">Основы механики Люминари</div>
-        </div>
+        <div><div class="section-title">Теория билда</div><div class="section-subtitle">Основы механики Люминари (Luminari)</div></div>
       </div>
 
       <img src="https://image.qwenlm.ai/public_source/7ce1e409-9276-42bc-870e-0cb0f4b8f86b/142916e2b-1a78-45cd-b61c-73dc0b026a6a.png" alt="Дерево пассивных навыков" class="section-image">
 
       <div class="card">
         <ul>
-          <li><strong>Люминари</strong> (новая ветка восхождения Искателя) для постоянного наемника (хайп с 3.26).</li>
-          <li>Вы играете как <strong>аура-бот</strong>, стакаете радиус света и здоровье, чтобы увеличить добавляемый урон от огня от связи «Огненная связь» (Flame Link). Ваш Наемник наносит основной урон (DPS).</li>
-          <li>Мы будем стремиться к примерно <strong>8–10 тысячам здоровья</strong> и <strong>100-200% эффекту связи</strong>.</li>
-          <li>Мина «Пирокластическая мина» для добавления урона больше не работает (изменена на огненное разоблачение). Поэтому мы можем отказаться от нее, если вам не хватает гнезд.</li>
+          <li><strong>Люминари (Luminari)</strong> — новая ветка восхождения Искателя (Scion) для постоянного наемника (хайп с 3.26).</li>
+          <li>Вы играете как <strong>аура-бот</strong>, стакаете радиус света (Light Radius) и здоровье (Life), чтобы увеличить добавляемый урон от огня от связи «Огненная связь» (Flame Link). Ваш Наемник (Mercenary) наносит основной урон (DPS).</li>
+          <li>Мы будем стремиться к примерно <strong>8–10 тысячам здоровья</strong> и <strong>100-200% эффекту связи (Link Effect)</strong>.</li>
+          <li>Мина «Пирокластическая мина» (Pyroclast Mine) для добавления урона больше не работает (изменена на огненное разоблачение). Поэтому мы можем отказаться от нее, если вам не хватает гнезд.</li>
         </ul>
       </div>
 
       <div class="highlight">
-        <strong>Кратко:</strong> Каждая единица здоровья → превращается в добавляемый урон от огня для наемника (через Огненную связь) → умножается на эффект связи (новая пассивная способность восхождения Люминари).
+        <strong>Кратко:</strong> Каждая единица здоровья (Life) → превращается в добавляемый урон от огня для наемника (через Огненную связь / Flame Link) → умножается на эффект связи (новая пассивная способность восхождения Люминари / Luminari).
       </div>
 
       <div class="chart-container">
@@ -1123,23 +507,18 @@ td strong { color: var(--text-primary); }
       </div>
     </div>
 
-    <!-- Section 1: Leveling -->
     <div id="leveling" class="section">
       <div class="section-header">
         <div class="section-number">1</div>
-        <div>
-          <div class="section-title">Прокачка</div>
-          <div class="section-subtitle">Базовый навык: Sunder (Раскол)</div>
-        </div>
+        <div><div class="section-title">Прокачка</div><div class="section-subtitle">Базовый навык: Раскол (Sunder)</div></div>
       </div>
 
       <div class="card">
         <div class="info-box">
-          <strong>Базовый навык:</strong> Sunder (Раскол), полностью родной для Искателя (не требуется перенос предметов). Источник: Maxroll Havoc – Sunder Scion.
+          <strong>Базовый навык:</strong> Раскол (Sunder), полностью родной для Искателя (Scion) (не требуется перенос предметов). Источник: Maxroll Havoc – Sunder Scion.
         </div>
       </div>
 
-      <!-- Leveling Tabs -->
       <div class="tabs">
         <button class="tab-btn active" onclick="switchTab(event, 'act1')">Акт 1 (1-12)</button>
         <button class="tab-btn" onclick="switchTab(event, 'act2')">Акт 2 (12-23)</button>
@@ -1151,78 +530,49 @@ td strong { color: var(--text-primary); }
 
       <div id="act1" class="tab-content active">
         <div class="card">
-          <div class="card-header">
-            <div class="card-title">Акт 1 (Уровень 1-12)</div>
-            <span class="card-badge badge-fire">Старт</span>
-          </div>
+          <div class="card-header"><div class="card-title">Акт 1 (Уровень 1-12)</div><span class="card-badge badge-fire">Старт</span></div>
           <ul>
-            <li>С самого начала используем <strong>Spectral Throw (Призрачный бросок)</strong>; подбираем <strong>Leap Slam (Прыжок)</strong> около 10 уровня.</li>
-            <li>Sunder (Раскол) открывается на 12 уровне, после Фэйргрейвза.</li>
-            <li>Контрольная точка на дереве: путь в сторону кластера двуручного оружия / урона в ближнем бою со стороны Мародера, ближайшего к старту Искателя, по пути подбирая пассивные навыки здоровья.</li>
-            <li>Подберите <strong>Decoy totem (Тотем-приманку)</strong> и прокачайте его. Он понадобится вам позже для дуэлей с Наемниками.</li>
+            <li>С самого начала используем <strong>Призрачный бросок (Spectral Throw)</strong>; подбираем <strong>Прыжок (Leap Slam)</strong> около 10 уровня.</li>
+            <li>Раскол (Sunder) открывается на 12 уровне, после Фэйргрейвза (Fairgraves).</li>
+            <li>Контрольная точка на дереве: путь в сторону кластера двуручного оружия / урона в ближнем бою со стороны Мародера (Marauder), ближайшего к старту Искателя (Scion), по пути подбирая пассивные навыки здоровья (Life).</li>
+            <li>Подберите <strong>Тотем-приманку (Decoy Totem)</strong> и прокачайте его. Он понадобится вам позже для дуэлей с Наемниками (Mercenaries).</li>
           </ul>
         </div>
       </div>
 
       <div id="act2" class="tab-content">
         <div class="card">
-          <div class="card-header">
-            <div class="card-title">Акт 2 (Уровень 12-23)</div>
-            <span class="card-badge badge-blue">Продолжение</span>
-          </div>
+          <div class="card-header"><div class="card-title">Акт 2 (Уровень 12-23)</div><span class="card-badge badge-blue">Продолжение</span></div>
           <ul>
-            <li>Добавьте <strong>Herald of Ash (Вестник пепла)</strong>, <strong>Blood Rage (Кровавая ярость)</strong>, <strong>Melee Physical Damage (Урон в ближнем бою)</strong>, <strong>Close Combat (Ближний бой)</strong>.</li>
-            <li>Разбойники: <strong>Убить всех</strong> (соответствует позднему этапу игры с упором на блок/защиту) или <strong>Алира</strong>, если вам нужно раннее сопротивление/крит/мана.</li>
-            <li>Контрольная точка на дереве: возьмите несколько пассивных навыков на колесе двуручного оружия, сначала двигайтесь в сторону зоны Мародера.</li>
+            <li>Добавьте <strong>Вестник пепла (Herald of Ash)</strong>, <strong>Кровавая ярость (Blood Rage)</strong>, <strong>Урон в ближнем бою (Melee Physical Damage)</strong>, <strong>Ближний бой (Close Combat)</strong>.</li>
+            <li>Разбойники: <strong>Убить всех</strong> (соответствует позднему этапу игры с упором на блок/защиту) или <strong>Алира (Alira)</strong>, если вам нужно раннее сопротивление/крит/мана.</li>
+            <li>Контрольная точка на дереве: возьмите несколько пассивных навыков на колесе двуручного оружия, сначала двигайтесь в сторону зоны Мародера (Marauder).</li>
           </ul>
         </div>
       </div>
 
       <div id="act3" class="tab-content">
         <div class="card">
-          <div class="card-header">
-            <div class="card-title">Акт 3 (Уровень 23-33) — Веха Наемника</div>
-            <span class="card-badge badge-gold">Ключевой момент</span>
-          </div>
+          <div class="card-header"><div class="card-title">Акт 3 (Уровень 23-33) — Веха Наемника (Mercenary)</div><span class="card-badge badge-gold">Ключевой момент</span></div>
           <ul>
-            <li>Добавьте <strong>Vulnerability (Уязвимость)</strong>, меняйте <strong>Haste (Поспешность)</strong> / <strong>Pride (Гордость)</strong> по мере необходимости.</li>
-            <li>Становятся доступными дуэли с наемниками — гарантированные появления подтверждены в Скипетре Бога (акт 3), Великой Арене (акт 4), На гряде (акт 6) и Скрытых недрах (акт 8).</li>
-            <li><strong>Техника сброса зоны:</strong> покиньте и снова войдите в ту же область через путевую точку/портал, чтобы обновить список Наемников.</li>
+            <li>Добавьте <strong>Уязвимость (Vulnerability)</strong>, меняйте <strong>Поспешность (Haste)</strong> / <strong>Гордость (Pride)</strong> по мере необходимости.</li>
+            <li>Становятся доступными дуэли с наемниками (Mercenaries) — гарантированные появления подтверждены в Скипетре Бога (Sceptre of God) (акт 3), Великой Арене (Grand Arena) (акт 4), На гряде (The Brine) (акт 6) и Скрытых недрах (The Core) (акт 8).</li>
+            <li><strong>Техника сброса зоны:</strong> покиньте и снова войдите в ту же область через путевую точку/портал, чтобы обновить список Наемников (Mercenaries).</li>
           </ul>
         </div>
       </div>
 
       <div id="lab" class="tab-content">
         <div class="card">
-          <div class="card-header">
-            <div class="card-title">Время прохождения Лабиринта и порядок Восхождения</div>
-          </div>
+          <div class="card-header"><div class="card-title">Время прохождения Лабиринта (Lab) и порядок Восхождения (Ascendancy)</div></div>
           <div class="table-wrapper">
             <table>
-              <thead>
-                <tr><th>Лабиринт</th><th>Восхождение</th><th>Приоритет</th></tr>
-              </thead>
+              <thead><tr><th>Лабиринт (Lab)</th><th>Восхождение (Ascendancy)</th><th>Приоритет</th></tr></thead>
               <tbody>
-                <tr>
-                  <td><strong>Обычный</strong></td>
-                  <td>Благородная кровь (Noble Blood) — постоянный Наемник</td>
-                  <td><span class="tag tag-fire">Критично</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Жестокий</strong></td>
-                  <td>Клятва верности (Oath of Fealty) — постоянная огненная связь</td>
-                  <td><span class="tag tag-fire">Критично</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Безжалостный</strong></td>
-                  <td>Легендарные предметы (Legendary Items) — 2 слота под уникальные предметы</td>
-                  <td><span class="tag tag-cold">Важно</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Вечный/Убер</strong></td>
-                  <td>Золотая слава (Golden Glory) — для фарма экипировки на радиус света</td>
-                  <td><span class="tag tag-phys">Позже</span></td>
-                </tr>
+                <tr><td><strong>Обычный (Normal)</strong></td><td>Благородная кровь (Noble Blood) — постоянный Наемник (Mercenary)</td><td><span class="tag tag-fire">Критично</span></td></tr>
+                <tr><td><strong>Жестокий (Cruel)</strong></td><td>Клятва верности (Oath of Fealty) — постоянная огненная связь (Flame Link)</td><td><span class="tag tag-fire">Критично</span></td></tr>
+                <tr><td><strong>Безжалостный (Merciless)</strong></td><td>Легендарные предметы (Legendary Items) — 2 слота под уникальные предметы</td><td><span class="tag tag-cold">Важно</span></td></tr>
+                <tr><td><strong>Вечный/Убер (Eternal/Uber)</strong></td><td>Золотая слава (Golden Glory) — для фарма экипировки на радиус света (Light Radius)</td><td><span class="tag tag-phys">Позже</span></td></tr>
               </tbody>
             </table>
           </div>
@@ -1231,285 +581,179 @@ td strong { color: var(--text-primary); }
 
       <div id="aurabot" class="tab-content">
         <div class="card">
-          <div class="card-header">
-            <div class="card-title">Контрольная точка полного перехода на Аура-бота</div>
-            <span class="card-badge badge-purple">Сброс навыков</span>
-          </div>
+          <div class="card-header"><div class="card-title">Контрольная точка полного перехода на Аура-бота (Aura-bot)</div><span class="card-badge badge-purple">Сброс навыков</span></div>
           <div class="warning-box">
-            <strong>Рекомендуется:</strong> Рано после 3 акта просто перейдите на гибридный стиль: самостоятельные атаки + наемник с огненной связью. Полностью сбросьте дерево и экипировку на стек здоровья и радиуса света на белых картах (T1-T2).
+            <strong>Рекомендуется:</strong> Рано после 3 акта просто перейдите на гибридный стиль: самостоятельные атаки + наемник (Mercenary) с огненной связью (Flame Link). Полностью сбросьте дерево и экипировку на стек здоровья (Life) и радиуса света (Light Radius) на белых картах (T1-T2).
           </div>
           <ul>
-            <li>К этому моменту у вас должен быть нанят первый рабочий Наемник и минимально одет.</li>
-            <li>Огненная связь уже у вас в руках (родная награда за квест Искателя, 4 акт).</li>
-            <li>Кривая масштабирования самого Sunder начинает отставать по эффективности вложений по сравнению с тем, чтобы просто позволить Наемнику тащить игру.</li>
+            <li>К этому моменту у вас должен быть нанят первый рабочий Наемник (Mercenary) и минимально одет.</li>
+            <li>Огненная связь (Flame Link) уже у вас в руках (родная награда за квест Искателя / Scion, 4 акт).</li>
+            <li>Кривая масштабирования самого Раскола (Sunder) начинает отставать по эффективности вложений по сравнению с тем, чтобы просто позволить Наемнику (Mercenary) тащить игру.</li>
           </ul>
         </div>
       </div>
 
       <div id="gems" class="tab-content">
         <div class="card">
-          <div class="card-header">
-            <div class="card-title">Связки камней</div>
-          </div>
+          <div class="card-header"><div class="card-title">Связки камней (Gem Links)</div></div>
 
-          <h4>🔵 АУРА (обычный аура-бот)</h4>
-          <p>Приоритет: <strong>Purity of Elements (Очищение от стихий)</strong> → <strong>Clarity (Ясность)</strong> → <strong>Determination/Grace</strong> → Любое очищение от огня/молнии/холода.</p>
+          <h4>🔵 АУРА (обычный аура-бот / aura-bot)</h4>
+          <p>Приоритет: <strong>Очищение от стихий (Purity of Elements)</strong> → <strong>Ясность (Clarity)</strong> → <strong>Решимость/Грация (Determination/Grace)</strong> → Любое очищение от огня/молнии/холода.</p>
 
-          <h4>🔴 АУРА (Кровавая магия)</h4>
-          <p>2L Purity of Elements — <strong>Eternal blessing (Вечное благословение)</strong></p>
+          <h4>🔴 АУРА (Кровавая магия / Blood Magic)</h4>
+          <p>2L Очищение от стихий (Purity of Elements) — <strong>Вечное благословение (Eternal Blessing)</strong></p>
 
-          <h4> СВЯЗЬ</h4>
-          <p>2L <strong>Flame Link (Огненная связь)</strong> + <strong>Empower support (Усиление)</strong></p>
+          <h4>🔗 СВЯЗЬ (Link)</h4>
+          <p>2L <strong>Огненная связь (Flame Link)</strong> + <strong>Усиление (Empower Support)</strong></p>
 
-          <h4>🏃 ПЕРЕМЕЩЕНИЕ</h4>
-          <p>3L <strong>Leap Slam (Прыжок)</strong> - <strong>Momentum (Импульс)</strong> - <strong>Faster attacks (Ускоренные атаки)</strong> и 1L <strong>Frostblink (Мерцание)</strong></p>
+          <h4>🏃 ПЕРЕМЕЩЕНИЕ (Movement)</h4>
+          <p>3L <strong>Прыжок (Leap Slam)</strong> - <strong>Импульс (Momentum)</strong> - <strong>Ускоренные атаки (Faster Attacks)</strong> и 1L <strong>Мерцание (Frostblink)</strong></p>
 
-          <h4> МИНЫ (только для боссов)</h4>
+          <h4>💣 МИНЫ (Mines) — только для боссов</h4>
           <div class="warning-box">
-            <strong>ВАЖНО:</strong> НЕ подрывайте мины и НЕ используйте Automation для подрыва. Вы просто бросаете мину и оставляете её там, чтобы активировать эффект ауры мины.
+            <strong>ВАЖНО:</strong> НЕ подрывайте мины и НЕ используйте Автоматизацию (Automation) для подрыва. Вы просто бросаете мину и оставляете её там, чтобы активировать эффект ауры мины.
           </div>
           <div class="table-wrapper">
             <table>
-              <thead>
-                <tr><th>Мина</th><th>Эффект</th><th>Рекомендация</th></tr>
-              </thead>
+              <thead><tr><th>Мина (Mine)</th><th>Эффект</th><th>Рекомендация</th></tr></thead>
               <tbody>
-                <tr>
-                  <td><strong>Pyroclast Mine of Sabotage</strong></td>
-                  <td>До 25% игнорирования сопротивления огню</td>
-                  <td><span class="tag tag-fire">Рекомендуется</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Portal + High Impact Mine</strong></td>
-                  <td>Бесплатный шанс на двойной урон</td>
-                  <td><span class="tag tag-fire">Рекомендуется</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Icicle Mine of Sabotage</strong></td>
-                  <td>40% шанс крита на мину (макс. 500)</td>
-                  <td><span class="tag tag-cold">Ситуативно</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Stormblast Mine</strong></td>
-                  <td>3% увеличения получаемого урона (макс. 150)</td>
-                  <td><span class="tag tag-cold">Ситуативно</span></td>
-                </tr>
+                <tr><td><strong>Пирокластическая мина саботажа (Pyroclast Mine of Sabotage)</strong></td><td>До 25% игнорирования сопротивления огню (Fire Resistance Penetration)</td><td><span class="tag tag-fire">Рекомендуется</span></td></tr>
+                <tr><td><strong>Портал (Portal) + Мощная мина (High Impact Mine)</strong></td><td>Бесплатный шанс на двойной урон</td><td><span class="tag tag-fire">Рекомендуется</span></td></tr>
+                <tr><td><strong>Сосулька-мина саботажа (Icicle Mine of Sabotage)</strong></td><td>40% шанс крита (Critical Strike Chance) на мину (макс. 500)</td><td><span class="tag tag-cold">Ситуативно</span></td></tr>
+                <tr><td><strong>Штормовая мина (Stormblast Mine)</strong></td><td>3% увеличения получаемого урона (макс. 150)</td><td><span class="tag tag-cold">Ситуативно</span></td></tr>
               </tbody>
             </table>
           </div>
 
-          <h4>👑 AGoS (Оживленный страж поражения) — РОСКОШЬ</h4>
-          <p>4L или 6L в зависимости от экипировки. Порядок связей: AGoS - EDWA - Multistrike - Minion Damage - Elemental Penetration - Volatility - Meat Shield.</p>
+          <h4>👑 Оживленный страж поражения (Animate Guardian of Smiting / AGoS) — РОСКОШЬ</h4>
+          <p>4L или 6L в зависимости от экипировки. Порядок связей: AGoS - Усиление эффективного урона от атак (EDWA) - Множественные удары (Multistrike) - Урон приспешников (Minion Damage) - Игнорирование сопротивления стихиям (Elemental Penetration) - Нестабильность (Volatility) - Мясной щит (Meat Shield).</p>
         </div>
       </div>
     </div>
 
-    <!-- Section 2: Mercenary -->
     <div id="mercenary" class="section">
       <div class="section-header">
         <div class="section-number">2</div>
-        <div>
-          <div class="section-title">Выбор наемника</div>
-          <div class="section-subtitle">Основные архетипы для билда</div>
-        </div>
+        <div><div class="section-title">Выбор наемника (Mercenary)</div><div class="section-subtitle">Основные архетипы для билда</div></div>
       </div>
 
       <img src="https://image.qwenlm.ai/public_source/7ce1e409-9276-42bc-870e-0cb0f4b8f86b/10ed65c96-b0ba-4f85-ab75-9b17b75027ac.png" alt="Наемник Кинетик" class="section-image">
 
       <div class="comparison-table">
         <div class="comparison-card">
-          <h4>⚡ Кинетик (KBoC)</h4>
+          <h4>⚡ Кинетик (Kineticist) — KBoC</h4>
           <div class="card-badge badge-blue" style="margin-bottom:12px">Для зачистки карт</div>
           <ul class="pros">
-            <li>Добавляемый физ. урон от маны</li>
+            <li>Добавляемый физ. урон от маны (Mana)</li>
             <li>3 встроенных взрыва</li>
             <li>Лучший архетип для зачистки</li>
           </ul>
-          <ul class="cons">
-            <li>Нерф в 3.29 (~15-20% потерь)</li>
-          </ul>
+          <ul class="cons"><li>Нерф в 3.29 (~15-20% потерь)</li></ul>
         </div>
 
         <div class="comparison-card">
-          <h4>🌋 Извергатель (VFoS)</h4>
+          <h4>🌋 Извергатель (Eruptor) — VFoS</h4>
           <div class="card-badge badge-fire" style="margin-bottom:12px">Альтернатива зачистки</div>
           <ul class="pros">
             <li>Взрыв урона от огня по области</li>
-            <li>Наследует экипировку от Sunder</li>
+            <li>Наследует экипировку от Раскола (Sunder)</li>
             <li>Дешевый вариант</li>
           </ul>
-          <ul class="cons">
-            <li>Нерф в 3.27 (-50% область действия)</li>
-          </ul>
+          <ul class="cons"><li>Нерф в 3.27 (-50% область действия)</li></ul>
         </div>
 
         <div class="comparison-card">
-          <h4> Тлеющий удар (MS)</h4>
+          <h4>🔥 Тлеющий удар (Molten Strike / MS)</h4>
           <div class="card-badge badge-gold" style="margin-bottom:12px">Для боссов</div>
           <ul class="pros">
             <li>Отлично масштабируется с огнем</li>
             <li>Естественный выбор для боссов</li>
             <li>Без подтвержденных нерфов 3.29</li>
           </ul>
-          <ul class="cons">
-            <li>Только для боссов</li>
-          </ul>
+          <ul class="cons"><li>Только для боссов</li></ul>
         </div>
       </div>
 
       <div class="chart-container">
-        <div class="chart-title"> Сравнение наемников по характеристикам</div>
+        <div class="chart-title">⚔️ Сравнение наемников (Mercenaries) по характеристикам</div>
         <div class="chart-grid">
-          <div>
-            <canvas id="mercenaryChart" height="250"></canvas>
-          </div>
-          <div>
-            <canvas id="nerfChart" height="250"></canvas>
-          </div>
+          <div><canvas id="mercenaryChart" height="250"></canvas></div>
+          <div><canvas id="nerfChart" height="250"></canvas></div>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">📉 Влияние нерфа — стоит ли беспокоиться?</div>
-        </div>
+        <div class="card-header"><div class="card-title">📉 Влияние нерфа — стоит ли беспокоиться?</div></div>
         <div class="table-wrapper">
           <table>
-            <thead>
-              <tr><th>Навык</th><th>Изменение</th><th>Вердикт</th></tr>
-            </thead>
+            <thead><tr><th>Навык (Skill)</th><th>Изменение</th><th>Вердикт</th></tr></thead>
             <tbody>
-              <tr>
-                <td><strong>KBoC</strong></td>
-                <td>Arcane Might 200%→150%; урон от маны 10-17%→10-15%</td>
-                <td>Реально, но умеренно (~15-20% относительных потерь). Не смертельно.</td>
-              </tr>
-              <tr>
-                <td><strong>VFoS</strong></td>
-                <td>Нерф в 3.27 (-50% область действия, ручное наведение)</td>
-                <td>Самый большой нерф коснулся перекрытия урона по одной цели.</td>
-              </tr>
-              <tr>
-                <td><strong>MS</strong></td>
-                <td>Подтвержденных изменений для 3.29 не найдено</td>
-                <td>Стабилен</td>
-              </tr>
+              <tr><td><strong>KBoC (Кинетический взрыв кластеризации / Kinetic Blast of Clustering)</strong></td><td>Тайная мощь (Arcane Might) 200%→150%; урон от маны (Mana) 10-17%→10-15%</td><td>Реально, но умеренно (~15-20% относительных потерь). Не смертельно.</td></tr>
+              <tr><td><strong>VFoS (Вулканическая трещина извивания / Volcanic Fissure of Snaking)</strong></td><td>Нерф в 3.27 (-50% область действия, ручное наведение)</td><td>Самый большой нерф коснулся перекрытия урона по одной цели.</td></tr>
+              <tr><td><strong>MS (Расплавленный удар / Molten Strike)</strong></td><td>Подтвержденных изменений для 3.29 не найдено</td><td>Стабилен</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">🏆 Почетные упоминания альтернативных архетипов</div>
-        </div>
+        <div class="card-header"><div class="card-title">🏆 Почетные упоминания альтернативных архетипов</div></div>
         <ul>
-          <li><strong>Manyshot (Многострел)</strong> — бесплатный аура-бот, поставляется с заранее экипированными Hatred + Grace, масштабирование урона от холода, высокое уклонение.</li>
-          <li><strong>Winter Deacon (Зимний диакон)</strong> — Frost Shield, Frostblink, Arctic Armour; хорошая утилита для наложения замедления (chill).</li>
+          <li><strong>Многострел (Manyshot)</strong> — бесплатный аура-бот, поставляется с заранее экипированными Ненависть (Hatred) + Грация (Grace), масштабирование урона от холода (Cold), высокое уклонение (Evasion).</li>
+          <li><strong>Зимний диакон (Winter Deacon)</strong> — Морозный щит (Frost Shield), Мерцание (Frostblink), Арктическая броня (Arctic Armour); хорошая утилита для наложения замедления (Chill).</li>
         </ul>
       </div>
     </div>
 
-    <!-- Section 3: Gear -->
     <div id="gear" class="section">
       <div class="section-header">
         <div class="section-number">3</div>
-        <div>
-          <div class="section-title">Экипировка</div>
-          <div class="section-subtitle">Для вас и ваших наемников</div>
-        </div>
+        <div><div class="section-title">Экипировка (Gear)</div><div class="section-subtitle">Для вас и ваших наемников (Mercenaries)</div></div>
       </div>
 
       <div class="card">
-        <div class="card-header">
-          <div class="card-title"> Новые лучшие в слоте (BIS) оружия</div>
-          <span class="card-badge badge-gold">Nycta's Lantern</span>
-        </div>
+        <div class="card-header"><div class="card-title">🗡️ Новые лучшие в слоте (BIS) оружия</div><span class="card-badge badge-gold">Фонарь Никты (Nycta's Lantern)</span></div>
         <div class="comparison-table">
           <div class="comparison-card">
             <h4 class="pros">Плюсы</h4>
             <ul class="pros">
-              <li>50% увеличение радиуса света</li>
+              <li>50% увеличение радиуса света (Light Radius)</li>
               <li>Легко получить</li>
             </ul>
           </div>
           <div class="comparison-card">
             <h4 class="cons">Минусы</h4>
             <ul class="cons">
-              <li>Нет здоровья (по сравнению с Dark Seer)</li>
-              <li>Нет + к уровню камней навыков</li>
-              <li>Боевой маг избыточен</li>
+              <li>Нет здоровья (Life) (по сравнению с Темным провидцем / Dark Seer)</li>
+              <li>Нет + к уровню камней навыков (Gem Levels)</li>
+              <li>Боевой маг (Battlemage) избыточен</li>
             </ul>
           </div>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">🛡️ Полная таблица экипировки</div>
-        </div>
+        <div class="card-header"><div class="card-title">🛡️ Полная таблица экипировки (Gear)</div></div>
         <div class="tabs">
           <button class="tab-btn active" onclick="switchTab(event, 'gear-you')">Вы</button>
-          <button class="tab-btn" onclick="switchTab(event, 'gear-kinetic')">Кинетик</button>
-          <button class="tab-btn" onclick="switchTab(event, 'gear-ms')">Тлеющий удар</button>
-          <button class="tab-btn" onclick="switchTab(event, 'gear-ag')">Оживленный страж</button>
+          <button class="tab-btn" onclick="switchTab(event, 'gear-kinetic')">Кинетик (Kineticist)</button>
+          <button class="tab-btn" onclick="switchTab(event, 'gear-ms')">Тлеющий удар (Molten Strike)</button>
+          <button class="tab-btn" onclick="switchTab(event, 'gear-ag')">Оживленный страж (AG)</button>
         </div>
 
         <div id="gear-you" class="tab-content active">
           <div class="table-wrapper">
             <table>
-              <thead>
-                <tr><th>Слот</th><th>Ранняя игра</th><th>Поздняя игра</th><th>Роскошь</th></tr>
-              </thead>
+              <thead><tr><th>Слот</th><th>Ранняя игра</th><th>Поздняя игра</th><th>Роскошь</th></tr></thead>
               <tbody>
-                <tr>
-                  <td><strong>Оружие</strong></td>
-                  <td>2x Фонарь Никты (100% радиус света)</td>
-                  <td>Фонарь Никты + редкий Эзомитовый щит с влиянием Создателя</td>
-                  <td>—</td>
-                </tr>
-                <tr>
-                  <td><strong>Шлем</strong></td>
-                  <td>—</td>
-                  <td>Редкий шлем Гигантобойца (здоровье + сопротивление + радиус света)</td>
-                  <td>Освященный монарх (+50 радиус света)</td>
-                </tr>
-                <tr>
-                  <td><strong>Доспех</strong></td>
-                  <td>Лорика Солярис (25% радиус света)</td>
-                  <td>Редкий созданный Королевский нагрудник</td>
-                  <td>Сердце Каома</td>
-                </tr>
-                <tr>
-                  <td><strong>Перчатки</strong></td>
-                  <td>Руки Фреции (аура-бот) или редкие Левиафановые рукавицы (Кровавая магия)</td>
-                  <td>—</td>
-                  <td>Руническое творение предательства</td>
-                </tr>
-                <tr>
-                  <td><strong>Сапоги</strong></td>
-                  <td>—</td>
-                  <td>Редкие Левиафановые поножи (скорость, здоровье, сопротивление)</td>
-                  <td>Марш легиона (для камней аур)</td>
-                </tr>
-                <tr>
-                  <td><strong>Пояс</strong></td>
-                  <td>—</td>
-                  <td>Стигийские тиски с влиянием Охотника</td>
-                  <td>Пояс доброжелательности + Жажда душ (комбо)</td>
-                </tr>
-                <tr>
-                  <td><strong>Кольца</strong></td>
-                  <td>2x Аметистовых кольца или 2x Фонарь Лори</td>
-                  <td>Аметистовые/Киноварные кольца 82+ уровня</td>
-                  <td>Нечистая красная мечта</td>
-                </tr>
-                <tr>
-                  <td><strong>Амулет</strong></td>
-                  <td>Редкий Цитриновый/Агатовый амулет</td>
-                  <td>—</td>
-                  <td>Нетронутая душа</td>
-                </tr>
+                <tr><td><strong>Оружие</strong></td><td>2x Фонарь Никты (Nycta's Lantern) (100% радиус света / Light Radius)</td><td>Фонарь Никты (Nycta's Lantern) + редкий Эзомитовый щит (Ezomyte Shield) с влиянием Создателя (Shaper)</td><td>—</td></tr>
+                <tr><td><strong>Шлем (Helmet)</strong></td><td>—</td><td>Редкий шлем Гигантобойца (Giant Slayer Helmet) (здоровье / Life + сопротивление / Resistance + радиус света / Light Radius)</td><td>Освященный монарх (The Hallowed Monarch) (+50 радиус света / Light Radius)</td></tr>
+                <tr><td><strong>Доспех (Body Armour)</strong></td><td>Лорика Солярис (Solaris Lorica) (25% радиус света / Light Radius)</td><td>Редкий созданный Королевский нагрудник (Royal Plate)</td><td>Сердце Каома (Kaom's Heart)</td></tr>
+                <tr><td><strong>Перчатки (Gloves)</strong></td><td>Руки Фреции (The Hand of Phrecia) (аура-бот / aura-bot) или редкие Левиафановые рукавицы (Leviathan Mitts) (Кровавая магия / Blood Magic)</td><td>—</td><td>Руническое творение предательства (Runic Betrayal Craft)</td></tr>
+                <tr><td><strong>Сапоги (Boots)</strong></td><td>—</td><td>Редкие Левиафановые поножи (Leviathan Greaves) (скорость / Speed, здоровье / Life, сопротивление / Resistance)</td><td>Марш легиона (Legion Boots) (для камней аур / Aura Gems)</td></tr>
+                <tr><td><strong>Пояс (Belt)</strong></td><td>—</td><td>Стигийские тиски (Stygian Vise) с влиянием Охотника (Hunter)</td><td>Пояс доброжелательности (Belt of Benevolence) + Жажда душ (Soul Taker) (комбо)</td></tr>
+                <tr><td><strong>Кольца (Rings)</strong></td><td>2x Аметистовых кольца (Amethyst Ring) или 2x Фонарь Лори (Lori's Lantern)</td><td>Аметистовые/Киноварные кольца (Amethyst/Cinnabar Ring) 82+ уровня</td><td>Нечистая красная мечта (Foulborn Red Dream)</td></tr>
+                <tr><td><strong>Амулет (Amulet)</strong></td><td>Редкий Цитриновый/Агатовый амулет (Citrine/Agate Amulet)</td><td>—</td><td>Нетронутая душа (The Untouched Soul)</td></tr>
               </tbody>
             </table>
           </div>
@@ -1518,42 +762,16 @@ td strong { color: var(--text-primary); }
         <div id="gear-kinetic" class="tab-content">
           <div class="table-wrapper">
             <table>
-              <thead>
-                <tr><th>Слот</th><th>Рекомендация</th></tr>
-              </thead>
+              <thead><tr><th>Слот</th><th>Рекомендация</th></tr></thead>
               <tbody>
-                <tr>
-                  <td><strong>Оружие</strong></td>
-                  <td><strong>Ранняя:</strong> Бдительность Пискатора<br><strong>Средняя:</strong> Уничтожение<br><strong>Поздняя:</strong> Редкая созданная волшебная палочка (добавляет урон от огня + урон от заклинаний + скорость атаки + мультимод)</td>
-                </tr>
-                <tr>
-                  <td><strong>Щит</strong></td>
-                  <td>Титановый духовный щит / Щит с хрупкостью/соком при блоке. Ищите: урон от заклинаний + шанс блока + здоровье + сопротивление огню</td>
-                </tr>
-                <tr>
-                  <td><strong>Шлем</strong></td>
-                  <td>Редкий шлем Гигантобойца (поздняя игра)</td>
-                </tr>
-                <tr>
-                  <td><strong>Доспех</strong></td>
-                  <td>Редкий Королевский нагрудник: сопротивление огню + регенерация 150 ЕЭ уникальным предметом поблизости + заряд энергии/выносливости каждые x секунд</td>
-                </tr>
-                <tr>
-                  <td><strong>Перчатки</strong></td>
-                  <td>Испорченные перчатки с проклятием при попадании ИЛИ редкие Левиафановые рукавицы (сопротивление огню + скорость атаки + огненное разоблачение при попадании)</td>
-                </tr>
-                <tr>
-                  <td><strong>Сапоги</strong></td>
-                  <td>Редкие Левиафановые поножи: спам окаменелостями для +1 Бездонного гнезда + истощенная земля при уникальном присутствии</td>
-                </tr>
-                <tr>
-                  <td><strong>Кольца</strong></td>
-                  <td><strong>Объятия вражды</strong> (ОБЯЗАТЕЛЬНО) + Укрощение / Пустотный взор / Шестеренчатое кольцо</td>
-                </tr>
-                <tr>
-                  <td><strong>Амулет</strong></td>
-                  <td>Ранняя: редкий со здоровьем и сопротивлением огню<br>Средняя: Вечная борьба (15% добивания)<br>Поздняя: Нетронутая душа</td>
-                </tr>
+                <tr><td><strong>Оружие (Weapon)</strong></td><td><strong>Ранняя:</strong> Бдительность Пискатора (Piscator's Vigil)<br><strong>Средняя:</strong> Уничтожение (Annihilation)<br><strong>Поздняя:</strong> Редкая созданная волшебная палочка (Wand) (добавляет урон от огня + урон от заклинаний + скорость атаки + мультимод)</td></tr>
+                <tr><td><strong>Щит (Shield)</strong></td><td>Титановый духовный щит (Titanium Spirit Shield) / Щит с хрупкостью/соком при блоке. Ищите: урон от заклинаний + шанс блока + здоровье / Life + сопротивление огню / Fire Resistance</td></tr>
+                <tr><td><strong>Шлем (Helmet)</strong></td><td>Редкий шлем Гигантобойца (Giant Slayer Helmet) (поздняя игра)</td></tr>
+                <tr><td><strong>Доспех (Body Armour)</strong></td><td>Редкий Королевский нагрудник (Royal Plate): сопротивление огню / Fire Resistance + регенерация 150 ЕЭ уникальным предметом поблизости + заряд энергии/выносливости каждые x секунд</td></tr>
+                <tr><td><strong>Перчатки (Gloves)</strong></td><td>Испорченные перчатки с проклятием при попадании ИЛИ редкие Левиафановые рукавицы (Leviathan Mitts) (сопротивление огню / Fire Resistance + скорость атаки + огненное разоблачение при попадании)</td></tr>
+                <tr><td><strong>Сапоги (Boots)</strong></td><td>Редкие Левиафановые поножи (Leviathan Greaves): спам окаменелостями для +1 Бездонного гнезда + истощенная земля при уникальном присутствии</td></tr>
+                <tr><td><strong>Кольца (Rings)</strong></td><td><strong>Объятия вражды (Enmity's Embrace)</strong> (ОБЯЗАТЕЛЬНО) + Укрощение (Taming) / Пустотный взор (Voideye) / Шестеренчатое кольцо (Cogwork Ring)</td></tr>
+                <tr><td><strong>Амулет (Amulet)</strong></td><td>Ранняя: редкий со здоровьем / Life и сопротивлением огню / Fire Resistance<br>Средняя: Вечная борьба (Eternal Struggle) (15% добивания)<br>Поздняя: Нетронутая душа (The Untouched Soul)</td></tr>
               </tbody>
             </table>
           </div>
@@ -1562,22 +780,11 @@ td strong { color: var(--text-primary); }
         <div id="gear-ms" class="tab-content">
           <div class="table-wrapper">
             <table>
-              <thead>
-                <tr><th>Слот</th><th>Рекомендация</th></tr>
-              </thead>
+              <thead><tr><th>Слот</th><th>Рекомендация</th></tr></thead>
               <tbody>
-                <tr>
-                  <td><strong>Оружие</strong></td>
-                  <td>Парное оружие: 2 Инкрустированных рапиры 82+ уровня<br><strong>Крафт:</strong> 2 префикса 1 суффикса → рекомбинация или эссенция (добавляет урон от огня + стихийный урон от атак + скорость атаки)<br>Первая рапира: мультимод (шанс крита + попадания не могут быть уклонены)<br>Вторая рапира: мультимод (шанс крита + игнорирование сопротивления огню)</td>
-                </tr>
-                <tr>
-                  <td><strong>Кольца</strong></td>
-                  <td><strong>Объятия вражды</strong> и <strong>Нимис</strong> (оба лучшие в слоте)</td>
-                </tr>
-                <tr>
-                  <td><strong>Сапоги</strong></td>
-                  <td>Попутный ветер, если доступен</td>
-                </tr>
+                <tr><td><strong>Оружие (Weapon)</strong></td><td>Парное оружие: 2 Инкрустированных рапиры (Inlaid Rapier) 82+ уровня<br><strong>Крафт:</strong> 2 префикса 1 суффикса → рекомбинация или эссенция (добавляет урон от огня + стихийный урон от атак + скорость атаки)<br>Первая рапира: мультимод (шанс крита + попадания не могут быть уклонены)<br>Вторая рапира: мультимод (шанс крита + игнорирование сопротивления огню / Fire Resistance Penetration)</td></tr>
+                <tr><td><strong>Кольца (Rings)</strong></td><td><strong>Объятия вражды (Enmity's Embrace)</strong> и <strong>Нимис (Nimis)</strong> (оба лучшие в слоте / BIS)</td></tr>
+                <tr><td><strong>Сапоги (Boots)</strong></td><td>Попутный ветер (Winds of Change), если доступен</td></tr>
               </tbody>
             </table>
           </div>
@@ -1586,30 +793,13 @@ td strong { color: var(--text-primary); }
         <div id="gear-ag" class="tab-content">
           <div class="table-wrapper">
             <table>
-              <thead>
-                <tr><th>Слот</th><th>Рекомендация</th></tr>
-              </thead>
+              <thead><tr><th>Слот</th><th>Рекомендация</th></tr></thead>
               <tbody>
-                <tr>
-                  <td><strong>Оружие</strong></td>
-                  <td><strong>Ранняя:</strong> Трость Кулемака (физ. урон, игнорирование сопротивления стихиям, взрыв)<br><strong>Поздняя:</strong> 2x Реплика Перо сна ИЛИ Серый ветер + Сфера Ратпита</td>
-                </tr>
-                <tr>
-                  <td><strong>Шлем</strong></td>
-                  <td>Бесформенное пламя ИЛИ Корона глаз (если Серый ветер + Сфера Ратпита)</td>
-                </tr>
-                <tr>
-                  <td><strong>Доспех</strong></td>
-                  <td>Каома / Чрево зверя / Облик доппельгангера / Одеяние эфемерности (рекомендуется)</td>
-                </tr>
-                <tr>
-                  <td><strong>Перчатки</strong></td>
-                  <td>Могильные узы (если взрывной Кулемак) ИЛИ редкие с проклятием при попадании/скоростью атаки</td>
-                </tr>
-                <tr>
-                  <td><strong>Сапоги</strong></td>
-                  <td>Редкие со скоростью перемещения/здоровьем/броней</td>
-                </tr>
+                <tr><td><strong>Оружие (Weapon)</strong></td><td><strong>Ранняя:</strong> Трость Кулемака (Culmac's Rod) (физ. урон, игнорирование сопротивления стихиям, взрыв)<br><strong>Поздняя:</strong> 2x Реплика Перо сна (Replica Feathered Sleep) ИЛИ Серый ветер (Grey Wind) + Сфера Ратпита (Rathpit's Sphere)</td></tr>
+                <tr><td><strong>Шлем (Helmet)</strong></td><td>Бесформенное пламя (Formless Flame) ИЛИ Корона глаз (Crown of Eyes) (если Серый ветер / Grey Wind + Сфера Ратпита / Rathpit's Sphere)</td></tr>
+                <tr><td><strong>Доспех (Body Armour)</strong></td><td>Каома (Kaom's Heart) / Чрево зверя (Beast's Belly) / Облик доппельгангера (Doppelganger's Guise) / Одеяние эфемерности (Ephemeral Raiment) (рекомендуется)</td></tr>
+                <tr><td><strong>Перчатки (Gloves)</strong></td><td>Могильные узы (Gravebind) (если взрывной Кулемак / Culmac) ИЛИ редкие с проклятием при попадании/скоростью атаки</td></tr>
+                <tr><td><strong>Сапоги (Boots)</strong></td><td>Редкие со скоростью перемещения / Movement Speed / здоровьем / Life / броней / Armour</td></tr>
               </tbody>
             </table>
           </div>
@@ -1617,110 +807,55 @@ td strong { color: var(--text-primary); }
       </div>
     </div>
 
-    <!-- Section 4: Uniques -->
     <div id="uniques" class="section">
       <div class="section-header">
         <div class="section-number">4</div>
-        <div>
-          <div class="section-title">Получение уникальных предметов</div>
-          <div class="section-subtitle">Сферы шанса, дроп и рекомендации по Атласу</div>
-        </div>
+        <div><div class="section-title">Получение уникальных предметов (Unique Items)</div><div class="section-subtitle">Сферы шанса (Chaos Orbs), дроп и рекомендации по Атласу (Atlas)</div></div>
       </div>
 
       <img src="https://image.qwenlm.ai/public_source/7ce1e409-9276-42bc-870e-0cb0f4b8f86b/15b2b66b0-d66a-4850-ba57-91050b755568.png" alt="Уникальные предметы" class="section-image">
 
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">🎲 Уникальные предметы — сферы шанса</div>
-        </div>
+        <div class="card-header"><div class="card-title">🎲 Уникальные предметы (Unique Items) — сферы шанса (Chaos Orbs)</div></div>
         <div class="info-box">
-          <strong>Примечание:</strong> для создания сферой шанса в среднем потребуется 300 сфер шанса для 5-го тира и около 600 сфер шанса для 4-го тира.
+          <strong>Примечание:</strong> для создания сферой шанса (Chaos Orb) в среднем потребуется 300 сфер шанса для 5-го тира и около 600 сфер шанса для 4-го тира.
         </div>
         <div class="table-wrapper">
           <table>
-            <thead>
-              <tr><th>Предмет</th><th>База</th><th>Тир</th><th>Рекомендация</th></tr>
-            </thead>
+            <thead><tr><th>Предмет (Item)</th><th>База (Base)</th><th>Тир</th><th>Рекомендация</th></tr></thead>
             <tbody>
-              <tr>
-                <td><strong>Piscator's Vigil</strong> (Волшебная палочка)</td>
-                <td>Кинетическая палочка</td>
-                <td>4</td>
-                <td>Можно попробовать, но не лучший вариант</td>
-              </tr>
-              <tr>
-                <td><strong>Nycta's Lantern</strong> (Скипетр)</td>
-                <td>Хрустальный скипетр</td>
-                <td>4</td>
-                <td><span class="tag tag-fire">Жизнеспособно</span></td>
-              </tr>
-              <tr>
-                <td><strong>Solaris Lorica</strong> (Доспех)</td>
-                <td>Медный нагрудник</td>
-                <td>5</td>
-                <td><span class="tag tag-fire">Жизнеспособно</span></td>
-              </tr>
-              <tr>
-                <td><strong>Lori's Lantern</strong> (Кольцо)</td>
-                <td>Призматическое кольцо</td>
-                <td>4</td>
-                <td><span class="tag tag-fire">Жизнеспособно</span></td>
-              </tr>
-              <tr>
-                <td><strong>Voideye</strong> (Кольцо)</td>
-                <td>Кольцо без гнезд</td>
-                <td>3</td>
-                <td><span class="tag tag-phys">Не пытайтесь</span></td>
-              </tr>
-              <tr>
-                <td><strong>Hand of Phrecia</strong> (Перчатки)</td>
-                <td>Сетчатые перчатки</td>
-                <td>3</td>
-                <td><span class="tag tag-phys">Не пытайтесь</span></td>
-              </tr>
-              <tr>
-                <td><strong>Gravebind</strong> (Перчатки AG)</td>
-                <td>Гидрические рукавицы</td>
-                <td>2</td>
-                <td>Дождитесь Знака удачи</td>
-              </tr>
-              <tr>
-                <td><strong>Kaom's Heart</strong> (Доспех)</td>
-                <td>Славный нагрудник</td>
-                <td>1</td>
-                <td>Дождитесь Знака удачи</td>
-              </tr>
+              <tr><td><strong>Бдительность Пискатора (Piscator's Vigil)</strong> (Волшебная палочка / Wand)</td><td>Кинетическая палочка (Kinetic Wand)</td><td>4</td><td>Можно попробовать, но не лучший вариант</td></tr>
+              <tr><td><strong>Фонарь Никты (Nycta's Lantern)</strong> (Скипетр / Sceptre)</td><td>Хрустальный скипетр (Crystal Sceptre)</td><td>4</td><td><span class="tag tag-fire">Жизнеспособно</span></td></tr>
+              <tr><td><strong>Лорика Солярис (Solaris Lorica)</strong> (Доспех / Body Armour)</td><td>Медный нагрудник (Copper Plate)</td><td>5</td><td><span class="tag tag-fire">Жизнеспособно</span></td></tr>
+              <tr><td><strong>Фонарь Лори (Lori's Lantern)</strong> (Кольцо / Ring)</td><td>Призматическое кольцо (Prismatic Ring)</td><td>4</td><td><span class="tag tag-fire">Жизнеспособно</span></td></tr>
+              <tr><td><strong>Пустотный взор (Voideye)</strong> (Кольцо / Ring)</td><td>Кольцо без гнезд (Unset Ring)</td><td>3</td><td><span class="tag tag-phys">Не пытайтесь</span></td></tr>
+              <tr><td><strong>Рука Фреции (The Hand of Phrecia)</strong> (Перчатки / Gloves)</td><td>Сетчатые перчатки (Chain Gloves)</td><td>3</td><td><span class="tag tag-phys">Не пытайтесь</span></td></tr>
+              <tr><td><strong>Могильные узы (Gravebind)</strong> (Перчатки / Gloves для AG)</td><td>Гидрические рукавицы (Hydrascale Mitts)</td><td>2</td><td>Дождитесь Знака удачи (Sign of Luck)</td></tr>
+              <tr><td><strong>Сердце Каома (Kaom's Heart)</strong> (Доспех / Body Armour)</td><td>Славный нагрудник (Glorious Plate)</td><td>1</td><td>Дождитесь Знака удачи (Sign of Luck)</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">💎 Уникальные предметы — ограниченные дропом</div>
-        </div>
+        <div class="card-header"><div class="card-title">💎 Уникальные предметы (Unique Items) — ограниченные дропом</div></div>
         <div class="table-wrapper">
           <table>
-            <thead>
-              <tr><th>Предмет</th><th>Источник</th><th>Тип</th></tr>
-            </thead>
+            <thead><tr><th>Предмет (Item)</th><th>Источник</th><th>Тип</th></tr></thead>
             <tbody>
-              <tr><td><strong>Enmity's Embrace</strong> (Кольцо)</td><td>Воплощение страха</td><td><span class="tag tag-fire">Обязательно</span></td></tr>
-              <tr><td><strong>The Untouched Soul</strong> (Амулет)</td><td>Король тумана (Ритуал)</td><td><span class="tag tag-cold">Важно</span></td></tr>
-              <tr><td><strong>The Hallowed Monarch</strong> (Шлем)</td><td>Убер-Воплощение ужаса</td><td><span class="tag tag-phys">Роскошь</span></td></tr>
-              <tr><td><strong>The Apostate</strong> (Доспех)</td><td>Убер-Кортекс</td><td><span class="tag tag-phys">Роскошь</span></td></tr>
-              <tr><td><strong>Foulborn red dream & Formless Flame</strong></td><td>Разлом (дерево/близнецы/сундук)</td><td><span class="tag tag-cold">Важно</span></td></tr>
-              <tr><td><strong>Nimis</strong></td><td>Убер-Пожиратель миров</td><td><span class="tag tag-cold">Важно</span></td></tr>
+              <tr><td><strong>Объятия вражды (Enmity's Embrace)</strong> (Кольцо / Ring)</td><td>Воплощение страха (Incarnation of Fear)</td><td><span class="tag tag-fire">Обязательно</span></td></tr>
+              <tr><td><strong>Нетронутая душа (The Untouched Soul)</strong> (Амулет / Amulet)</td><td>Король тумана (Fog King) (Ритуал / Ritual)</td><td><span class="tag tag-cold">Важно</span></td></tr>
+              <tr><td><strong>Освященный монарх (The Hallowed Monarch)</strong> (Шлем / Helmet)</td><td>Убер-Воплощение ужаса (Uber Incarnation of Dread)</td><td><span class="tag tag-phys">Роскошь</span></td></tr>
+              <tr><td><strong>Отступник (The Apostate)</strong> (Доспех / Body Armour)</td><td>Убер-Кортекс (Uber Cortex)</td><td><span class="tag tag-phys">Роскошь</span></td></tr>
+              <tr><td><strong>Нечистая красная мечта (Foulborn Red Dream) & Бесформенное пламя (Formless Flame)</strong></td><td>Разлом (Breach) (дерево/близнецы/сундук)</td><td><span class="tag tag-cold">Важно</span></td></tr>
+              <tr><td><strong>Нимис (Nimis)</strong></td><td>Убер-Пожиратель миров (Uber Eater of Worlds)</td><td><span class="tag tag-cold">Важно</span></td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Atlas Strategy -->
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">🗺️ Стратегия Атласа</div>
-        </div>
+        <div class="card-header"><div class="card-title">🗺️ Стратегия Атласа (Atlas)</div></div>
 
         <div class="tabs">
           <button class="tab-btn active" onclick="switchTab(event, 'atlas1')">Неделя 1</button>
@@ -1731,30 +866,12 @@ td strong { color: var(--text-primary); }
         <div id="atlas1" class="tab-content active">
           <div class="table-wrapper">
             <table>
-              <thead>
-                <tr><th>Механика</th><th>Приоритет</th><th>Описание</th></tr>
-              </thead>
+              <thead><tr><th>Механика</th><th>Приоритет</th><th>Описание</th></tr></thead>
               <tbody>
-                <tr>
-                  <td><strong>Наемники</strong></td>
-                  <td><span class="tag tag-fire">Обязательно</span></td>
-                  <td>Техника «Изгнанника» для блокировки типов атрибутов. Непоколебимое видение → Грабеж и разбой → Скарабеи Тартана</td>
-                </tr>
-                <tr>
-                  <td><strong>Предательство</strong></td>
-                  <td><span class="tag tag-fire">Отлично</span></td>
-                  <td>Лео (Укрепление), Янус (Исследование), Райкер, Сбежавшая тварь, Ваган (сундук скарабеев Тартана)</td>
-                </tr>
-                <tr>
-                  <td><strong>Путешествие</strong></td>
-                  <td><span class="tag tag-cold">Новое 3.29</span></td>
-                  <td>Скамья крафта Всепламени — 2-4 призрачные копии. Ускорение процесса создания сферой шанса</td>
-                </tr>
-                <tr>
-                  <td><strong>Разлом</strong></td>
-                  <td><span class="tag tag-cold">Хорошо</span></td>
-                  <td>Уничтожайте норы до защиты ульев. Рискуйте Древними дарами чрева. Дары чрева с припасами для ранних редких предметов</td>
-                </tr>
+                <tr><td><strong>Наемники (Mercenaries)</strong></td><td><span class="tag tag-fire">Обязательно</span></td><td>Техника «Изгнанника» (Exile) для блокировки типов атрибутов. Непоколебимое видение (Unwavering Vision) → Грабеж и разбой (Loot and Pillage) → Скарабеи Тартана (Tartan Scarabs)</td></tr>
+                <tr><td><strong>Предательство (Betrayal)</strong></td><td><span class="tag tag-fire">Отлично</span></td><td>Лео (Leo) (Укрепление / Fortification), Янус (Janus) (Исследование / Research), Райкер (Riker), Сбежавшая тварь (Escaped Beast), Ваган (Vagan) (сундук скарабеев Тартана / Tartan Scarab Chest)</td></tr>
+                <tr><td><strong>Путешествие (Expedition)</strong></td><td><span class="tag tag-cold">Новое 3.29</span></td><td>Скамья крафта Всепламени (Omniflame Crafting Bench) — 2-4 призрачные копии. Ускорение процесса создания сферой шанса (Chaos Orb)</td></tr>
+                <tr><td><strong>Разлом (Breach)</strong></td><td><span class="tag tag-cold">Хорошо</span></td><td>Уничтожайте норы до защиты ульев. Рискуйте Древними дарами чрева (Ancient Womb Gifts). Дары чрева с припасами (Womb Gifts with Supplies) для ранних редких предметов</td></tr>
               </tbody>
             </table>
           </div>
@@ -1762,201 +879,172 @@ td strong { color: var(--text-primary); }
 
         <div id="atlas2" class="tab-content">
           <div class="highlight">
-            <strong>РИТУАЛ + РАЗРУШИТЕЛЬНАЯ ИГРА на карте Силос</strong> (стратегия «витринного шоппинга»)
+            <strong>РИТУАЛ (RITUAL) + РАЗРУШИТЕЛЬНАЯ ИГРА (Delirium) на карте Силос (Silos)</strong> (стратегия «витринного шоппинга»)
           </div>
           <ul>
-            <li><strong>Ритуалы:</strong> Выполняйте только 2 типа. Ищите странные ритуалы в заборе: Апокалиптический, Ледниковый, Нестабильный, Зловещий, Кровавый, Ваал, Роскошный.</li>
-            <li><strong>Безымянный ритуал:</strong> вылавливайте Свет смысла и Нетронутую душу.</li>
-            <li><strong>Разрушительная игра:</strong> Мчитесь в комнату босса и УБИВАЙТЕ ТОЛЬКО тех, кого призвала Зрительница.</li>
+            <li><strong>Ритуалы (Rituals):</strong> Выполняйте только 2 типа. Ищите странные ритуалы в заборе: Апокалиптический (Apocalyptic), Ледниковый (Glacial), Нестабильный (Unstable), Зловещий (Ominous), Кровавый (Blood), Ваал (Vaal), Роскошный (Luxury).</li>
+            <li><strong>Безымянный ритуал (Nameless Ritual):</strong> вылавливайте Свет смысла (Light of Meaning) и Нетронутую душу (The Untouched Soul).</li>
+            <li><strong>Разрушительная игра (Delirium):</strong> Мчитесь в комнату босса и УБИВАЙТЕ ТОЛЬКО тех, кого призвала Зрительница (Watcher).</li>
           </ul>
         </div>
 
         <div id="atlas3" class="tab-content">
           <div class="highlight">
-            <strong>ФАРМ КАРТЫ ПРЕДСКАЗАНИЙ КАОМА НА ПЕСКАХ</strong>
+            <strong>ФАРМ КАРТЫ ПРЕДСКАЗАНИЙ КАОМА (Kaom) НА ПЕСКАХ (Sands)</strong>
           </div>
           <ol>
-            <li>Вложитесь в <strong>Измененное пророчество</strong> для шанса выпадения Сферы ясновидения (4%).</li>
-            <li>Запускайте <strong>Кальдеру</strong> (или любую карту с Сердцем короля).</li>
-            <li>Используйте <strong>Сферу ясновидения</strong> на Пески.</li>
-            <li>Затем фармите: <strong>Экспедиция</strong> (валюта) + <strong>Жатва</strong> (крафт) + <strong>Спуск</strong> (карта предсказаний изменений + окаменелости).</li>
-            <li>В конце: <strong>Разлом + Запределье + Святилище</strong> для бонусов к плотности мобов.</li>
+            <li>Вложитесь в <strong>Измененное пророчество (Altered Prophecy)</strong> для шанса выпадения Сферы ясновидения (Orb of Clarity) (4%).</li>
+            <li>Запускайте <strong>Кальдеру (Caldera)</strong> (или любую карту с Сердцем короля / King's Heart).</li>
+            <li>Используйте <strong>Сферу ясновидения (Orb of Clarity)</strong> на Пески (Sands).</li>
+            <li>Затем фармите: <strong>Экспедиция (Expedition)</strong> (валюта) + <strong>Жатва (Harvest)</strong> (крафт) + <strong>Спуск (Descent)</strong> (карта предсказаний изменений + окаменелости / Fossils).</li>
+            <li>В конце: <strong>Разлом (Breach) + Запределье (Beyond) + Святилище (Sanctum)</strong> для бонусов к плотности мобов.</li>
           </ol>
         </div>
       </div>
     </div>
 
-    <!-- Section 5: Filterblade -->
     <div id="filterblade" class="section">
       <div class="section-header">
         <div class="section-number">5</div>
-        <div>
-          <div class="section-title">Filterblade</div>
-          <div class="section-subtitle">Настройка фильтра (в основном для белых баз)</div>
-        </div>
+        <div><div class="section-title">Filterblade</div><div class="section-subtitle">Настройка фильтра (в основном для белых баз)</div></div>
       </div>
 
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">⚙️ Как использовать Filterblade</div>
-        </div>
+        <div class="card-header"><div class="card-title">⚙️ Как использовать Filterblade</div></div>
         <div class="info-box">
           В Filterblade используйте раздел <strong>Misc (Разное)</strong> → <strong>Add additional Show/Hide rules</strong> → <strong>Add Basetype-Based Rules</strong>.
         </div>
         <ul>
-          <li>Для <strong>СОЗДАНИЯ СФЕРОЙ ШАНСА</strong> оставьте уровень предмета на 1 (сфера шанса не зависит от уровня предмета).</li>
-          <li>Для <strong>КРАФТА</strong> вручную увеличьте уровень предмета.</li>
+          <li>Для <strong>СОЗДАНИЯ СФЕРОЙ ШАНСА (Chaos Orb)</strong> оставьте уровень предмета (Item Level) на 1 (сфера шанса не зависит от уровня предмета).</li>
+          <li>Для <strong>КРАФТА (Crafting)</strong> вручную увеличьте уровень предмета (Item Level).</li>
         </ul>
       </div>
 
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">📋 Базы для фильтрации</div>
-        </div>
+        <div class="card-header"><div class="card-title">📋 Базы (Bases) для фильтрации</div></div>
         <div class="table-wrapper">
           <table>
-            <thead>
-              <tr><th>Тип</th><th>База</th><th>Уровень предмета</th></tr>
-            </thead>
+            <thead><tr><th>Тип</th><th>База (Base)</th><th>Уровень предмета (Item Level)</th></tr></thead>
             <tbody>
-              <tr><td colspan="3" style="background:var(--bg-tertiary);font-weight:600;color:var(--accent-gold)">Создание сферой шанса</td></tr>
-              <tr><td>Оружие</td><td>Хрустальный скипетр</td><td>1+</td></tr>
-              <tr><td>Кольцо</td><td>Призматическое кольцо</td><td>1+</td></tr>
-              <tr><td>Доспех</td><td>Медный нагрудник</td><td>1+</td></tr>
-              <tr><td>Оружие</td><td>Кинетическая палочка</td><td>1+</td></tr>
-              <tr><td colspan="3" style="background:var(--bg-tertiary);font-weight:600;color:var(--accent-gold)">Крафт</td></tr>
-              <tr><td>Шлем</td><td>Шлем Гигантобойца</td><td>81+</td></tr>
-              <tr><td>Доспех</td><td>Королевский нагрудник</td><td>84+</td></tr>
-              <tr><td>Перчатки</td><td>Левиафановые рукавицы</td><td>81/84+</td></tr>
-              <tr><td>Сапоги</td><td>Левиафановые поножи</td><td>81+/86</td></tr>
-              <tr><td>Кольцо</td><td>Аметистовое кольцо</td><td>81+</td></tr>
-              <tr><td>Кольцо</td><td>Киноварное кольцо</td><td>81+</td></tr>
-              <tr><td>Щит</td><td>Эзомитовый/Пиковый башенный щит</td><td>81+</td></tr>
-              <tr><td>Оружие</td><td>Кинетическая палочка</td><td>82+</td></tr>
-              <tr><td>Оружие</td><td>Пророческая палочка</td><td>80+</td></tr>
+              <tr><td colspan="3" style="background:var(--bg-tertiary);font-weight:600;color:var(--accent-gold)">Создание сферой шанса (Chaos Orb)</td></tr>
+              <tr><td>Оружие (Weapon)</td><td>Хрустальный скипетр (Crystal Sceptre)</td><td>1+</td></tr>
+              <tr><td>Кольцо (Ring)</td><td>Призматическое кольцо (Prismatic Ring)</td><td>1+</td></tr>
+              <tr><td>Доспех (Body Armour)</td><td>Медный нагрудник (Copper Plate)</td><td>1+</td></tr>
+              <tr><td>Оружие (Weapon)</td><td>Кинетическая палочка (Kinetic Wand)</td><td>1+</td></tr>
+              <tr><td colspan="3" style="background:var(--bg-tertiary);font-weight:600;color:var(--accent-gold)">Крафт (Crafting)</td></tr>
+              <tr><td>Шлем (Helmet)</td><td>Шлем Гигантобойца (Giant Slayer Helmet)</td><td>81+</td></tr>
+              <tr><td>Доспех (Body Armour)</td><td>Королевский нагрудник (Royal Plate)</td><td>84+</td></tr>
+              <tr><td>Перчатки (Gloves)</td><td>Левиафановые рукавицы (Leviathan Mitts)</td><td>81/84+</td></tr>
+              <tr><td>Сапоги (Boots)</td><td>Левиафановые поножи (Leviathan Greaves)</td><td>81+/86</td></tr>
+              <tr><td>Кольцо (Ring)</td><td>Аметистовое кольцо (Amethyst Ring)</td><td>81+</td></tr>
+              <tr><td>Кольцо (Ring)</td><td>Киноварное кольцо (Cinnabar Ring)</td><td>81+</td></tr>
+              <tr><td>Щит (Shield)</td><td>Эзомитовый/Пиковый башенный щит (Ezomyte/Pinnacle Tower Shield)</td><td>81+</td></tr>
+              <tr><td>Оружие (Weapon)</td><td>Кинетическая палочка (Kinetic Wand)</td><td>82+</td></tr>
+              <tr><td>Оружие (Weapon)</td><td>Пророческая палочка (Prophecy Wand)</td><td>80+</td></tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- Section 6: Crafting -->
     <div id="crafting" class="section">
       <div class="section-header">
         <div class="section-number">6</div>
-        <div>
-          <div class="section-title">Крафт</div>
-          <div class="section-subtitle">Всепламя и подробные руководства</div>
-        </div>
+        <div><div class="section-title">Крафт (Crafting)</div><div class="section-subtitle">Всепламя (Omniflame) и подробные руководства</div></div>
       </div>
 
       <img src="https://image.qwenlm.ai/public_source/7ce1e409-9276-42bc-870e-0cb0f4b8f86b/1fc941406-064b-4b3d-a024-347efe386c4f.png" alt="Крафт Всепламени" class="section-image">
 
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">🔥 НОВОЕ — Крафт Всепламени</div>
-          <span class="card-badge badge-fire">3.29</span>
-        </div>
+        <div class="card-header"><div class="card-title">🔥 НОВОЕ — Крафт Всепламени (Omniflame Crafting)</div><span class="card-badge badge-fire">3.29</span></div>
         <ul>
-          <li>Новая валюта: <strong>Сера мертвеца</strong> (для скамьи Всепламени, аналог Жизненной силы в Жатве).</li>
+          <li>Новая валюта: <strong>Сера мертвеца (Dead Man's Sulfur)</strong> (для скамьи Всепламени / Omniflame Bench, аналог Жизненной силы / Lifeforce в Жатве / Harvest).</li>
           <li>Возвращает <strong>2-4 результата</strong> на выбор в зависимости от валюты.</li>
         </ul>
         <div class="table-wrapper">
           <table>
-            <thead>
-              <tr><th>Валюта</th><th>Результатов</th></tr>
-            </thead>
+            <thead><tr><th>Валюта (Currency)</th><th>Результатов</th></tr></thead>
             <tbody>
-              <tr><td>Сфера хаоса / господства / увеличения / возвышения</td><td><strong>3</strong></td></tr>
-              <tr><td>Сфера алхимии / возвышения Охотника / расщепления</td><td><strong>2</strong></td></tr>
-              <tr><td>Оскверненная сфера</td><td><strong>НЕ работает</strong></td></tr>
-              <tr><td>Зеркало Каландры</td><td><strong>1 результат</strong></td></tr>
+              <tr><td>Сфера хаоса / господства / увеличения / возвышения (Chaos/Regal/Augment/Exalt Orb)</td><td><strong>3</strong></td></tr>
+              <tr><td>Сфера алхимии / возвышения Охотника / расщепления (Alchemy/Hunter's Exalt/Divide Orb)</td><td><strong>2</strong></td></tr>
+              <tr><td>Оскверненная сфера (Corrupted Orb)</td><td><strong>НЕ работает</strong></td></tr>
+              <tr><td>Зеркало Каландры (Mirror of Kalandra)</td><td><strong>1 результат</strong></td></tr>
             </tbody>
           </table>
         </div>
         <div class="warning-box">
-          <strong>Недостаток — Нематериальность:</strong> Больше нематериальности = Меньше результатов. При многократном использовании скамьи Всепламени на одном предмете количество результатов постепенно вернется к 1. Ограничьте использование максимум 2 разами.
+          <strong>Недостаток — Нематериальность (Immateriality):</strong> Больше нематериальности = Меньше результатов. При многократном использовании скамьи Всепламени (Omniflame Bench) на одном предмете количество результатов постепенно вернется к 1. Ограничьте использование максимум 2 разами.
         </div>
       </div>
 
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">🔨 Подробное руководство по крафту</div>
-        </div>
+        <div class="card-header"><div class="card-title">🔨 Подробное руководство по крафту (Crafting Guide)</div></div>
 
-        <h4>6.1 Ваш щит</h4>
-        <p>План: рекомбинировать щит с (1) Высоким здоровьем + (2) Высоким шансом блока + (3) Восстановление 5% здоровья при блоке.</p>
+        <h4>6.1 Ваш щит (Shield)</h4>
+        <p>План: рекомбинировать щит с (1) Высоким здоровьем / Life + (2) Высоким шансом блока / Block Chance + (3) Восстановление 5% здоровья при блоке / Life Regeneration on Block.</p>
         <ol>
-          <li>База = Эзомитовый/Пиковый башенный щит 81 уровня</li>
-          <li>Рекомбинация т1 Здоровья и т2 Шанса блока</li>
-          <li>Заблокировать префикс → Жатва: перековать здоровье</li>
-          <li>Заблокировать префикс → Жатва: перековать крит или физ. урон</li>
-          <li><strong>Всепламя + Сфера возвышения Создателя</strong> для 2 результатов (ищем Восстановление % здоровья при блоке)</li>
-          <li>Крафт на скамье Характеристик/Сопротивления</li>
+          <li>База = Эзомитовый/Пиковый башенный щит (Ezomyte/Pinnacle Tower Shield) 81 уровня</li>
+          <li>Рекомбинация т1 Здоровья / Life и т2 Шанса блока / Block Chance</li>
+          <li>Заблокировать префикс → Жатва (Harvest): перековать здоровье / Life</li>
+          <li>Заблокировать префикс → Жатва (Harvest): перековать крит / Critical или физ. урон / Physical Damage</li>
+          <li><strong>Всепламя (Omniflame) + Сфера возвышения Создателя (Shaper's Exalt Orb)</strong> для 2 результатов (ищем Восстановление % здоровья при блоке / Life Regeneration on Block)</li>
+          <li>Крафт на скамье (Bench) Характеристик / Attributes / Сопротивления / Resistance</li>
         </ol>
 
-        <h4>6.2 Ваш шлем</h4>
-        <p>Получить редкие предметы через дерево Разлома со шлемом Гигантобойца, имеющим мод т1 «Радиус света/Глобальная точность».</p>
+        <h4>6.2 Ваш шлем (Helmet)</h4>
+        <p>Получить редкие предметы через дерево Разлома (Breach Tree) со шлемом Гигантобойца (Giant Slayer Helmet), имеющим мод т1 «Радиус света / Light Radius / Глобальная точность / Global Accuracy».</p>
         <ol>
-          <li>Шлем Гигантобойца 81 уровня: Жатва: перековать атаки → т1 %Увеличения радиуса света</li>
-          <li>Альтернатива: спам сферами изменения (суффикс «Сияния»)</li>
-          <li>Дерево Разлома: Дары чрева с припасами</li>
-          <li>Рекомбинация → Всепламя Возвышение</li>
+          <li>Шлем Гигантобойца (Giant Slayer Helmet) 81 уровня: Жатва (Harvest): перековать атаки → т1 %Увеличения радиуса света / Light Radius</li>
+          <li>Альтернатива: спам сферами изменения (Alteration Orbs) (суффикс «Сияния» / Shining)</li>
+          <li>Дерево Разлома (Breach Tree): Дары чрева с припасами (Womb Gifts with Supplies)</li>
+          <li>Рекомбинация → Всепламя Возвышение (Omniflame Exalt)</li>
         </ol>
 
-        <h4>6.3 Королевский нагрудник</h4>
+        <h4>6.3 Королевский нагрудник (Royal Plate)</h4>
         <div class="table-wrapper">
           <table>
-            <thead>
-              <tr><th>Шаг</th><th>Действие</th></tr>
-            </thead>
+            <thead><tr><th>Шаг</th><th>Действие</th></tr></thead>
             <tbody>
-              <tr><td>1</td><td>База = Королевский нагрудник 84 уровня</td></tr>
-              <tr><td>2</td><td>Жатва: перековать защиту → Т2+ плоская броня + Т3+ % брони</td></tr>
-              <tr><td>3</td><td>Заблокировать префикс → Жатва: перековать защиту → гибридная броня/восстановление после оглушения при блоке</td></tr>
-              <tr><td>4</td><td>Заблокировать префикс → Жатва: перековать физический урон → Дополнительное снижение физического урона</td></tr>
-              <tr><td>5</td><td>Всепламя Возвышение для Сопротивления/Характеристики</td></tr>
-              <tr><td>6</td><td>Повторный крафт на скамье</td></tr>
+              <tr><td>1</td><td>База = Королевский нагрудник (Royal Plate) 84 уровня</td></tr>
+              <tr><td>2</td><td>Жатва (Harvest): перековать защиту → Т2+ плоская броня / Armour + Т3+ % брони / Armour</td></tr>
+              <tr><td>3</td><td>Заблокировать префикс → Жатва (Harvest): перековать защиту → гибридная броня / Hybrid Armour / восстановление после оглушения при блоке / Recovery on Block</td></tr>
+              <tr><td>4</td><td>Заблокировать префикс → Жатва (Harvest): перековать физический урон / Physical Damage → Дополнительное снижение физического урона / Additional Physical Reduction</td></tr>
+              <tr><td>5</td><td>Всепламя Возвышение (Omniflame Exalt) для Сопротивления / Resistance / Характеристики / Attributes</td></tr>
+              <tr><td>6</td><td>Повторный крафт на скамье (Bench)</td></tr>
             </tbody>
           </table>
         </div>
 
-        <h4>6.5 Амулет (Мин-макс)</h4>
-        <p>Ищем +2 к уровню камней навыков и Максимальное здоровье.</p>
+        <h4>6.5 Амулет (Amulet) — Мин-макс</h4>
+        <p>Ищем +2 к уровню камней навыков / Gem Levels и Максимальное здоровье / Maximum Life.</p>
         <ol>
-          <li>Спам сферами изменения → +1 к уровню всех камней навыков (~2500-4000 сфер изменения)</li>
-          <li><strong>Всепламя Сфера господства</strong> (15% шанс получить мод Максимального здоровья с x3 результатами)</li>
-          <li>Крафт на скамье: Мультимод + Не может получить моды атаки + Префиксы не могут быть изменены</li>
-          <li>Жатва: ДОБАВИТЬ огонь → гарантировать +1 к уровню всех камней навыков огня</li>
-          <li>Жатва: Перековать хаос → сопротивление хаосу</li>
-          <li>Удар Всепламени Возвышения → крафт на скамье</li>
+          <li>Спам сферами изменения (Alteration Orbs) → +1 к уровню всех камней навыков / All Gems (~2500-4000 сфер изменения / Alteration Orbs)</li>
+          <li><strong>Всепламя Сфера господства (Omniflame Dominant Orb)</strong> (15% шанс получить мод Максимального здоровья / Maximum Life с x3 результатами)</li>
+          <li>Крафт на скамье (Bench): Мультимод / Multimod + Не может получить моды атаки / Cannot Roll Attack Mods + Префиксы не могут быть изменены / Prefixes Cannot Be Changed</li>
+          <li>Жатва (Harvest): ДОБАВИТЬ огонь / Add Fire → гарантировать +1 к уровню всех камней навыков огня / All Fire Gems</li>
+          <li>Жатва (Harvest): Перековать хаос / Reroll Chaos → сопротивление хаосу / Chaos Resistance</li>
+          <li>Удар Всепламени Возвышения (Omniflame Exalt) → крафт на скамье (Bench)</li>
         </ol>
 
-        <h4>6.8 Оружие — волшебная палочка</h4>
+        <h4>6.8 Оружие — волшебная палочка (Wand)</h4>
         <div class="table-wrapper">
           <table>
-            <thead>
-              <tr><th>Шаг</th><th>Действие</th><th>Примечание</th></tr>
-            </thead>
+            <thead><tr><th>Шаг</th><th>Действие</th><th>Примечание</th></tr></thead>
             <tbody>
-              <tr><td>1</td><td>Спам сферами изменения на Кинетической палочке 82+ → т2+ добавляемого урона от огня</td><td>Можно использовать Всепламя на Оглушающей эссенции тоски</td></tr>
-              <tr><td>2</td><td>Спам сферами изменения на Пророческой палочке 80/84+ → т2/т1 урона от заклинаний</td><td>—</td></tr>
-              <tr><td>3</td><td>Рекомбинируйте 2 предмета</td><td>Перенести т2+ урон от заклинаний на базу Кинетической палочки</td></tr>
-              <tr><td>4</td><td>Префиксы не могут быть изменены → Жатва: добавить скорость → т2+ Скорости атаки</td><td>Завершить Мультимодом</td></tr>
+              <tr><td>1</td><td>Спам сферами изменения (Alteration Orbs) на Кинетической палочке (Kinetic Wand) 82+ → т2+ добавляемого урона от огня / Added Fire Damage</td><td>Можно использовать Всепламя (Omniflame) на Оглушающей эссенции тоски (Stunned Essence of Anguish)</td></tr>
+              <tr><td>2</td><td>Спам сферами изменения (Alteration Orbs) на Пророческой палочке (Prophecy Wand) 80/84+ → т2/т1 урона от заклинаний / Spell Damage</td><td>—</td></tr>
+              <tr><td>3</td><td>Рекомбинируйте 2 предмета</td><td>Перенести т2+ урон от заклинаний / Spell Damage на базу Кинетической палочки / Kinetic Wand</td></tr>
+              <tr><td>4</td><td>Префиксы не могут быть изменены / Prefixes Cannot Be Changed → Жатва (Harvest): добавить скорость / Add Speed → т2+ Скорости атаки / Attack Speed</td><td>Завершить Мультимодом / Multimod</td></tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- Tracker Section -->
     <div id="tracker" class="section">
       <div class="section-header">
         <div class="section-number">✅</div>
-        <div>
-          <div class="section-title">Отслеживание прогресса</div>
-          <div class="section-subtitle">Отмечайте выполненные задачи</div>
-        </div>
+        <div><div class="section-title">Отслеживание прогресса</div><div class="section-subtitle">Отмечайте выполненные задачи</div></div>
       </div>
 
       <div class="card">
@@ -1967,103 +1055,103 @@ td strong { color: var(--text-primary); }
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Акт 1: Spectral Throw → Sunder на 12 уровне</div>
+          <div class="task-text">Акт 1: Призрачный бросок (Spectral Throw) → Раскол (Sunder) на 12 уровне</div>
           <span class="task-priority priority-high">Важно</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Акт 2: Добавить Herald of Ash, Blood Rage, Melee Physical Damage</div>
+          <div class="task-text">Акт 2: Добавить Вестник пепла (Herald of Ash), Кровавая ярость (Blood Rage), Урон в ближнем бою (Melee Physical Damage)</div>
           <span class="task-priority priority-high">Важно</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Акт 3: Нанять первого Наемника (Кинетик/Извергатель)</div>
+          <div class="task-text">Акт 3: Нанять первого Наемника (Mercenary) (Кинетик / Kineticist / Извергатель / Eruptor)</div>
           <span class="task-priority priority-high">Критично</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Обычный Лабиринт: Благородная кровь</div>
+          <div class="task-text">Обычный Лабиринт (Normal Lab): Благородная кровь (Noble Blood)</div>
           <span class="task-priority priority-high">Критично</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Жестокий Лабиринт: Клятва верности</div>
+          <div class="task-text">Жестокий Лабиринт (Cruel Lab): Клятва верности (Oath of Fealty)</div>
           <span class="task-priority priority-high">Критично</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Переход на Аура-бота на белых картах (T1-T2)</div>
+          <div class="task-text">Переход на Аура-бота (Aura-bot) на белых картах (T1-T2)</div>
           <span class="task-priority priority-high">Критично</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Получить Nycta's Lantern (Фонарь Никты)</div>
+          <div class="task-text">Получить Фонарь Никты (Nycta's Lantern)</div>
           <span class="task-priority priority-medium">Средне</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Получить Enmity's Embrace (Объятия вражды)</div>
+          <div class="task-text">Получить Объятия вражды (Enmity's Embrace)</div>
           <span class="task-priority priority-high">Критично</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Получить The Untouched Soul (Нетронутая душа)</div>
+          <div class="task-text">Получить Нетронутая душа (The Untouched Soul)</div>
           <span class="task-priority priority-medium">Средне</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Скрафтить редкий шлем Гигантобойца</div>
+          <div class="task-text">Скрафтить редкий шлем Гигантобойца (Giant Slayer Helmet)</div>
           <span class="task-priority priority-medium">Средне</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Скрафтить Королевский нагрудник</div>
+          <div class="task-text">Скрафтить Королевский нагрудник (Royal Plate)</div>
           <span class="task-priority priority-medium">Средне</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Скрафтить Левиафановые рукавицы и поножи</div>
+          <div class="task-text">Скрафтить Левиафановые рукавицы (Leviathan Mitts) и поножи (Leviathan Greaves)</div>
           <span class="task-priority priority-medium">Средне</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Скрафтить амулет (+2 к уровню камней навыков)</div>
+          <div class="task-text">Скрафтить амулет (Amulet) (+2 к уровню камней навыков / Gem Levels)</div>
           <span class="task-priority priority-low">Позже</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Скрафтить волшебную палочку для наемника</div>
+          <div class="task-text">Скрафтить волшебную палочку (Wand) для наемника (Mercenary)</div>
           <span class="task-priority priority-low">Позже</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Получить Kaom's Heart (Сердце Каома)</div>
+          <div class="task-text">Получить Сердце Каома (Kaom's Heart)</div>
           <span class="task-priority priority-low">Роскошь</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Получить The Hallowed Monarch (Освященный монарх)</div>
+          <div class="task-text">Получить Освященный монарх (The Hallowed Monarch)</div>
           <span class="task-priority priority-low">Роскошь</span>
         </div>
 
         <div class="task-item" onclick="toggleTask(this)">
           <div class="task-checkbox"></div>
-          <div class="task-text">Получить Nimis (Нимис)</div>
+          <div class="task-text">Получить Нимис (Nimis)</div>
           <span class="task-priority priority-low">Роскошь</span>
         </div>
       </div>
@@ -2077,7 +1165,6 @@ td strong { color: var(--text-primary); }
   </div>
 </main>
 
-<!-- Progress Tracker Panel -->
 <div class="tracker-panel" id="trackerPanel">
   <svg class="progress-ring" viewBox="0 0 40 40">
     <circle cx="20" cy="20" r="16" fill="none" stroke="var(--border-color)" stroke-width="4"/>
@@ -2091,11 +1178,9 @@ td strong { color: var(--text-primary); }
   </div>
 </div>
 
-<!-- Back to Top -->
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
-// Theme switching
 function setTheme(theme) {
   document.body.setAttribute('data-theme', theme);
   document.querySelectorAll('.theme-btn').forEach(btn => {
@@ -2108,14 +1193,11 @@ function setTheme(theme) {
 const savedTheme = localStorage.getItem('poe-theme');
 if (savedTheme) setTheme(savedTheme);
 
-// Sidebar toggle
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
 }
 
-// Tab switching
 function switchTab(event, tabId) {
-  const parent = event.target.closest('.section') || event.target.closest('.card');
   const tabs = event.target.parentElement;
   tabs.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
   event.target.classList.add('active');
@@ -2125,7 +1207,6 @@ function switchTab(event, tabId) {
   document.getElementById(tabId).classList.add('active');
 }
 
-// Search
 function searchContent(query) {
   if (!query) {
     document.querySelectorAll('.section').forEach(s => s.style.display = '');
@@ -2138,7 +1219,6 @@ function searchContent(query) {
   });
 }
 
-// Task tracking
 function toggleTask(el) {
   el.classList.toggle('completed');
   const checkbox = el.querySelector('.task-checkbox');
@@ -2152,32 +1232,15 @@ function updateProgress() {
   const completed = document.querySelectorAll('.task-item.completed');
   const total = tasks.length;
   const done = completed.length;
-  const pct = Math.round((done / total) * 100);
+  const pct = total ? Math.round((done / total) * 100) : 0;
 
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressText').textContent = pct + '%';
   document.getElementById('trackerProgressText').textContent = done + ' / ' + total;
 
   const circumference = 2 * Math.PI * 16;
-  const offset = circumference - (done / total) * circumference;
+  const offset = circumference - (total ? (done / total) : 0) * circumference;
   document.getElementById('progressCircle').style.strokeDashoffset = offset;
-
-  // Update sidebar links
-  document.querySelectorAll('.sidebar-link').forEach(link => {
-    const section = link.dataset.section;
-    if (section) {
-      const sectionEl = document.getElementById(section);
-      if (sectionEl) {
-        const tasksInSection = sectionEl.querySelectorAll('.task-item');
-        const completedInSection = sectionEl.querySelectorAll('.task-item.completed');
-        if (tasksInSection.length > 0 && tasksInSection.length === completedInSection.length) {
-          link.classList.add('completed');
-        } else {
-          link.classList.remove('completed');
-        }
-      }
-    }
-  });
 
   updateProgressChart();
 }
@@ -2214,7 +1277,6 @@ function resetTracker() {
   }
 }
 
-// Active sidebar link on scroll
 const sections = document.querySelectorAll('.section');
 const sidebarLinks = document.querySelectorAll('.sidebar-link');
 
@@ -2234,7 +1296,6 @@ window.addEventListener('scroll', () => {
     }
   });
 
-  // Back to top button
   const btn = document.getElementById('backToTop');
   if (window.scrollY > 400) {
     btn.classList.add('visible');
@@ -2243,7 +1304,6 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// Charts
 let scalingChart, mercenaryChart, nerfChart, progressChart;
 
 function createCharts() {
@@ -2251,7 +1311,6 @@ function createCharts() {
   const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
   const textColor = isDark ? '#a09e9a' : '#4a4a5a';
 
-  // Scaling chart
   const ctx1 = document.getElementById('scalingChart');
   if (ctx1) {
     if (scalingChart) scalingChart.destroy();
@@ -2260,14 +1319,14 @@ function createCharts() {
       data: {
         labels: ['1000 HP', '3000 HP', '5000 HP', '7000 HP', '9000 HP', '10000 HP'],
         datasets: [{
-          label: 'Добавляемый урон от огня',
+          label: 'Добавляемый урон от огня (Added Fire Damage)',
           data: [100, 300, 500, 700, 900, 1000],
           borderColor: '#ff6b35',
           backgroundColor: 'rgba(255,107,53,0.1)',
           fill: true,
           tension: 0.4
         }, {
-          label: 'С эффектом связи 150%',
+          label: 'С эффектом связи 150% (Link Effect)',
           data: [150, 450, 750, 1050, 1350, 1500],
           borderColor: '#d4a853',
           backgroundColor: 'rgba(212,168,83,0.1)',
@@ -2286,26 +1345,25 @@ function createCharts() {
     });
   }
 
-  // Mercenary comparison chart
   const ctx2 = document.getElementById('mercenaryChart');
   if (ctx2) {
     if (mercenaryChart) mercenaryChart.destroy();
     mercenaryChart = new Chart(ctx2, {
       type: 'radar',
       data: {
-        labels: ['Зачистка', 'Боссы', 'Выживаемость', 'Масштабирование', 'Доступность'],
+        labels: ['Зачистка (Clear)', 'Боссы (Bossing)', 'Выживаемость (Survivability)', 'Масштабирование (Scaling)', 'Доступность (Accessibility)'],
         datasets: [{
-          label: 'Кинетик (KBoC)',
+          label: 'Кинетик (Kineticist / KBoC)',
           data: [95, 60, 70, 85, 75],
           borderColor: '#4a9eff',
           backgroundColor: 'rgba(74,158,255,0.2)'
         }, {
-          label: 'Тлеющий удар (MS)',
+          label: 'Тлеющий удар (Molten Strike / MS)',
           data: [50, 95, 75, 90, 70],
           borderColor: '#ff6b35',
           backgroundColor: 'rgba(255,107,53,0.2)'
         }, {
-          label: 'Извергатель (VFoS)',
+          label: 'Извергатель (Eruptor / VFoS)',
           data: [75, 55, 65, 70, 85],
           borderColor: '#2ecc71',
           backgroundColor: 'rgba(46,204,113,0.2)'
@@ -2325,7 +1383,6 @@ function createCharts() {
     });
   }
 
-  // Nerf impact chart
   const ctx3 = document.getElementById('nerfChart');
   if (ctx3) {
     if (nerfChart) nerfChart.destroy();
@@ -2334,7 +1391,7 @@ function createCharts() {
       data: {
         labels: ['KBoC', 'VFoS', 'MS'],
         datasets: [{
-          label: 'Потери от нерфа (%)',
+          label: 'Потери от нерфа (%) (Nerf Impact)',
           data: [17.5, 50, 0],
           backgroundColor: ['rgba(255,107,53,0.7)', 'rgba(231,76,60,0.7)', 'rgba(46,204,113,0.7)'],
           borderColor: ['#ff6b35', '#e74c3c', '#2ecc71'],
@@ -2352,7 +1409,6 @@ function createCharts() {
     });
   }
 
-  // Progress chart
   const ctx4 = document.getElementById('progressChart');
   if (ctx4) {
     if (progressChart) progressChart.destroy();
@@ -2361,7 +1417,7 @@ function createCharts() {
     progressChart = new Chart(ctx4, {
       type: 'doughnut',
       data: {
-        labels: ['Выполнено', 'Осталось'],
+        labels: ['Выполнено (Done)', 'Осталось (Remaining)'],
         datasets: [{
           data: [completed.length, tasks.length - completed.length],
           backgroundColor: ['#ff6b35', 'rgba(255,255,255,0.1)'],
@@ -2371,9 +1427,7 @@ function createCharts() {
       },
       options: {
         responsive: true,
-        plugins: {
-          legend: { labels: { color: textColor } }
-        }
+        plugins: { legend: { labels: { color: textColor } } }
       }
     });
   }
@@ -2392,7 +1446,6 @@ function updateCharts() {
   setTimeout(createCharts, 100);
 }
 
-// Init
 window.addEventListener('load', () => {
   loadProgress();
   createCharts();
