@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Panel</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0f;--card:#14141f;--card2:#1c1c2e;--border:#2a2a3e;--accent:#6366f1;--accent2:#818cf8;--green:#34d399;--red:#f87171;--yellow:#fbbf24;--cyan:#22d3ee;--text:#e2e8f0;--muted:#64748b;--input:#1e1e30}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.header{background:linear-gradient(135deg,#1e1b4b,#312e81);padding:20px 32px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.header h1{font-size:22px;font-weight:700;display:flex;align-items:center;gap:10px}
+.header .ip{background:rgba(255,255,255,.1);color:#fff;padding:4px 14px;border-radius:20px;font-size:12px;font-family:monospace}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card.full{grid-column:1/-1}
+.card h2{font-size:16px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:3px 10px;border-radius:20px;font-weight:600}
+.status.running{background:rgba(52,211,153,.12);color:var(--green)}
+.status.stopped{background:rgba(248,113,113,.12);color:var(--red)}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+.status.running .dot{background:var(--green);box-shadow:0 0 6px var(--green)}
+.status.stopped .dot{background:var(--red)}
+.btn{padding:7px 14px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;transition:all .15s}
+.btn-go{background:var(--accent);color:#fff}.btn-go:hover{background:#4f46e5}
+.btn-stop{background:var(--red);color:#fff}.btn-stop:hover{background:#dc2626}
+.btn-sm{padding:5px 10px;font-size:11px;background:var(--card2);color:var(--muted);border:1px solid var(--border)}.btn-sm:hover{color:var(--text);border-color:var(--accent)}
+.btn-yellow{background:rgba(251,191,36,.15);color:var(--yellow);border:1px solid rgba(251,191,36,.3)}.btn-yellow:hover{background:rgba(251,191,36,.25)}
+.btn-group{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.sys-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.sys-item{background:var(--card2);padding:12px 8px;border-radius:8px;text-align:center}
+.sys-item .val{font-size:18px;font-weight:700;color:var(--accent2)}
+.sys-item .lbl{font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+.flags-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px}
+.field{display:flex;align-items:center;gap:6px}
+.field label{color:var(--muted);font-size:12px;min-width:90px}
+.field input,.field select{flex:1;background:var(--input);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-size:12px;font-family:monospace}
+.field input:focus,.field select:focus{outline:none;border-color:var(--accent)}
+.field input[type=number]{max-width:90px}
+.preset-bar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:10px 0;padding:10px;background:var(--card2);border-radius:8px}
+.preset-chip{padding:4px 10px;background:var(--input);border:1px solid var(--border);border-radius:15px;font-size:11px;cursor:pointer;color:var(--text);transition:all .15s;display:flex;align-items:center;gap:4px}
+.preset-chip:hover{border-color:var(--accent);background:rgba(99,102,241,.1)}
+.preset-chip .del{color:var(--red);cursor:pointer;font-weight:bold;margin-left:2px}
+.last-run-badge{font-size:11px;color:var(--cyan);padding:4px 10px;background:rgba(34,211,238,.08);border-radius:10px;border:1px solid rgba(34,211,238,.2)}
+.log-box{background:#0d0d14;border:1px solid var(--border);border-radius:6px;padding:10px;font-family:monospace;font-size:11px;max-height:160px;overflow-y:auto;color:var(--muted);margin-top:10px;white-space:pre-wrap;line-height:1.5}
+.model-sel{margin:8px 0}
+.model-item{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--card2);border-radius:6px;margin-bottom:4px;font-size:12px}
+.model-item .name{font-family:monospace;color:var(--accent2)}
+.model-item .size{color:var(--muted)}
+.info-line{font-size:12px;color:var(--muted);margin-top:6px}
+.info-line a{color:var(--accent);text-decoration:none;font-weight:600}
+.info-line a:hover{text-decoration:underline}
+.toggle-section{cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between}
+.toggle-section .arrow{transition:transform .2s;color:var(--muted)}
+.toggle-section.open .arrow{transform:rotate(90deg)}
+.collapsible{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.collapsible.open{max-height:1200px}
+.save-row{display:flex;gap:6px;align-items:center;margin-top:8px}
+.save-row input{flex:1;background:var(--input);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-size:12px}
+.model-del{color:var(--red);cursor:pointer;font-size:14px;margin-left:6px;padding:0 4px;border-radius:3px}
+.model-del:hover{background:rgba(248,113,153,.15)}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🤖 AI Panel <span style="font-size:12px;color:var(--muted);font-weight:400">llama.cpp manager</span></h1>
+  <span class="ip">192.168.137.10</span>
+</div>
+
+<div class="container">
+
+  <!-- System -->
+  <div class="card">
+    <div class="sys-grid" id="sysInfo">
+      <div class="sys-item"><div class="val">V100</div><div class="lbl">GPU</div></div>
+      <div class="sys-item"><div class="val" id="gpuMem">—</div><div class="lbl">VRAM Used</div></div>
+      <div class="sys-item"><div class="val">32 GB</div><div class="lbl">VRAM Total</div></div>
+      <div class="sys-item"><div class="val" id="gpuTemp">—</div><div class="lbl">Temp °C</div></div>
+      <div class="sys-item"><div class="val">16</div><div class="lbl">CPU Cores</div></div>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span style="font-size:12px;color:var(--muted)">Сервер:</span>
+      <button class="btn btn-yellow btn-sm" onclick="serverReboot()">🔄 Перезагрузить сервер</button>
+      <button class="btn btn-stop btn-sm" onclick="serverShutdown()">⏹ Выключить сервер</button>
+      <button class="btn btn-sm" onclick="restartPanel()">🔁 Рестарт панели</button>
+      <span id="serverMsg" style="font-size:11px;color:var(--muted)"></span>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- LLM Server -->
+    <div class="card full">
+      <h2>
+        <span id="llmStatus" class="status stopped"><span class="dot"></span>Stopped</span>
+        LLM Server
+        <span id="llmModelBadge" style="margin-left:auto;font-size:11px;color:var(--muted);font-family:monospace"></span>
+      </h2>
+
+      <!-- Presets bar -->
+      <div class="preset-bar" id="presetBar">
+        <span style="font-size:11px;color:var(--muted)">Пресеты:</span>
+        <span id="presetList" style="display:flex;gap:4px;flex-wrap:wrap"></span>
+        <span id="lastRunBadge" class="last-run-badge" style="display:none" onclick="loadLastRun()" title="Последний запуск — клик для загрузки">⏱ Последний запуск</span>
+      </div>
+
+      <!-- Model select -->
+      <div class="field" style="margin-bottom:8px">
+        <label style="min-width:60px">Модель:</label>
+        <select id="modelSelect" style="flex:1;max-width:400px"></select>
+      </div>
+
+      <!-- Flags (collapsible) -->
+      <div class="toggle-section" onclick="toggleFlags()">
+        <span style="font-size:13px">⚙️ Флаги запуска</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="collapsible" id="flagsBlock">
+        <div class="flags-grid" style="margin-top:8px">
+          <div class="field"><label>GPU слои (-ngl):</label><input type="number" id="f_ngl" value="99"></div>
+          <div class="field"><label>Контекст (-c):</label><input type="number" id="f_ctx" value="98304"></div>
+          <div class="field"><label>Потоки (-t):</label><input type="number" id="f_threads" value="12"></div>
+          <div class="field"><label>Температура:</label><input type="number" id="f_temp" value="0.2" step="0.1"></div>
+          <div class="field"><label>Repeat penalty:</label><input type="number" id="f_repeat_penalty" value="1.0" step="0.01"></div>
+          <div class="field"><label>Presence penalty:</label><input type="number" id="f_presence_penalty" value="0.0" step="0.01"></div>
+          <div class="field"><label>Top K:</label><input type="number" id="f_top_k" value="20"></div>
+          <div class="field"><label>Top P:</label><input type="number" id="f_top_p" value="0.95" step="0.01"></div>
+          <div class="field"><label>Min P:</label><input type="number" id="f_min_p" value="0.0" step="0.01"></div>
+          <div class="field"><label>K-кэш:</label><input id="f_cache_type_k" value="q4_0"></div>
+          <div class="field"><label>V-кэш:</label><input id="f_cache_type_v" value="q4_0"></div>
+          <div class="field"><label>Flash attn:</label><select id="f_flash_attn"><option selected>on</option><option>off</option><option>auto</option></select></div>
+          <div class="field"><label>Cont batching (-cb):</label><input type="number" id="f_cont_batching"></div>
+          <div class="field"><label>Slot контекст:</label><input type="number" id="f_slot_context_size"></div>
+          <div class="field"><label>Batch (-b):</label><input type="number" id="f_batch" value="1024"></div>
+          <div class="field"><label>Ubatch (-ub):</label><input type="number" id="f_ubatch" value="256"></div>
+          <div class="field"><label>Ctx checkpoints:</label><input type="number" id="f_ctx_checkpoints" value="8"></div>
+          <div class="field"><label>Cache reuse:</label><input type="number" id="f_cache_reuse" value="256"></div>
+          <div class="field"><label>Spec type:</label><input id="f_spec_type" value="draft-mtp"></div>
+          <div class="field"><label>Draft N max:</label><input type="number" id="f_spec_draft_n" value="3"></div>
+          <div class="field"><label>Reasoning:</label><select id="f_reasoning"><option selected>off</option><option>on</option></select></div>
+          <div class="field"><label>Порт:</label><input type="number" id="f_port" value="8080"></div>
+        </div>
+
+        <!-- Checkboxes row -->
+        <div style="margin-top:10px;display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+          <span style="font-size:11px;color:var(--muted)">Флаги:</span>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer">
+            <input type="checkbox" id="cb_jinja" checked> <span>Jinja</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer">
+            <input type="checkbox" id="cb_no_mmap" checked> <span>No mmap</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer">
+            <input type="checkbox" id="cb_context_shift" checked> <span>Context shift</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer">
+            <input type="checkbox" id="cb_api"> <span>API</span>
+          </label>
+        </div>
+
+        <!-- Save preset -->
+        <div class="save-row">
+          <input id="presetName" placeholder="Имя пресета...">
+          <button class="btn btn-sm" onclick="savePreset()">💾 Сохранить пресет</button>
+          <button class="btn btn-yellow btn-sm" onclick="captureRunning()">📸 Захватить из процесса</button>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-go" onclick="startLLM()">▶ Запустить</button>
+        <button class="btn btn-stop" onclick="stopLLM()">⏹ Остановить</button>
+        <button class="btn btn-sm" onclick="checkLLM()">🔄 Обновить</button>
+      </div>
+
+      <div class="info-line" id="llmInfo">
+        URL: <a id="llmUrl" href="http://192.168.137.10:8080" target="_blank">http://192.168.137.10:8080</a>
+      </div>
+
+      <div class="log-box" id="llmLog">Нажмите «Обновить» для проверки статуса...</div>
+    </div>
+
+    <!-- Models -->
+    <div class="card">
+      <h2>📦 Модели <span style="font-size:11px;color:var(--muted)">(~/models)</span></h2>
+      <div id="modelList" style="margin-top:8px">Загрузка...</div>
+    </div>
+
+    <!-- ComfyUI -->
+    <div class="card">
+      <h2>
+        <span id="comfyStatus" class="status stopped"><span class="dot"></span>Stopped</span>
+        ComfyUI
+      </h2>
+      <div style="font-size:12px;color:var(--muted);margin:6px 0">Генерация изображений (Stable Diffusion)</div>
+      <div class="field"><label>Порт:</label><input type="number" id="comfyPort" value="8188"></div>
+      <div class="btn-group">
+        <button class="btn btn-go" onclick="startComfy()">▶ Запустить</button>
+        <button class="btn btn-stop" onclick="stopComfy()">⏹ Стоп</button>
+        <button class="btn btn-sm" onclick="checkComfy()">🔄</button>
+        <button class="btn btn-yellow btn-sm" onclick="installComfy()">📥 Установить</button>
+      </div>
+      <div class="info-line">URL: <a id="comfyUrl" href="http://192.168.137.10:8188" target="_blank">http://192.168.137.10:8188</a></div>
+      <div class="log-box" id="comfyLog">—</div>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+const IP = '192.168.137.10';
+
+function $(id) { return document.getElementById(id); }
+
+function updateStatus(id, running) {
+  const el = $(id);
+  el.className = 'status ' + (running ? 'running' : 'stopped');
+  el.innerHTML = '<span class="dot"></span>' + (running ? 'Running' : 'Stopped');
+}
+
+async function api(path, method = 'GET', body = null) {
+  const opts = { method, headers: { 'Content-Type': 'application/json' } };
+  if (body) opts.body = JSON.stringify(body);
+  const r = await fetch('/api' + path, opts);
+  return r.json();
+}
+
+// --- Flags ---
+const FLAG_IDS = ['ngl','ctx','threads','temp','repeat_penalty','presence_penalty','top_k','top_p','min_p','cache_type_k','cache_type_v','flash_attn','cont_batching','slot_context_size','batch','ubatch','ctx_checkpoints','cache_reuse','spec_type','spec_draft_n','reasoning','port'];
+const CHECKBOX_IDS = ['jinja','no_mmap','context_shift','api'];
+
+function getFlags() {
+  const f = {};
+  FLAG_IDS.forEach(id => {
+    const el = $('f_' + id);
+    if (el) {
+      const v = el.value.trim();
+      if (v !== '') f[id] = v;
+    }
+  });
+  CHECKBOX_IDS.forEach(id => {
+    const el = $('cb_' + id);
+    if (el) f[id] = el.checked ? 'on' : 'off';
+  });
+  return f;
+}
+
+function setFlags(f) {
+  FLAG_IDS.forEach(id => {
+    const el = $('f_' + id);
+    if (el && f[id] !== undefined) el.value = f[id];
+  });
+  CHECKBOX_IDS.forEach(id => {
+    const el = $('cb_' + id);
+    if (el && f[id] !== undefined) el.checked = f[id] === 'on';
+  });
+}
+
+function toggleFlags() {
+  const sec = document.querySelector('.toggle-section');
+  const blk = $('flagsBlock');
+  sec.classList.toggle('open');
+  blk.classList.toggle('open');
+}
+
+// --- LLM ---
+async function checkLLM() {
+  const d = await api('/llm/status');
+  updateStatus('llmStatus', d.running);
+  $('llmLog').textContent = d.log || '—';
+  if (d.port) {
+    $('f_port').value = d.port;
+    $('llmUrl').href = `http://${IP}:${d.port}`;
+    $('llmUrl').textContent = `http://${IP}:${d.port}`;
+  }
+  if (d.model) $('llmModelBadge').textContent = d.model;
+  else $('llmModelBadge').textContent = '';
+
+  // If running, show captured flags
+  if (d.running && d.flags && Object.keys(d.flags).length > 0) {
+    setFlags(d.flags);
+    // Try to select matching model
+    if (d.flags.model) {
+      const sel = $('modelSelect');
+      for (let o of sel.options) {
+        if (o.value === d.flags.model) { o.selected = true; break; }
+      }
+    }
+  }
+}
+
+async function startLLM() {
+  const body = { model: $('modelSelect').value, ...getFlags() };
+  const d = await api('/llm/start', 'POST', body);
+  $('llmLog').textContent = d.message || JSON.stringify(d);
+  setTimeout(checkLLM, 2000);
+}
+
+async function stopLLM() {
+  const d = await api('/llm/stop', 'POST');
+  $('llmLog').textContent = d.message || JSON.stringify(d);
+  checkLLM();
+}
+
+// --- Presets ---
+async function loadPresets() {
+  const d = await api('/llm/presets');
+  const list = $('presetList');
+  list.innerHTML = '';
+  if (d.presets && d.presets.length > 0) {
+    d.presets.forEach(p => {
+      const chip = document.createElement('span');
+      chip.className = 'preset-chip';
+      chip.innerHTML = `${p.name} <span class="del" onclick="event.stopPropagation();deletePreset('${p.name}')">×</span>`;
+      chip.onclick = () => loadPreset(p);
+      list.appendChild(chip);
+    });
+  } else {
+    list.innerHTML = '<span style="font-size:11px;color:var(--muted)">нет пресетов</span>';
+  }
+}
+
+function loadPreset(p) {
+  setFlags(p.flags);
+  if (p.flags.model) {
+    const sel = $('modelSelect');
+    for (let o of sel.options) {
+      if (o.value === p.flags.model) { o.selected = true; break; }
+    }
+  }
+  // Open flags section
+  const sec = document.querySelector('.toggle-section');
+  const blk = $('flagsBlock');
+  if (!blk.classList.contains('open')) { sec.classList.add('open'); blk.classList.add('open'); }
+}
+
+async function savePreset() {
+  const name = $('presetName').value.trim();
+  if (!name) { alert('Введите имя пресета'); return; }
+  const body = { name, model: $('modelSelect').value, ...getFlags() };
+  const d = await api('/llm/presets/save', 'POST', body);
+  $('presetName').value = '';
+  $('llmLog').textContent = d.message;
+  loadPresets();
+}
+
+async function deletePreset(name) {
+  await api('/llm/presets/delete', 'POST', { name });
+  loadPresets();
+}
+
+async function captureRunning() {
+  const d = await api('/llm/capture', 'POST', {});
+  if (d.flags) {
+    setFlags(d.flags);
+    $('llmLog').textContent = d.message;
+    // Auto-fill preset name
+    if (d.name) $('presetName').value = d.name;
+  } else {
+    $('llmLog').textContent = d.message || 'Ошибка';
+  }
+}
+
+// --- Last run ---
+async function loadLastRun() {
+  const d = await api('/llm/last-run');
+  if (d.last_run) {
+    setFlags(d.last_run);
+    if (d.last_run.model) {
+      const sel = $('modelSelect');
+      for (let o of sel.options) {
+        if (o.value === d.last_run.model) { o.selected = true; break; }
+      }
+    }
+    // Open flags
+    const sec = document.querySelector('.toggle-section');
+    const blk = $('flagsBlock');
+    if (!blk.classList.contains('open')) { sec.classList.add('open'); blk.classList.add('open'); }
+  }
+}
+
+async function checkLastRun() {
+  const d = await api('/llm/last-run');
+  if (d.last_run) {
+    $('lastRunBadge').style.display = 'inline';
+    const keys = Object.keys(d.last_run).filter(k => k !== 'model');
+    const modelName = d.last_run.model ? d.last_run.model.split('/').pop() : '?';
+    $('lastRunBadge').textContent = '⏱ Последний: ' + modelName + ' (' + keys.length + ' флагов)';
+  }
+}
+
+// --- Models ---
+async function loadModels() {
+  const d = await api('/models');
+  const list = $('modelList');
+  const sel = $('modelSelect');
+  if (d.models && d.models.length > 0) {
+    list.innerHTML = d.models.map(m =>
+      `<div class="model-item"><span class="name">${m.name}</span><span><span class="size">${m.size}</span><span class="model-del" onclick="deleteModel('${m.name}')" title="Удалить">×</span></span></div>`
+    ).join('');
+    sel.innerHTML = d.models.map(m => `<option value="${m.path}">${m.name}</option>`).join('');
+  } else {
+    list.innerHTML = '<div style="color:var(--muted);font-size:12px">Нет моделей</div>';
+  }
+}
+
+// --- ComfyUI ---
+async function checkComfy() {
+  const d = await api('/comfy/status');
+  updateStatus('comfyStatus', d.running);
+  $('comfyLog').textContent = d.log || (d.installed ? 'Установлен' : 'Не установлен');
+}
+async function startComfy() {
+  const d = await api('/comfy/start', 'POST', { port: $('comfyPort').value });
+  $('comfyLog').textContent = d.message; checkComfy();
+}
+async function stopComfy() {
+  const d = await api('/comfy/stop', 'POST');
+  $('comfyLog').textContent = d.message; checkComfy();
+}
+async function installComfy() {
+  $('comfyLog').textContent = 'Установка... это займёт время.';
+  const d = await api('/comfy/install', 'POST');
+  $('comfyLog').textContent = d.message;
+}
+
+// --- GPU ---
+async function refreshGPU() {
+  try {
+    const d = await api('/gpu');
+    if (d.memory_used_gb) $('gpuMem').textContent = d.memory_used_gb + ' GB';
+    if (d.temperature) $('gpuTemp').textContent = d.temperature;
+  } catch(e) {}
+}
+
+// --- Server ---
+async function serverReboot() {
+  if (!confirm('Перезагрузить сервер?')) return;
+  const d = await api('/server/reboot', 'POST');
+  $('serverMsg').textContent = d.message;
+}
+async function serverShutdown() {
+  if (!confirm('Выключить сервер?')) return;
+  const d = await api('/server/shutdown', 'POST');
+  $('serverMsg').textContent = d.message;
+}
+async function restartPanel() {
+  const d = await api('/server/restart-panel', 'POST');
+  $('serverMsg').textContent = d.message;
+}
+
+
+// --- Delete model ---
+async function deleteModel(filename) {
+  if (!confirm(`Удалить ${filename}?`)) return;
+  try {
+    const d = await api('/models/delete', 'POST', { filename });
+    $('llmLog').textContent = d.message || d.error;
+    loadModels();
+  } catch(e) {
+    alert('Ошибка: ' + e.message);
+  }
+}
+
+// --- Init ---
+loadModels();
+loadPresets();
+checkLLM();
+checkComfy();
+checkLastRun();
+refreshGPU();
+setInterval(refreshGPU, 5000);
+setInterval(checkLLM, 15000);
+setInterval(checkComfy, 15000);
+</script>
+
+</body>
+</html>
