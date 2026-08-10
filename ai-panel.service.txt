@@ -1,0 +1,15 @@
+[Unit]
+Description=AI Panel — management panel for llama.cpp
+After=network.target
+
+[Service]
+Type=simple
+User=dima
+Environment=HOME=/home/dima
+ExecStart=/usr/bin/python3 /home/dima/ai-panel/server.py
+WorkingDirectory=/home/dima/ai-panel
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
