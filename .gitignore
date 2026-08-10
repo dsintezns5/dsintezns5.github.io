@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+presets.json
+last_run.json
+logs/
+*.downloading
