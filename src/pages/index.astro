@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import BuildCard from '../components/BuildCard.astro';
+import LeagueTimer from '../components/LeagueTimer.astro';
+
+// 3.30 стартует 13.11.2026 в 23:00 по Москве (20:00 UTC)
+const LEAGUE_START = '2026-11-13T20:00:00Z';
+const LEAGUE = '3.30';
+
+const builds = (await getCollection('builds')).sort(
+  (a, b) => +new Date(b.data.updated) - +new Date(a.data.updated)
+);
+const featured = builds[0];
+const rest = builds.slice(1);
+---
+
+<Layout>
+  <div class="container">
+    <section class="hero">
+      <img src="/images/kepa-mita-avatar.webp" alt="Кепка" class="hero-avatar" />
+      <div>
+        <p class="hero-kicker">twitch.tv/kepa_mita · 20 000+ фолловеров · теорикрафтинг, уберы и смерть с чатом</p>
+        <h1>Билды и гайды <span class="grad">Path of Exile</span>, которые не сломают тебе мозг</h1>
+        <p class="hero-sub">
+          Привет, я Кепка! Играю в PoE, гоняю убёров и превращаю свой опыт в гайды, в которых всё
+          объяснено по-человечески. Даже если ты ещё не понял(а), что такое «кап резов» — начни с этого сайта.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="/builds/">📚 Все билды</a>
+          <a class="btn" href="/newbies/">🆘 Я новичок</a>
+          <a class="btn" href="https://www.twitch.tv/kepa_mita" target="_blank" rel="noopener">🎮 Мой Твич</a>
+        </div>
+      </div>
+    </section>
+
+    <LeagueTimer target={LEAGUE_START} league={LEAGUE} />
+
+    {featured && (
+      <section class="section">
+        <div class="grid">
+          <BuildCard build={featured} featured />
+        </div>
+      </section>
+    )}
+
+    <section class="section">
+      <div class="section-head">
+        <h2>📚 Билды</h2>
+        <a class="hint" href="/builds/">Все билды и фильтры →</a>
+      </div>
+      <div class="grid">
+        {rest.map((b) => <BuildCard build={b} />)}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="newbie-cta">
+        <h2>🆘 Ты впервые в Path of Exile?</h2>
+        <p>
+          Не знаешь, с чего начать? Это нормально — PoE встречает новичка стеной жаргона.
+          Здесь будет квиз «какой билд мне подходит», словарь терминов и чеклист первого дня лиги.
+        </p>
+        <a class="btn btn-primary" href="/newbies/">Начать с нуля</a>
+      </div>
+    </section>
+  </div>
+</Layout>

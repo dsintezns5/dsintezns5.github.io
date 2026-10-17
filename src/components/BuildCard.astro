@@ -1,0 +1,50 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  build: CollectionEntry<'builds'>;
+  featured?: boolean;
+}
+
+const { build, featured = false } = Astro.props;
+const b = build.data;
+
+const budgetLabel: Record<string, string> = {
+  starter: '🟢 Стартовый',
+  mid: '🟡 Средний',
+  expensive: '🔴 Дорогой',
+};
+const tagLabel: Record<string, string> = {
+  'league-starter': 'Лигстарт',
+  mapping: 'Маппинг',
+  bossing: 'Боссы',
+  endgame: 'Эндгейм',
+  ssf: 'SSF',
+};
+---
+
+<a
+  class:list={['card-build', featured && 'featured']}
+  href={`/builds/${build.slug}/`}
+  data-cls={b.cls}
+  data-diff={b.difficulty}
+  data-budget={b.budget}
+  data-tags={b.tags.join(' ')}
+>
+  <div class="card-img">
+    <img src={b.image} alt="" loading="lazy" />
+    {b.demo && <span class="demo-ribbon">ДЕМО</span>}
+  </div>
+  <div class="card-body">
+    {featured && <span class="featured-tag">⭐ Рекомендация на лигстарт</span>}
+    <h3>{b.title}</h3>
+    <p class="card-cls">{b.cls} → {b.ascendancy}</p>
+    <p class="card-desc">{b.description}</p>
+    <div class="badges">
+      <span class="badge" title={`Сложность ${b.difficulty} из 3`}>{'⭐'.repeat(b.difficulty)}{'☆'.repeat(3 - b.difficulty)}</span>
+      <span class="badge badge-budget">{budgetLabel[b.budget]}</span>
+      {b.tags.map((t) => <span class="badge">{tagLabel[t] ?? t}</span>)}
+      <span class="badge badge-league">Лига {b.league}</span>
+    </div>
+  </div>
+</a>
