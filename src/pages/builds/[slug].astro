@@ -1,0 +1,80 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const builds = await getCollection('builds');
+  return builds.map((b) => ({ params: { slug: b.slug }, props: { build: b } }));
+}
+
+const { build } = Astro.props;
+const { Content } = await render(build);
+const b = build.data;
+
+const url = `https://dsintezns5.github.io/builds/${build.slug}/`;
+const shareTg = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(b.title + ' — билд Path of Exile от Кепки')}`;
+const shareVk = `https://vk.com/share.php?url=${encodeURIComponent(url)}`;
+
+const budgetLabel: Record<string, string> = {
+  starter: '🟢 Стартовый бюджет',
+  mid: '🟡 Средний бюджет',
+  expensive: '🔴 Дорогой',
+};
+const tagLabel: Record<string, string> = {
+  'league-starter': 'Лигстарт',
+  mapping: 'Маппинг',
+  bossing: 'Боссы',
+  endgame: 'Эндгейм',
+  ssf: 'SSF',
+};
+const updated = new Date(b.updated).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Layout title={`${b.title} — билд PoE от Кепки`} description={b.description}>
+  <article class="build-page">
+    <header class="build-head">
+      <div class="badges">
+        <span class="badge" title={`Сложность ${b.difficulty} из 3`}>{'⭐'.repeat(b.difficulty)}{'☆'.repeat(3 - b.difficulty)} Сложность</span>
+        <span class="badge badge-budget">{budgetLabel[b.budget]}</span>
+        {b.tags.map((t) => <span class="badge">{tagLabel[t] ?? t}</span>)}
+        <span class="badge badge-league">Лига {b.league}</span>
+        <span class="badge">Обновлено {updated}</span>
+      </div>
+      <h1>{b.title}</h1>
+      <p class="build-meta">{b.cls} → {b.ascendancy}{b.skills.length ? ` · Основные скиллы: ${b.skills.join(', ')}` : ''}</p>
+      {b.demo && (
+        <div class="demo-banner">
+          🧪 <b>Это демо-билд (заглушка).</b> Тексты примерные, чтобы показать формат сайта.
+          Реальный гайд с моими PoB, скринами и видео появится, когда я соберу всё под новую лигу.
+        </div>
+      )}
+    </header>
+
+    <section class="quickstart">
+      <h2>⚡ Быстрый старт</h2>
+      <p>{b.description}</p>
+      <div class="qs-actions">
+        <button class="pob-btn big" data-pob={b.pob}>📋 Скопировать PoB</button>
+        {b.video && <a class="btn" href={b.video} target="_blank" rel="noopener">📺 Видео-гайд</a>}
+      </div>
+    </section>
+
+    <div class="md">
+      <Content />
+    </div>
+
+    <section class="feedback">
+      <div>
+        <p><b>Гайд устарел после патча?</b> Или что-то не так — напиши, поправлю.</p>
+      </div>
+      <div class="share">
+        <a href="https://t.me/kepa_mita" target="_blank" rel="noopener">✈️ Telegram</a>
+        <a href="https://discord.gg/Gefd6QDrB4" target="_blank" rel="noopener">💬 Discord</a>
+        <a href={shareTg} target="_blank" rel="noopener">Поделиться в ТГ</a>
+        <a href={shareVk} target="_blank" rel="noopener">Поделиться в ВК</a>
+      </div>
+    </section>
+  </article>
+
+  <button class="pob-btn pob-float" data-pob={b.pob}>📋 Скопировать PoB</button>
+</Layout>

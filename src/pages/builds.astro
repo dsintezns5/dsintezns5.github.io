@@ -1,0 +1,92 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import BuildCard from '../components/BuildCard.astro';
+
+const builds = (await getCollection('builds')).sort(
+  (a, b) => +new Date(b.data.updated) - +new Date(a.data.updated)
+);
+
+const classes = [...new Set(builds.map((b) => b.data.cls))];
+const budgets = [
+  ['starter', '🟢 Стартовый'],
+  ['mid', '🟡 Средний'],
+  ['expensive', '🔴 Дорогой'],
+] as const;
+const roles = [
+  ['league-starter', 'Лигстарт'],
+  ['mapping', 'Маппинг'],
+  ['bossing', 'Боссы'],
+  ['ssf', 'SSF'],
+] as const;
+---
+
+<Layout title="Все билды — Кепка PoE">
+  <div class="container section">
+    <div class="section-head">
+      <h2>📚 Все билды</h2>
+      <span class="hint">Фильтруй под себя — всё работает прямо в браузере</span>
+    </div>
+
+    <div class="filters" id="filters">
+      <div class="filter-row" data-group="cls">
+        <span class="f-label">Класс</span>
+        <button class="chip active" data-value="">Все</button>
+        {classes.map((c) => <button class="chip" data-value={c}>{c}</button>)}
+      </div>
+      <div class="filter-row" data-group="diff">
+        <span class="f-label">Сложность</span>
+        <button class="chip active" data-value="">Любая</button>
+        <button class="chip" data-value="1">⭐ Лёгкий</button>
+        <button class="chip" data-value="2">⭐⭐ Средний</button>
+        <button class="chip" data-value="3">⭐⭐⭐ Сложный</button>
+      </div>
+      <div class="filter-row" data-group="budget">
+        <span class="f-label">Бюджет</span>
+        <button class="chip active" data-value="">Любой</button>
+        {budgets.map(([v, l]) => <button class="chip" data-value={v}>{l}</button>)}
+      </div>
+      <div class="filter-row" data-group="tags">
+        <span class="f-label">Роль</span>
+        <button class="chip active" data-value="">Любая</button>
+        {roles.map(([v, l]) => <button class="chip" data-value={v}>{l}</button>)}
+      </div>
+    </div>
+
+    <div class="grid" id="builds-grid">
+      {builds.map((b) => <BuildCard build={b} />)}
+    </div>
+    <p class="empty-note" id="empty-note">Ничего не нашлось 😅 Сбрось пару фильтров</p>
+  </div>
+</Layout>
+
+<script>
+  const state: Record<string, string> = { cls: '', diff: '', budget: '', tags: '' };
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('#builds-grid .card-build'));
+  const emptyNote = document.getElementById('empty-note')!;
+
+  function apply() {
+    let visible = 0;
+    for (const card of cards) {
+      const okCls = !state.cls || card.dataset.cls === state.cls;
+      const okDiff = !state.diff || card.dataset.diff === state.diff;
+      const okBudget = !state.budget || card.dataset.budget === state.budget;
+      const okTags = !state.tags || (card.dataset.tags || '').split(' ').includes(state.tags);
+      const show = okCls && okDiff && okBudget && okTags;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    }
+    emptyNote.style.display = visible ? 'none' : 'block';
+  }
+
+  document.querySelectorAll<HTMLElement>('#filters .chip').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const row = chip.closest<HTMLElement>('.filter-row')!;
+      const group = row.dataset.group!;
+      row.querySelectorAll('.chip').forEach((c) => c.classList.remove('active'));
+      chip.classList.add('active');
+      state[group] = chip.dataset.value || '';
+      apply();
+    });
+  });
+</script>

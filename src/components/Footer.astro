@@ -1,0 +1,21 @@
+---
+const socials = [
+  { href: 'https://www.twitch.tv/kepa_mita', label: '🎮 Twitch' },
+  { href: 'https://www.youtube.com/@Kepa_mita', label: '📺 YouTube' },
+  { href: 'https://t.me/kepa_mita', label: '✈️ Telegram' },
+  { href: 'https://discord.gg/Gefd6QDrB4', label: '💬 Discord' },
+  { href: 'https://www.donationalerts.com/r/kepa_mita', label: '💰 Донаты' },
+];
+---
+
+<footer class="site-foot">
+  <div class="container foot-inner">
+    <div>
+      <div style="font-weight: 800; color: var(--text);">КЕПА<span style="color: var(--primary);">⚡</span>POE</div>
+      <div>Билды и гайды Path of Exile. Умираю на уберах, чтобы ты не умер(ла).</div>
+    </div>
+    <div class="foot-social">
+      {socials.map((s) => <a href={s.href} target="_blank" rel="noopener">{s.label}</a>)}
+    </div>
+  </div>
+</footer>

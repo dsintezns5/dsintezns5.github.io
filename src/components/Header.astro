@@ -1,0 +1,21 @@
+---
+const nav = [
+  { href: '/builds/', label: 'Билды' },
+  { href: '/newbies/', label: 'Новичкам' },
+  { href: 'https://www.twitch.tv/kepa_mita', label: '🎮 Twitch', external: true },
+  { href: 'https://www.youtube.com/@Kepa_mita', label: 'YouTube', external: true },
+  { href: 'https://t.me/kepa_mita', label: 'Telegram', external: true },
+  { href: 'https://discord.gg/Gefd6QDrB4', label: 'Discord', external: true },
+];
+---
+
+<header class="site-head">
+  <div class="container head-inner">
+    <a class="logo" href="/">КЕПА<span>⚡</span>POE</a>
+    <nav>
+      {nav.map((n) => (
+        <a href={n.href} {...(n.external ? { target: '_blank', rel: 'noopener' } : {})}>{n.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,46 @@
+---
+// Таймер обратного отсчёта до старта лиги. Чистый клиентский JS, сервер не нужен.
+interface Props {
+  target: string; // ISO-дата старта лиги
+  league: string; // номер лиги, напр. "3.30"
+}
+const { target, league } = Astro.props;
+---
+
+<div class="timer" data-target={target} data-league={league}>
+  <span class="timer-label">⏰ Лига {league} стартует через:</span>
+  <div class="timer-digits">
+    <span class="td"><b data-t="d">--</b><i>дней</i></span>
+    <span class="td"><b data-t="h">--</b><i>часов</i></span>
+    <span class="td"><b data-t="m">--</b><i>минут</i></span>
+    <span class="td"><b data-t="s">--</b><i>секунд</i></span>
+  </div>
+</div>
+
+<script>
+  const el = document.querySelector<HTMLDivElement>('.timer');
+  if (el) {
+    const targetMs = new Date(el.dataset.target!).getTime();
+    const league = el.dataset.league || '';
+    const set = (k: string, v: string) => {
+      const node = el.querySelector(`[data-t="${k}"]`);
+      if (node) node.textContent = v;
+    };
+    const tick = () => {
+      const diff = targetMs - Date.now();
+      if (diff <= 0) {
+        const label = el.querySelector('.timer-label');
+        if (label) label.textContent = `🔥 Лига ${league} уже стартовала! Погнали.`;
+        const digits = el.querySelector('.timer-digits');
+        if (digits) digits.style.display = 'none';
+        return;
+      }
+      set('d', String(Math.floor(diff / 86400000)));
+      set('h', String(Math.floor(diff / 3600000) % 24).padStart(2, '0'));
+      set('m', String(Math.floor(diff / 60000) % 60).padStart(2, '0'));
+      set('s', String(Math.floor(diff / 1000) % 60).padStart(2, '0'));
+      window.setTimeout(tick, 1000);
+    };
+    tick();
+  }
+</script>
