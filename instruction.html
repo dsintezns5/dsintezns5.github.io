@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Инструкция — анимации из Twitch‑чата в OBS</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0b10;
+      --card: rgba(255, 255, 255, .065);
+      --card-strong: rgba(255, 255, 255, .09);
+      --border: rgba(255, 255, 255, .13);
+      --text: #f7f7fa;
+      --muted: #b7b7c2;
+      --accent: #9146ff;
+      --accent-2: #a970ff;
+      --cyan: #35c4ff;
+      --green: #4ade80;
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% -8%, rgba(145, 70, 255, .42), transparent 34rem),
+        radial-gradient(circle at 94% 4%, rgba(53, 196, 255, .18), transparent 28rem),
+        radial-gradient(circle at 50% 115%, rgba(145, 70, 255, .18), transparent 34rem),
+        var(--bg);
+      line-height: 1.55;
+    }
+
+    .wrap {
+      width: min(980px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 48px 0 58px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border: 1px solid rgba(169, 112, 255, .38);
+      border-radius: 999px;
+      background: rgba(145, 70, 255, .14);
+      color: #eadfff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 5px rgba(74, 222, 128, .13);
+    }
+
+    h1 {
+      margin: 22px 0 12px;
+      max-width: 760px;
+      font-size: clamp(36px, 7vw, 66px);
+      line-height: 1.02;
+      letter-spacing: -.045em;
+    }
+
+    .lead {
+      max-width: 700px;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(17px, 2.4vw, 21px);
+    }
+
+    .lead strong { color: #fff; }
+
+    .open-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      margin-top: 26px;
+      padding: 12px 20px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), #772ce8);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      box-shadow: 0 16px 38px rgba(145, 70, 255, .34);
+    }
+
+    .open-button:hover { background: linear-gradient(135deg, var(--accent-2), var(--accent)); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 34px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--card-strong), var(--card));
+      box-shadow: 0 20px 55px rgba(0, 0, 0, .24);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .38), transparent);
+    }
+
+    .number {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      background: linear-gradient(135deg, var(--accent), var(--cyan));
+      font-size: 21px;
+      font-weight: 900;
+      box-shadow: 0 12px 28px rgba(145, 70, 255, .28);
+    }
+
+    h2 {
+      margin: 18px 0 10px;
+      font-size: 22px;
+      line-height: 1.18;
+      letter-spacing: -.02em;
+    }
+
+    p { color: var(--muted); }
+    .card p { margin: 8px 0; font-size: 15px; }
+    .card strong { color: #fff; }
+
+    .fake-field {
+      margin-top: 16px;
+      padding: 12px 13px;
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 13px;
+      background: rgba(0, 0, 0, .32);
+      color: #d9d9e2;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .status {
+      display: inline-flex;
+      margin-top: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(74, 222, 128, .12);
+      border: 1px solid rgba(74, 222, 128, .28);
+      color: #bbf7d0;
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    ol.compact {
+      margin: 10px 0 0;
+      padding-left: 21px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    ol.compact li { margin: 6px 0; }
+    ol.compact strong { color: #fff; }
+
+    .wide-card { margin-top: 16px; }
+
+    .words {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .word {
+      padding: 8px 12px;
+      border: 1px solid rgba(169, 112, 255, .32);
+      border-radius: 999px;
+      background: rgba(145, 70, 255, .13);
+      color: #f0eaff;
+      font-weight: 800;
+    }
+
+    .troubles {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .trouble {
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 17px;
+      background: rgba(0, 0, 0, .2);
+    }
+
+    .trouble strong { display: block; margin-bottom: 5px; color: #fff; }
+    .trouble span { color: var(--muted); font-size: 14px; }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, .1);
+      color: #fff;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: .92em;
+    }
+
+    footer {
+      margin-top: 26px;
+      color: #858591;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 820px) {
+      .steps, .troubles { grid-template-columns: 1fr; }
+      .wrap { padding-top: 34px; }
+    }
+
+    @media print {
+      body { background: #fff; color: #111; }
+      .card, .trouble { box-shadow: none; background: #fff; border-color: #ddd; }
+      p, .card p, ol.compact, .trouble span, footer { color: #444; }
+      .card strong, ol.compact strong, .trouble strong { color: #111; }
+      .open-button { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <span class="badge"><span class="dot"></span> Twitch + OBS · настройка за 1 минуту</span>
+
+    <h1>Анимации из чата на вашем стриме</h1>
+    <p class="lead">Всё просто: <strong>укажите канал</strong>, нажмите <strong>«Слушать»</strong>, скопируйте ссылку и вставьте её в OBS.</p>
+
+    <a class="open-button" href="index.html?setup=1">Открыть страницу настройки →</a>
+
+    <section class="steps" aria-label="Шаги настройки">
+      <article class="card">
+        <div class="number">1</div>
+        <h2>Укажите канал</h2>
+        <p>В поле <strong>«Канал Twitch»</strong> впишите логин из адреса вашего канала:</p>
+        <div class="fake-field">twitch.tv/<strong>ваш_логин</strong></div>
+        <p>Нажмите кнопку <strong>«Слушать»</strong> и дождитесь статуса:</p>
+        <span class="status">Twitch: слушаю #ваш_канал</span>
+        <p>Логин пишется латинскими буквами, без <code>@</code> и пробелов.</p>
+      </article>
+
+      <article class="card">
+        <div class="number">2</div>
+        <h2>Скопируйте ссылку</h2>
+        <p>Нажмите <strong>«Копировать»</strong> рядом с готовой ссылкой для OBS. Она будет выглядеть примерно так:</p>
+        <div class="fake-field">https://…/?channel=ваш_логин</div>
+        <p>После этого вкладку браузера можно закрыть: OBS сам подключится к чату по ссылке.</p>
+      </article>
+
+      <article class="card">
+        <div class="number">3</div>
+        <h2>Вставьте в OBS</h2>
+        <ol class="compact">
+          <li><strong>Источники → ＋ → Браузер</strong>.</li>
+          <li><strong>Создать новый</strong> → название «Анимации чата» → ОК.</li>
+          <li>В поле <strong>URL</strong> вставьте ссылку.</li>
+          <li>Для всего экрана: <strong>ширина 1920, высота 1080</strong>.</li>
+          <li>Нажмите ОК и поставьте источник <strong>выше игры</strong>.</li>
+        </ol>
+      </article>
+    </section>
+
+    <section class="card wide-card">
+      <h2>Проверка</h2>
+      <p>Напишите в своём Twitch‑чате любое из этих слов — анимация появится прямо в OBS:</p>
+      <div class="words">
+        <span class="word">привет</span>
+        <span class="word">здарова</span>
+        <span class="word">давай</span>
+        <span class="word">имба</span>
+        <span class="word">алё</span>
+        <span class="word">лизка</span>
+        <span class="word">лиза</span>
+        <span class="word">лизочка</span>
+        <span class="word">снайпер</span>
+        <span class="word">тройка</span>
+        <span class="word">пока</span>
+      </div>
+      <p>Повторное слово может сработать не сразу — между анимациями есть короткая защита от спама.</p>
+    </section>
+
+    <section class="card wide-card">
+      <h2>Если что‑то не работает</h2>
+      <div class="troubles">
+        <div class="trouble">
+          <strong>Не видно настройки</strong>
+          <span>Добавьте в конец адреса страницы <code>?setup=1</code> и откройте её заново.</span>
+        </div>
+        <div class="trouble">
+          <strong>Не появляется статус «слушаю»</strong>
+          <span>Проверьте логин: нужен именно логин из <code>twitch.tv/логин</code>, а не отображаемое имя канала.</span>
+        </div>
+        <div class="trouble">
+          <strong>В OBS ничего нет</strong>
+          <span>Источник должен быть включён и находиться выше игры. В его свойствах нажмите «Обновить кэш текущей страницы».</span>
+        </div>
+        <div class="trouble">
+          <strong>Слово сработало один раз</strong>
+          <span>Подождите несколько секунд или попробуйте другое слово: это пауза от спама в чате.</span>
+        </div>
+      </div>
+    </section>
+
+    <footer>Пароль и токены Twitch вводить не нужно: страница только читает публичный чат и ничего не пишет от имени канала.</footer>
+  </main>
+</body>
+</html>
