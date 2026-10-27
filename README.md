@@ -41,7 +41,7 @@
 
 ---
 
-Cтраница с пользовательской инструкцией после публикации будет доступна по адресу `https://dsintezns5.github.io/twitch-chat-animations/instruction.html`.
+Cтраница с пользовательской инструкцией после публикации будет доступна по адресу `(https://dsintezns5.github.io/instruction.html)`.
 
 
 ## Параметры URL
