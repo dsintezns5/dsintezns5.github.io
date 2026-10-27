@@ -317,7 +317,119 @@
     <p class="hint">Если файла ещё нет в репозитории, в режиме настройки вместо него появится тестовая плашка с именем файла. В OBS ошибка загрузки на экран не выводится.</p>
   </aside>
 
-  <script charset="utf-8" src="config.js"></script>
+  <script id="twitch-chat-animations-config">
+    /* === TWITCH_CHAT_ANIMATIONS_CONFIG_START === */
+    // Этот блок удобно изменять через локальный editor.html.
+    window.CHAT_ANIMATIONS_CONFIG = {
+  "defaultChannel": "",
+  "assetFolder": "asset",
+  "defaultDurationMs": 5000,
+  "autoDuration": true,
+  "globalCooldownMs": 2000,
+  "sameAnimationCooldownMs": 15000,
+  "perUserCooldownMs": 10000,
+  "maxQueue": 3,
+  "commandsOnly": false,
+  "ignoredUsers": [
+    "nightbot",
+    "streamelements",
+    "streamlabs",
+    "moobot",
+    "fossabot",
+    "wizebot",
+    "soundalerts"
+  ],
+  "animations": [
+    {
+      "file": "алё.webp",
+      "triggers": [
+        "алё"
+      ]
+    },
+    {
+      "file": "давай.webp",
+      "triggers": [
+        "давай"
+      ]
+    },
+    {
+      "file": "имба.webp",
+      "triggers": [
+        "имба"
+      ]
+    },
+    {
+      "file": "лизка лиза лизочка.webp",
+      "triggers": [
+        "лизка",
+        "лиза",
+        "лизочка"
+      ]
+    },
+    {
+      "file": "пока.webp",
+      "triggers": [
+        "пока"
+      ]
+    },
+    {
+      "file": "привет здарова.webp",
+      "triggers": [
+        "привет",
+        "здарова"
+      ]
+    },
+    {
+      "file": "снайпер.webp",
+      "triggers": [
+        "снайпер"
+      ]
+    },
+    {
+      "file": "тройка.webp",
+      "triggers": [
+        "тройка"
+      ]
+    },
+    {
+      "file": "гретель gretel gretel4hello gretel4love.webp",
+      "triggers": [
+        "гретель",
+        "gretel",
+        "gretel4hello",
+        "gretel4love"
+      ]
+    },
+    {
+      "file": "кепотька.webp",
+      "triggers": [
+        "кепотька"
+      ]
+    },
+    {
+      "file": "кепочка.webp",
+      "triggers": [
+        "кепочка"
+      ]
+    },
+    {
+      "file": "kepa mita кепка.webp",
+      "triggers": [
+        "kepa",
+        "mita",
+        "кепка"
+      ]
+    },
+    {
+      "file": "lul.webp",
+      "triggers": [
+        "lul"
+      ]
+    }
+  ]
+};
+    /* === TWITCH_CHAT_ANIMATIONS_CONFIG_END === */
+  </script>
   <script charset="utf-8" src="app.js"></script>
 </body>
 </html>
